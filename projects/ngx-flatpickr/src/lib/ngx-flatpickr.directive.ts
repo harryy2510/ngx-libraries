@@ -271,8 +271,16 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
 
   writeValue(value: any): void {
     let parsedValue: any = value;
-    if (this.mode === 'range' && value) {
-      parsedValue = [value.from, value.to];
+    if (value) {
+      switch (this.mode) {
+        case 'range':
+        case 'multiple':
+          parsedValue = value.map(d => new Date(moment(d).valueOf()))
+          break;
+        case 'single':
+        default:
+          parsedValue = new Date(moment(value).valueOf())
+      }
     }
 
     if (this.instance) {
