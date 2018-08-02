@@ -22,6 +22,12 @@
       ],
       "ngx-flatpickr/*": [
         "dist/ngx-flatpickr/*"
+      ],
+      "ngx-timepicker": [
+        "dist/ngx-timepicker"
+      ],
+      "ngx-timepicker/*": [
+        "dist/ngx-timepicker/*"
       ]
     }
   }

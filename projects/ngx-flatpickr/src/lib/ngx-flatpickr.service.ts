@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {Moment, MomentInput} from 'moment';
+import {Moment} from 'moment';
 
 export const DATE_FORMAT = 'MMM DD, YYYY';
 
 export type IFlatpickrDisableEnableDate =
   | string
-  | MomentInput
+  | Moment
   | Date
-  | { from: Date | string | MomentInput; to: Date | string | MomentInput }
-  | ((date: Date | MomentInput) => boolean);
+  | { from: Date | string | Moment; to: Date | string | Moment }
+  | ((date: Date | Moment) => boolean);
 
 // tslint:disable no-inferrable-types
 export interface IFlatpickrConfig {
@@ -112,12 +112,12 @@ export interface IFlatpickrConfig {
   /**
    * The maximum date that a user can pick to (inclusive).
    */
-  maxDate?: string | Date | MomentInput;
+  maxDate?: string | Date | Moment;
 
   /**
    * The minimum date that a user can start picking from (inclusive).
    */
-  minDate?: string | Date | MomentInput;
+  minDate?: string | Date | Moment;
 
   /**
    * Adjusts the step for the minute input (incl. scrolling).
@@ -179,7 +179,7 @@ export interface IFlatpickrConfig {
    * You may override the function that extracts the week numbers from a Date by supplying a getWeek function.
    * It takes in a date as a parameter and should return a corresponding string that you want to appear left of every week.
    */
-  getWeek?: (date: Date | MomentInput) => string;
+  getWeek?: (date: Date | Moment) => string;
 
   /**
    * Custom elements and input groups.
@@ -304,12 +304,12 @@ export class FlatpickrDefaults implements IFlatpickrConfig {
   /**
    * The maximum date that a user can pick to (inclusive).
    */
-  maxDate: Date | MomentInput = undefined;
+  maxDate: Date | Moment = undefined;
 
   /**
    * The minimum date that a user can start picking from (inclusive).
    */
-  minDate: Date | MomentInput = undefined;
+  minDate: Date | Moment = undefined;
 
   /**
    * Adjusts the step for the minute input (incl. scrolling).
@@ -373,7 +373,7 @@ export class FlatpickrDefaults implements IFlatpickrConfig {
    * You may override the function that extracts the week numbers from a Date by supplying a getWeek function.
    * It takes in a date as a parameter and should return a corresponding string that you want to appear left of every week.
    */
-  getWeek: (date: Date | MomentInput) => string;
+  getWeek: (date: Date | Moment) => string;
 
   /**
    * Custom elements and input groups.
@@ -410,10 +410,10 @@ export const momentToFpDateFormat = (format: string) => {
     'YY': 'y',
     'a': 'a',
     'A': 'A',
-    'h': 'g',
-    'H': 'G',
     'hh': 'h',
     'HH': 'H',
+    'h': 'g',
+    'H': 'G',
     'mm': 'i',
     'ss': 's',
     'SSS': 'u',

@@ -32,6 +32,7 @@ export interface FlatpickrDayCreateOutputOptions extends FlatpickrOutputOptions 
 
 @Directive({
   selector: '[ngxFlatpickr]',
+  exportAs: 'flatpickr',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

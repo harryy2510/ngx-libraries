@@ -1,21 +1,23 @@
 {
-  "name": "lib-demo",
+  "name": "ngx-libraries",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4201",
-    "build": "ng build ngx-flatpickr --prod",
-    "publish": "npm run build && cd dist/ngx-flatpickr && npm publish --access=public",
+    "build:flatpickr": "ng build ngx-flatpickr --prod",
+    "publish:flatpickr": "npm run build && cd dist/ngx-flatpickr && npm publish --access=public",
+    "build:timepicker": "ng build ngx-timepicker --prod",
+    "publish:timepicker": "npm run build && cd dist/ngx-timepicker && npm publish --access=public",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
   "private": false,
   "dependencies": {
-    "@angular/common": "^6.0.3",
-    "@angular/core": "^6.0.3",
-    "@angular/compiler": "^6.0.3",
     "@angular/animations": "^6.0.3",
+    "@angular/common": "^6.0.3",
+    "@angular/compiler": "^6.0.3",
+    "@angular/core": "^6.0.3",
     "@angular/forms": "^6.0.3",
     "@angular/http": "^6.0.3",
     "@angular/platform-browser": "^6.0.3",
@@ -23,8 +25,10 @@
     "@angular/router": "^6.0.3",
     "core-js": "^2.5.4",
     "flatpickr": "4.5.1",
+    "jquery": "3.3.1",
     "moment": "2.22.2",
     "rxjs": "^6.0.0",
+    "timepicker": "1.11.12",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
