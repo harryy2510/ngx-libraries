@@ -17,6 +17,7 @@ Then include in your apps module:
 
 ```typescript
 import 'flatpickr/dist/flatpickr.min.css'; // you may need to adjust the css import depending on your build tool
+import 'timepicker/jquery.timepicker.min.css'; // you may need to adjust the css import depending on your build tool
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxFlatpickrModule } from 'ngx-flatpickr';
