@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
+import * as moment_ from 'moment';
 import {Moment} from 'moment';
-import * as moment from 'moment';
+
+const moment = moment_;
 
 export const TIME_FORMAT = 'hh:mm a';
 
@@ -65,7 +67,7 @@ export interface ITimepickerConfig {
    * Language constants used in the timepicker.
    * Can override the defaults by passing an object with one or more of the following properties: decimal, mins, hr, hrs.
    */
-  lang?: {[meridian: string]: string};
+  lang?: { [meridian: string]: string };
 
   /**
    * Default: false
@@ -214,7 +216,7 @@ export class TimepickerDefaults implements ITimepickerConfig {
    * Language constants used in the timepicker.
    * Can override the defaults by passing an object with one or more of the following properties: decimal, mins, hr, hrs.
    */
-  lang?: {[meridian: string]: string} = null;
+  lang?: { [meridian: string]: string } = null;
 
   /**
    * Default: 24 hours after minTime

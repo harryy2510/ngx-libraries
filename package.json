@@ -5,9 +5,9 @@
     "ng": "ng",
     "start": "ng serve --port 4201",
     "build:flatpickr": "ng build ngx-flatpickr --prod",
-    "publish:flatpickr": "npm run build && cd dist/ngx-flatpickr && npm publish --access=public",
+    "publish:flatpickr": "npm run build:flatpickr && cd dist/ngx-flatpickr && npm publish --access=public",
     "build:timepicker": "ng build ngx-timepicker --prod",
-    "publish:timepicker": "npm run build && cd dist/ngx-timepicker && npm publish --access=public",
+    "publish:timepicker": "npm run build:timepicker && cd dist/ngx-timepicker && npm publish --access=public",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -1,8 +1,8 @@
-# ngx flatpickr
+# ngx libraries
 
 ## About
 
-An angular 6.0+ wrapper for flatpickr
+An angular 6.0+ wrapper for flatpickr, timepicker
 
 ## Installation
 
