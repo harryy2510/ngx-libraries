@@ -7,7 +7,7 @@ Install through npm:
 ```
 npm install --save flatpickr moment @harryy/ngx-flatpickr
 npm install --save jquery timepicker moment @harryy/ngx-timepicker
-npm install --save minimatch @harryy/ngx-rights
+npm install --save multimatch @harryy/ngx-rights
 ```
 
 Then include in your apps module:
