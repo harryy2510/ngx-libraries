@@ -28,6 +28,12 @@
       ],
       "ngx-timepicker/*": [
         "dist/ngx-timepicker/*"
+      ],
+      "ngx-rights": [
+        "dist/ngx-rights"
+      ],
+      "ngx-rights/*": [
+        "dist/ngx-rights/*"
       ]
     }
   }

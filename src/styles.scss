@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  font-family: sans-serif;
+}
+
+@import '../node_modules/daemonite-material/assets/scss/colors';
+
+$primary: (
+  color: $material-color-light-blue-400,
+  dark: $material-color-light-blue-800,
+  light: $material-color-light-blue-200
+);
+
+$secondary: (
+color: $material-color-light-blue-a400,
+dark: $material-color-light-blue-a700,
+light: $material-color-light-blue-a200
+);
+
+$border-color: $material-color-grey-200;
+@import "../node_modules/daemonite-material/assets/scss/material";
+
+

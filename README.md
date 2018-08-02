@@ -1,17 +1,13 @@
 # ngx libraries
 
-## About
-
-An angular 6.0+ wrapper for flatpickr, timepicker
-
 ## Installation
 
 Install through npm:
 
 ```
-npm install --save moment
-npm install --save flatpickr @harryy/ngx-flatpickr
-npm install --save timepicker jquery @harryy/ngx-timepicker
+npm install --save flatpickr moment @harryy/ngx-flatpickr
+npm install --save jquery timepicker moment @harryy/ngx-timepicker
+npm install --save minimatch @harryy/ngx-rights
 ```
 
 Then include in your apps module:
@@ -23,9 +19,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxFlatpickrModule } from 'ngx-flatpickr';
 import { NgxTimepickerModule } from 'ngx-timepicker';
+import { NgxRightsModule } from 'ngx-rights';
 
 @NgModule({
-  imports: [FormsModule, NgxFlatpickrModule.forRoot(), NgxTimepickerModule.forRoot()]
+  imports: [FormsModule, NgxFlatpickrModule.forRoot(), NgxTimepickerModule.forRoot(), NgxRightsModule.forRoot()]
 })
 export class MyModule {}
 ```
