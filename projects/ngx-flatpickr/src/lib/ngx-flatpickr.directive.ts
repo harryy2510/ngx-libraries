@@ -275,12 +275,16 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
     if (value) {
       switch (this.mode) {
         case 'range':
+          if (value) {
+            parsedValue = [value.start, value.end];
+          }
+          break;
         case 'multiple':
-          parsedValue = value.map(d => new Date(moment(d).valueOf()))
+          parsedValue = value.map(d => new Date(moment(d).valueOf()));
           break;
         case 'single':
         default:
-          parsedValue = new Date(moment(value).valueOf())
+          parsedValue = new Date(moment(value).valueOf());
       }
     }
 
@@ -411,29 +415,32 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   inputChanged(): void {
     const value: string = this.elm.nativeElement.value;
     let parsedValues: any;
+    let isValid = true;
     if (typeof value === 'string') {
       switch (this.mode) {
         case 'multiple':
           parsedValues = NgxFlatpickrDirective.parseDates(value.split(this.conjunction), this.dateFormat);
+          parsedValues.forEach(d => {
+            if (!moment(d).isValid()) {
+              isValid = false;
+            }
+          });
           break;
         case 'range':
-          parsedValues = NgxFlatpickrDirective.parseDates(value.split(this.instance.l10n.rangeSeparator), this.dateFormat);
+          const [start, end] = <Moment[]>NgxFlatpickrDirective.parseDates(value.split(this.instance.l10n.rangeSeparator), this.dateFormat);
+          if (start && end && start.isValid() && end.isValid()) {
+            parsedValues = {start, end};
+          } else {
+            parsedValues = {start: null, end: null};
+          }
           break;
         case 'single':
         default:
           parsedValues = NgxFlatpickrDirective.parseDates(value, this.dateFormat);
+          isValid = moment(parsedValues).isValid();
       }
     } else {
       parsedValues = NgxFlatpickrDirective.parseDates(value);
-    }
-    let isValid = true;
-    if (parsedValues instanceof Array) {
-      parsedValues.forEach(d => {
-        if (!moment(d).isValid()) {
-          isValid = false;
-        }
-      });
-    } else {
       isValid = moment(parsedValues).isValid();
     }
     this.onChangeFn(isValid ? parsedValues : null);
