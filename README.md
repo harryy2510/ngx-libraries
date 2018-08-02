@@ -9,6 +9,7 @@ An angular 6.0+ wrapper for flatpickr, timepicker
 Install through npm:
 
 ```
+npm install --save moment
 npm install --save flatpickr @harryy/ngx-flatpickr
 npm install --save timepicker jquery @harryy/ngx-timepicker
 ```
