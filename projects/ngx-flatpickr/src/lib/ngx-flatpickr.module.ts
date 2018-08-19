@@ -1,12 +1,12 @@
 import {InjectionToken, ModuleWithProviders, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgxFlatpickrDirective} from './ngx-flatpickr.directive';
-import {FlatpickrDefaults, IFlatpickrConfig} from './ngx-flatpickr.service';
+import {FlatpickrConfig} from './ngx-flatpickr.service';
 
 export const FLATPICKR_CONFIG = new InjectionToken('Flatpickr Config');
 
 export function defaultsFactory(config) {
-  return {...new FlatpickrDefaults(), ...config};
+  return {...new FlatpickrConfig(), ...config};
 }
 
 @NgModule({
@@ -15,7 +15,7 @@ export function defaultsFactory(config) {
   exports: [NgxFlatpickrDirective]
 })
 export class NgxFlatpickrModule {
-  static forRoot(config: IFlatpickrConfig = {}): ModuleWithProviders {
+  static forRoot(config: FlatpickrConfig = {}): ModuleWithProviders {
     return {
       ngModule: NgxFlatpickrModule,
       providers: [
@@ -24,7 +24,7 @@ export class NgxFlatpickrModule {
           useValue: config
         },
         {
-          provide: FlatpickrDefaults,
+          provide: FlatpickrConfig,
           useFactory: defaultsFactory,
           deps: [FLATPICKR_CONFIG]
         }

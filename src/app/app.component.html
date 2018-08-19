@@ -1,6 +1,14 @@
 <div class="container-fluid p-5">
   <div class="row">
     <div class="col-12">
+      <h3>Avatar</h3>
+    </div>
+    <ng-template ngFor [ngForOf]="avatars" let-avatar>
+      <ngx-avatar [upload]="avatar.upload" [size]="avatar.size" [margin]="avatar.margin"  [label]="avatar.label" [disabled]="avatar.disabled" [name]="avatar.name" [randomColor]="avatar.randomColor" [image]="avatar.image" [textColor]="avatar.textColor" [bgColor]="avatar.bgColor"></ngx-avatar>
+    </ng-template>
+  </div>
+  <div class="row">
+    <div class="col-12">
       <h3>Rights</h3>
     </div>
     <ng-template ngFor [ngForOf]="tests" let-test>

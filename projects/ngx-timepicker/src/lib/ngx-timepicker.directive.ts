@@ -17,12 +17,11 @@ import * as jQuery_ from 'jquery';
 import * as moment_ from 'moment';
 import {Moment} from 'moment';
 import {
-  ITimepickerConfig,
-  ITimepickerDisableEnableDate,
   momentToTpDateFormat,
   NoneObject,
   TIME_FORMAT,
-  TimepickerDefaults
+  TimepickerConfig,
+  TimepickerDisableEnableDate
 } from './ngx-timepicker.service';
 
 const jQuery = jQuery_;
@@ -72,7 +71,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
    * Disable selection of certain time ranges. Input will be converted in an array of time pairs, like `[['3:00am', '4:30am'], ['5:00pm', '8:00pm']].
    * The start of the interval will be disabled but the end won't.
    */
-  @Input() disableTimeRanges: ITimepickerDisableEnableDate[];
+  @Input() disableTimeRanges: TimepickerDisableEnableDate[];
   /**
    * Default: false
    * Disables the onscreen keyboard for touch devices. There can be instances where Firefox or Chrome have touch events enabled
@@ -125,7 +124,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
    * Default: Rounds to the nearest step
    * Function used to compute rounded times. The function will receive time in seconds and a settings object as arguments. The function should handle a null value for seconds
    */
-  @Input() roundingFunction: (seconds: number, settings: ITimepickerConfig) => number;
+  @Input() roundingFunction: (seconds: number, settings: TimepickerConfig) => number;
   /**
    * Default: null
    * If no time value is selected, set the dropdown scroll position to show the time provided, e.g. "09:00". A time string, Date object, or integer (seconds past midnight) is acceptible, as well as the string 'now'
@@ -236,7 +235,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }; // tslint:disable-line
 
   constructor(
-    private config: TimepickerDefaults,
+    private config: TimepickerConfig,
     private elm: ElementRef
   ) {
   }

@@ -8,6 +8,7 @@ Install through npm:
 npm install --save flatpickr moment @harryy/ngx-flatpickr
 npm install --save jquery timepicker moment @harryy/ngx-timepicker
 npm install --save multimatch @harryy/ngx-rights
+npm install --save svg.js svg.filter.js @harryy/ngx-avatar
 ```
 
 Then include in your apps module:
@@ -20,9 +21,16 @@ import { FormsModule } from '@angular/forms';
 import { NgxFlatpickrModule } from 'ngx-flatpickr';
 import { NgxTimepickerModule } from 'ngx-timepicker';
 import { NgxRightsModule } from 'ngx-rights';
+import { NgxAvatarModule } from 'ngx-avatar';
 
 @NgModule({
-  imports: [FormsModule, NgxFlatpickrModule.forRoot(), NgxTimepickerModule.forRoot(), NgxRightsModule.forRoot()]
+  imports: [
+    FormsModule,
+    NgxFlatpickrModule.forRoot(),
+    NgxTimepickerModule.forRoot(),
+    NgxRightsModule.forRoot(),
+    NgxAvatarModule.forRoot()
+  ]
 })
 export class MyModule {}
 ```
@@ -44,6 +52,8 @@ import { Component } from '@angular/core';
       ngxTimepicker 
       [(ngModel)]="selectedDate" 
       timeFormat="hh:mm a">
+  <ngx-avatar [upload]="true" [name]="name" [image]="image"></ngx-avatar>
+
   `
 })
 export class MyComponent {}

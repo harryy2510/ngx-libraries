@@ -12,7 +12,7 @@ import {
   Renderer2,
   SimpleChanges
 } from '@angular/core';
-import {FlatpickrDefaults, IFlatpickrDisableEnableDate, momentToFpDateFormat} from './ngx-flatpickr.service';
+import {FlatpickrConfig, FlatpickrDisableEnableDate, momentToFpDateFormat} from './ngx-flatpickr.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import flatpickr from 'flatpickr';
 import * as moment_ from 'moment';
@@ -94,7 +94,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   /**
    * See <a href="https://chmln.github.io/flatpickr/examples/#disabling-specific-dates">disabling dates</a>.
    */
-  @Input() disable: IFlatpickrDisableEnableDate[];
+  @Input() disable: FlatpickrDisableEnableDate[];
   /**
    * Set disableMobile to true to always use the non-native picker.
    * By default, Flatpickr utilizes native datetime widgets unless certain options (e.g. disable) are used.
@@ -103,7 +103,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   /**
    * See <a href="https://chmln.github.io/flatpickr/examples/#disabling-all-dates-except-select-few">enabling dates</a>.
    */
-  @Input() enable: IFlatpickrDisableEnableDate[];
+  @Input() enable: FlatpickrDisableEnableDate[];
   /**
    * Enables time picker.
    */
@@ -240,7 +240,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   }; // tslint:disable-line
 
   constructor(
-    private config: FlatpickrDefaults,
+    private config: FlatpickrConfig,
     private elm: ElementRef,
     private renderer: Renderer2
   ) {

@@ -247,6 +247,46 @@
           }
         }
       }
+    },
+    "ngx-avatar": {
+      "root": "projects/ngx-avatar",
+      "sourceRoot": "projects/ngx-avatar/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-avatar/tsconfig.lib.json",
+            "project": "projects/ngx-avatar/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngx-avatar/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-avatar/src/test.ts",
+            "tsConfig": "projects/ngx-avatar/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-avatar/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-avatar/tsconfig.lib.json",
+              "projects/ngx-avatar/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngx-libraries",

@@ -1,13 +1,13 @@
 import {InjectionToken, ModuleWithProviders, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgxTimepickerDirective} from './ngx-timepicker.directive';
-import {ITimepickerConfig, TimepickerDefaults} from './ngx-timepicker.service';
+import {TimepickerConfig} from './ngx-timepicker.service';
 
 
 export const TIMEPICKER_CONFIG = new InjectionToken('Timepicker Config');
 
 export function defaultsFactory(config) {
-  return {...new TimepickerDefaults(), ...config};
+  return {...new TimepickerConfig(), ...config};
 }
 
 @NgModule({
@@ -16,7 +16,7 @@ export function defaultsFactory(config) {
   exports: [NgxTimepickerDirective]
 })
 export class NgxTimepickerModule {
-  static forRoot(config: ITimepickerConfig = {}): ModuleWithProviders {
+  static forRoot(config: TimepickerConfig = {}): ModuleWithProviders {
     return {
       ngModule: NgxTimepickerModule,
       providers: [
@@ -25,7 +25,7 @@ export class NgxTimepickerModule {
           useValue: config
         },
         {
-          provide: TimepickerDefaults,
+          provide: TimepickerConfig,
           useFactory: defaultsFactory,
           deps: [TIMEPICKER_CONFIG]
         }

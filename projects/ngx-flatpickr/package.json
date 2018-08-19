@@ -1,8 +1,7 @@
 {
   "name": "@harryy/ngx-flatpickr",
-  "version": "0.0.6",
+  "version": "0.0.10",
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/forms": "^6.0.3",
     "flatpickr": "^4.5.1",
