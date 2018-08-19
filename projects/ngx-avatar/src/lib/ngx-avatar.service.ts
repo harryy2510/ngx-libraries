@@ -75,7 +75,6 @@ export class AvatarConfig {
 
   constructor() {
     this.size = Size['md'];
-    this.margin = '0 20 0 0';
     this.rounded = true;
 
     this.characters = 2;
