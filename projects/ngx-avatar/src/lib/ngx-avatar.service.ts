@@ -25,12 +25,12 @@ export const palette = [
 ];
 
 export enum Size {
-  xs = 30,
-  'extra-small' = 30,
-  sm = 40,
-  small = 40,
-  md = 50,
-  medium = 50,
+  xs = 25,
+  'extra-small' = 25,
+  sm = 35,
+  small = 35,
+  md = 45,
+  medium = 45,
   lg = 60,
   large = 60,
   xl = 80,

@@ -275,6 +275,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     const {top, right, bottom, left} = this._margin;
     const svgElement = <Doc>SVG(this.elm.nativeElement);
     svgElement
+      .style('display', 'flex')
       .size(this._size + left + right, this._size + top + bottom);
     this.instance.svg = svgElement;
   }
