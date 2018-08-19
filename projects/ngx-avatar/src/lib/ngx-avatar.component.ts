@@ -1,5 +1,13 @@
 import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {AvatarConfig, CSSProperty, defaultColor, Instance, palette, Size} from './ngx-avatar.service';
+import {
+  AvatarConfig,
+  CSSProperty,
+  defaultColor,
+  defaultLabelColor,
+  Instance,
+  palette,
+  Size
+} from './ngx-avatar.service';
 import * as SVG_ from 'svg.js';
 import {Circle, Doc, Image, Rect, Text} from 'svg.js';
 import 'svg.filter.js';
@@ -92,8 +100,12 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     return this._options.fontSize ? this._options.fontSize : this._size * 0.4;
   }
 
+  get _labelBgColor(): string {
+    return this._options.labelBgColor ? this._options.labelBgColor : defaultLabelColor;
+  }
+
   get _labelColor(): string {
-    return this._options.labelColor ? this._options.labelColor : (NgxAvatarComponent.isDark(this._options.labelBgColor) ? '#fff' : '#000');
+    return this._options.labelColor ? this._options.labelColor : (NgxAvatarComponent.isDark(this._labelBgColor) ? '#fff' : '#000');
   }
 
   static isDark(color: string): boolean {
@@ -362,7 +374,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
       .rect(this._size, this._size * 0.25)
       .radius(2)
       .move(left, top + this._size - (this._size * 0.25));
-    labelShape = this.renderColor(labelShape, this._options.labelBgColor, 0.8);
+    labelShape = this.renderColor(labelShape, this._labelBgColor, 0.8);
     this.instance.labelShape = labelShape;
 
     let labelText: Text = <Text>this.instance.svg
