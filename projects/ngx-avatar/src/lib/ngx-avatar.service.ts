@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Circle, Doc, Image, Rect, Text} from 'svg.js';
 
-export const defaultColor = '#29b6f6';
+export const defaultColor = '#1e88e5';
 export const defaultLabelColor = '#f44336';
 export const palette = [
   '#f44336',
