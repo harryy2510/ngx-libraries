@@ -10,7 +10,8 @@ import * as moment from 'moment';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  date = {start: moment(), end: null};
+  date = moment();
+  min = moment().add(2, 'd');
   time = moment();
   rights = ['**/service-providers/{service_provider_id.id}/**/*', '!**/service-providers/{service_provider_id.id}/certificates/*'];
   tests = [

@@ -247,7 +247,10 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   }
 
   // tslint:disable-next-line
-  static convertFormat(key: string, value: string) {
+  static convertFormat(key: string, value: any) {
+    if (value instanceof moment) {
+      return new Date(value.valueOf());
+    }
     if (key.includes('Format')) {
       return momentToFpDateFormat(value);
     }
