@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgxRightsService} from 'ngx-rights';
 import * as faker from 'faker';
 import {AvatarConfig} from '../../projects/ngx-avatar/src/lib/ngx-avatar.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'lib-root',
@@ -9,8 +10,8 @@ import {AvatarConfig} from '../../projects/ngx-avatar/src/lib/ngx-avatar.service
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  date = '';
-  time = '';
+  date = {start: moment(), end: null};
+  time = moment();
   rights = ['**/service-providers/{service_provider_id.id}/**/*', '!**/service-providers/{service_provider_id.id}/certificates/*'];
   tests = [
     '/programs/program_id/locations/location_id/divisions/division_id/service-providers/{service_provider_id.id}/appointments',

@@ -275,8 +275,14 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
     if (value) {
       switch (this.mode) {
         case 'range':
+          parsedValue = [];
           if (value) {
-            parsedValue = [value.start, value.end];
+            if (value.start) {
+              parsedValue[0] = new Date(moment(value.start).valueOf());
+            }
+            if (value.end) {
+              parsedValue[1] = new Date(moment(value.end).valueOf());
+            }
           }
           break;
         case 'multiple':
@@ -428,10 +434,10 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
           break;
         case 'range':
           const [start, end] = <Moment[]>NgxFlatpickrDirective.parseDates(value.split(this.instance.l10n.rangeSeparator), this.dateFormat);
-          if (start && end && start.isValid() && end.isValid()) {
-            parsedValues = {start, end};
-          } else {
-            parsedValues = {start: null, end: null};
+          parsedValues = {start: null, end: null};
+          if (start && start.isValid()) {
+            parsedValues.start = start;
+            parsedValues.end = (end && end.isValid()) ? end : start;
           }
           break;
         case 'single':
