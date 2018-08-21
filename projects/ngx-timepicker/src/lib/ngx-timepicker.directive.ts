@@ -226,6 +226,11 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   @Output()
   timeRangeError: EventEmitter<TimepickerOutputOptions> = new EventEmitter();
 
+  @Output()
+  onChange: EventEmitter<Moment> = new EventEmitter();
+
+  timer: any;
+
   private instance: any;
   private isDisabled = false;
   private initialValue: any;
@@ -413,13 +418,21 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }
 
   validate() {
-    const parsedValue: Moment = NgxTimepickerDirective.parseTime(this.elm.nativeElement.value, this.timeFormat);
-    if (moment(parsedValue).isValid()) {
-      this.onChangeFn(parsedValue);
-      this.elm.nativeElement.value = parsedValue.format(this.timeFormat);
-    } else {
-      this.writeValue(null);
-      this.onChangeFn(null);
+    if (this.timer) {
+      clearTimeout(this.timer);
     }
+    this.timer = setTimeout(() => {
+      const parsedValue: Moment = NgxTimepickerDirective.parseTime(this.elm.nativeElement.value, this.timeFormat);
+      if (parsedValue.isValid()) {
+        this.onChangeFn(parsedValue);
+        this.onChange.emit(parsedValue);
+        this.elm.nativeElement.value = parsedValue.format(this.timeFormat);
+      } else {
+        this.writeValue(null);
+        this.onChangeFn(null);
+        this.onChange.emit(null);
+      }
+    }, 100);
   }
 }
+

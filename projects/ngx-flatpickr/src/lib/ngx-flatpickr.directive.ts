@@ -230,6 +230,9 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   @Output()
   flatpickrDayCreate: EventEmitter<FlatpickrDayCreateOutputOptions> = new EventEmitter();
 
+  @Output()
+  onChange: EventEmitter<Moment | Moment[] | { start: Moment, end: Moment }> = new EventEmitter();
+
 
   private instance: flatpickr.Instance;
   private isDisabled = false;
@@ -324,7 +327,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   }
 
   ngAfterViewInit(): void {
-    const options: any = {
+    let options: any = {
       altFormat: this.altFormat,
       altInput: this.altInput,
       altInputClass: this.altInputClass,
@@ -359,7 +362,20 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
       weekNumbers: this.weekNumbers,
       getWeek: this.getWeek,
       wrap: this.wrap,
-      plugins: this.plugins,
+      plugins: this.plugins
+    };
+    if (this.locale) {
+      options.locale = this.locale;
+    }
+    Object.keys(options).forEach((key: string) => {
+      if (typeof options[key] === 'undefined') {
+        options[key] = (this.config as any)[key];
+      }
+      this[key] = options[key];
+      options[key] = NgxFlatpickrDirective.convertFormat(key, options[key]);
+    });
+    options = {
+      ...options,
       onChange: (_dates: Date[], dateString: string, instance: any) => {
         const selectedDates = <Moment[]>NgxFlatpickrDirective.parseDates(_dates);
         this.flatpickrChange.emit({selectedDates, dateString, instance});
@@ -393,16 +409,6 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
         this.flatpickrDayCreate.emit({selectedDates, dateString, instance, dayElement});
       }
     };
-    if (this.locale) {
-      options.locale = this.locale;
-    }
-    Object.keys(options).forEach((key: string) => {
-      if (typeof options[key] === 'undefined') {
-        options[key] = (this.config as any)[key];
-      }
-      this[key] = options[key];
-      options[key] = NgxFlatpickrDirective.convertFormat(key, options[key]);
-    });
     this.instance = flatpickr(this.elm.nativeElement, options) as flatpickr.Instance;
     this.setDisabledState(this.isDisabled);
   }
@@ -423,12 +429,12 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   @HostListener('input')
   inputChanged(): void {
     const value: string = this.elm.nativeElement.value;
-    let parsedValues: any;
+    let parsedValues: Moment | Moment[] | { start: Moment, end: Moment };
     let isValid = true;
     if (typeof value === 'string') {
       switch (this.mode) {
         case 'multiple':
-          parsedValues = NgxFlatpickrDirective.parseDates(value.split(this.conjunction), this.dateFormat);
+          parsedValues = <Moment[]>NgxFlatpickrDirective.parseDates(value.split(this.conjunction), this.dateFormat);
           parsedValues.forEach(d => {
             if (!moment(d).isValid()) {
               isValid = false;
@@ -445,13 +451,14 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
           break;
         case 'single':
         default:
-          parsedValues = NgxFlatpickrDirective.parseDates(value, this.dateFormat);
+          parsedValues = <Moment>NgxFlatpickrDirective.parseDates(value, this.dateFormat);
           isValid = moment(parsedValues).isValid();
       }
     } else {
-      parsedValues = NgxFlatpickrDirective.parseDates(value);
+      parsedValues = <Moment>NgxFlatpickrDirective.parseDates(value);
       isValid = moment(parsedValues).isValid();
     }
+    this.onChange.emit(isValid ? parsedValues : null);
     this.onChangeFn(isValid ? parsedValues : null);
   }
 }
