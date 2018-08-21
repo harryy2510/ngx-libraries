@@ -294,6 +294,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }
 
   writeValue(value: any): void {
+    this.currentValue = value ? moment(value) : null;
     this.setTime(value);
   }
 
@@ -428,7 +429,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
     }
 
     if (value && this.currentValue) {
-      return !moment(value).isSame(this.currentValue);
+      return !moment(value).startOf('m').isSame(moment(this.currentValue).startOf('m'));
     }
     return false;
   }
