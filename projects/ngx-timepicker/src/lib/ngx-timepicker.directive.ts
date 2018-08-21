@@ -229,11 +229,10 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   @Output()
   onChange: EventEmitter<Moment> = new EventEmitter();
 
-  timer: any;
-
   private instance: any;
   private isDisabled = false;
   private initialValue: any;
+  private currentValue: any;
   private onChangeFn: (value: any) => void = () => {
   }; // tslint:disable-line
   private onTouchedFn = () => {
@@ -295,12 +294,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }
 
   writeValue(value: any): void {
-    let parsedValue: any = value ? new Date(moment(value).valueOf()) : value;
-    if (this.instance) {
-      this.instance.timepicker('setTime', parsedValue);
-    } else {
-      this.initialValue = parsedValue;
-    }
+    this.setTime(value);
   }
 
   registerOnChange(fn: any): void {
@@ -418,21 +412,34 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }
 
   validate() {
-    if (this.timer) {
-      clearTimeout(this.timer);
+    let parsedValue: Moment = NgxTimepickerDirective.parseTime(this.elm.nativeElement.value, this.timeFormat);
+    parsedValue = parsedValue.isValid() ? parsedValue : null;
+    if (this.isChanged(parsedValue)) {
+      this.currentValue = parsedValue;
+      this.onChangeFn(this.currentValue);
+      this.onChange.emit(this.currentValue);
     }
-    this.timer = setTimeout(() => {
-      const parsedValue: Moment = NgxTimepickerDirective.parseTime(this.elm.nativeElement.value, this.timeFormat);
-      if (parsedValue.isValid()) {
-        this.onChangeFn(parsedValue);
-        this.onChange.emit(parsedValue);
-        this.elm.nativeElement.value = parsedValue.format(this.timeFormat);
-      } else {
-        this.writeValue(null);
-        this.onChangeFn(null);
-        this.onChange.emit(null);
-      }
-    }, 100);
+    this.setTime(parsedValue);
+  }
+
+  isChanged(value: any) {
+    if ((!value && this.currentValue) || (value && !this.currentValue)) {
+      return true;
+    }
+
+    if (value && this.currentValue) {
+      return !moment(value).isSame(this.currentValue);
+    }
+    return false;
+  }
+
+  private setTime(value: any) {
+    const parsedValue: any = value ? new Date(moment(value).valueOf()) : null;
+    if (this.instance) {
+      this.instance.timepicker('setTime', parsedValue);
+    } else {
+      this.initialValue = parsedValue;
+    }
   }
 }
 
