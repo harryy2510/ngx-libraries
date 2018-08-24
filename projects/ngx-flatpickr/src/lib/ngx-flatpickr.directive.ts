@@ -458,7 +458,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
       parsedValues = <Moment>NgxFlatpickrDirective.parseDates(value);
       isValid = moment(parsedValues).isValid();
     }
-    this.onChange.emit(isValid ? parsedValues : null);
     this.onChangeFn(isValid ? parsedValues : null);
+    this.onChange.emit(isValid ? parsedValues : null);
   }
 }

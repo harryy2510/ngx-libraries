@@ -36,12 +36,16 @@
         "dist/ngx-rights/*"
       ],
       "ngx-avatar": [
-        "dist/ngx-avatar",
         "dist/ngx-avatar"
       ],
       "ngx-avatar/*": [
-        "dist/ngx-avatar/*",
         "dist/ngx-avatar/*"
+      ],
+      "ngx-roles": [
+        "dist/ngx-roles"
+      ],
+      "ngx-roles/*": [
+        "dist/ngx-roles/*"
       ]
     }
   }
