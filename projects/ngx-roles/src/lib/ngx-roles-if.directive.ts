@@ -8,46 +8,44 @@ import {
   ɵstringify as stringify
 } from '@angular/core';
 import {NgxRolesService} from './ngx-roles.service';
-import {Role} from './protos/appointy.go.roles.service';
-
 
 @Directive({
   selector: '[ngxRolesIf]'
 })
 export class NgxRolesIfDirective implements OnInit {
 
-  _test: keyof Role | Array<keyof Role>;
+  _test: string | string[];
   private _thenTemplateRef: TemplateRef<any> | null = null;
   private _elseTemplateRef: TemplateRef<any> | null = null;
   private _thenViewRef: EmbeddedViewRef<any> | null = null;
   private _elseViewRef: EmbeddedViewRef<any> | null = null;
 
-  constructor(private _viewContainer: ViewContainerRef, templateRef: TemplateRef<any>, private _rightsService: NgxRolesService) {
+  constructor(private _viewContainer: ViewContainerRef, templateRef: TemplateRef<any>, private _rolesService: NgxRolesService) {
     this._thenTemplateRef = templateRef;
   }
 
   @Input()
-  set ngxRightsIf(_test: keyof Role | Array<keyof Role>) {
+  set ngxRolesIf(_test: string | string[]) {
     this._test = _test;
     this._updateView();
   }
 
   @Input()
-  set ngxRightsIfElse(templateRef: TemplateRef<any> | null) {
-    assertTemplate('ngxRightsIfElse', templateRef);
+  set ngxRolesIfElse(templateRef: TemplateRef<any> | null) {
+    assertTemplate('ngxRolesIfElse', templateRef);
     this._elseTemplateRef = templateRef;
     this._elseViewRef = null;
     this._updateView();
   }
 
   ngOnInit() {
-    this._rightsService.role$.subscribe(() => {
+    this._rolesService.role$.subscribe(() => {
       this._updateView();
     });
   }
 
   private _updateView() {
-    if (this._rightsService.check(this._test)) {
+    if (this._rolesService.check(this._test)) {
       if (!this._thenViewRef) {
         this._viewContainer.clear();
         this._elseViewRef = null;

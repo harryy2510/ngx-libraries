@@ -17,22 +17,26 @@ export class NgxRolesService {
     this.role$.next(this._role);
   }
 
-  public check(_test: keyof Role | Array<keyof Role>) {
+  public check(_test: string | string[]) {
     let can = false;
     if (this.role) {
       if (_test instanceof Array) {
         _test.forEach(r => {
-          if (this.role[r]) {
+          if (this._test(r)) {
             can = true;
           }
         })
       } else if (typeof _test === 'string') {
-        if (this.role[_test]) {
+        if (this._test(_test)) {
           can = true;
         }
       }
     }
     return can;
+  }
+
+  private _test(k: string) {
+    return k.startsWith('!') ? !this.role[k.substring(1)] : !!this.role[k];
   }
 }
 

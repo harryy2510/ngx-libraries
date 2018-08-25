@@ -3,6 +3,8 @@ import {NgxRightsService} from 'ngx-rights';
 import * as faker from 'faker';
 import {AvatarConfig} from '../../projects/ngx-avatar/src/lib/ngx-avatar.service';
 import * as moment from 'moment';
+import {NgxRolesService} from '../../projects/ngx-roles/src/lib/ngx-roles.service';
+import {Role, RoleType} from '../../projects/ngx-roles/src/lib/protos/appointy.go.roles.service';
 
 @Component({
   selector: 'lib-root',
@@ -21,10 +23,19 @@ export class AppComponent implements OnInit {
     '/programs/{class.base.program_id}/locations/{class.base.location_id}/divisions/{class.base.division_id}/users/{user_id}/classes/{class.id}'
   ];
 
+  role: Role = {
+    serviceProvider: {
+      type: RoleType.SERVICE_PROVIDER,
+      programId: '',
+      serviceProviderId: ''
+    }
+  };
+
   avatars = [];
 
-  constructor(private _rightsService: NgxRightsService) {
+  constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService) {
     this._rightsService.setRights(this.rights);
+    this._rolesService.role = this.role;
   }
 
   ngOnInit() {
