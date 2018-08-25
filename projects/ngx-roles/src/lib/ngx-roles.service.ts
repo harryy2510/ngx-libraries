@@ -19,6 +19,9 @@ export class NgxRolesService {
 
   public check(_test: string | string[]) {
     let can = false;
+    if (!_test || (_test instanceof Array && !_test.length)) {
+      return true;
+    }
     if (this.role) {
       if (_test instanceof Array) {
         _test.forEach(r => {
