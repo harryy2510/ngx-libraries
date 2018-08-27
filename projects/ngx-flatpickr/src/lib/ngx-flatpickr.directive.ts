@@ -430,7 +430,12 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
       });
     }
     if (this.markedDates && this.markedDates.length) {
-      this.markedDates = (this.markedDates as any).filter(d => moment(d).isValid()).map(d => moment(d).startOf('d').valueOf());
+      this.markedDates = (this.markedDates as any).map(d => {
+        if (!isNaN(d)) {
+          d = +d;
+        }
+        return moment(d).startOf('d').valueOf();
+      });
 
       if (this.instance) {
         this.instance.redraw();

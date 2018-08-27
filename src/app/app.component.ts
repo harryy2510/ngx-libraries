@@ -23,6 +23,8 @@ export class AppComponent implements OnInit {
     '/programs/{class.base.program_id}/locations/{class.base.location_id}/divisions/{class.base.division_id}/users/{user_id}/classes/{class.id}'
   ];
 
+  markedDates = [moment(), moment().add(1, 'd'), moment().add(2, 'd')];
+
   role: Role = {
     serviceProvider: {
       type: RoleType.SERVICE_PROVIDER,
