@@ -97,10 +97,12 @@ export class FlatpickrConfig {
    * Enables seconds in the time picker.
    */
   enableSeconds?: boolean;
+
   /**
    * Allows using a custom date formatting function instead of the built-in handling for date formats using dateFormat, altFormat, etc.
    */
   formatDate?: (value: any) => string;
+
   /**
    * Adjusts the step for the hour input (incl. scrolling).
    */
@@ -110,6 +112,11 @@ export class FlatpickrConfig {
    * Displays the calendar inline.
    */
   inline?: boolean;
+
+  /**
+   * Dates that will be marked (contains class name flatpickr-marked).
+   */
+  markedDates?: string[] | Date[] | Moment[];
 
   /**
    * The maximum date that a user can pick to (inclusive).

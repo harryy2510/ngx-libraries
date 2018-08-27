@@ -451,7 +451,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     if (this.instance.svg) {
       this.instance.svg.off('mouseover');
       this.instance.svg.off('mouseout');
-      this.instance.svg.style('cursor', 'default');
+      this.instance.svg.style('cursor', null);
     }
 
     if (this.instance.uploadShape) {

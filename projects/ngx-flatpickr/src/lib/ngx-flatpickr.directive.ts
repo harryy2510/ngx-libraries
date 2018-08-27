@@ -125,6 +125,10 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
    */
   @Input() inline: boolean;
   /**
+   * Dates that will be marked (contains class name flatpickr-marked).
+   */
+  @Input() markedDates: string[] | Date[] | Moment[];
+  /**
    * The maximum date that a user can pick to (inclusive).
    */
   @Input() maxDate: string | Date;
@@ -405,6 +409,11 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
         this.flatpickrValueUpdate.emit({selectedDates, dateString, instance});
       },
       onDayCreate: (_dates: Date[], dateString: string, instance: any, dayElement: HTMLElement) => {
+        if (this.markedDates && this.markedDates.length) {
+          if ((this.markedDates as any).indexOf(moment((dayElement as any).dateObj).startOf('d').valueOf()) > -1) {
+            dayElement.innerHTML += `<span class="flatpickr-marked"></span>`;
+          }
+        }
         const selectedDates = <Moment[]>NgxFlatpickrDirective.parseDates(_dates);
         this.flatpickrDayCreate.emit({selectedDates, dateString, instance, dayElement});
       }
@@ -419,6 +428,13 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
         const value = NgxFlatpickrDirective.convertFormat(key, this[key]);
         this.instance.set(key, value);
       });
+    }
+    if (this.markedDates && this.markedDates.length) {
+      this.markedDates = (this.markedDates as any).filter(d => moment(d).isValid()).map(d => moment(d).startOf('d').valueOf());
+
+      if (this.instance) {
+        this.instance.redraw();
+      }
     }
   }
 
