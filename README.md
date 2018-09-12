@@ -22,6 +22,7 @@ import { NgxFlatpickrModule } from 'ngx-flatpickr';
 import { NgxTimepickerModule } from 'ngx-timepicker';
 import { NgxRightsModule } from 'ngx-rights';
 import { NgxAvatarModule } from 'ngx-avatar';
+import { NgxTrumbowygModule } from 'ngx-trumbowyg';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { NgxAvatarModule } from 'ngx-avatar';
     NgxFlatpickrModule.forRoot(),
     NgxTimepickerModule.forRoot(),
     NgxRightsModule.forRoot(),
-    NgxAvatarModule.forRoot()
+    NgxAvatarModule.forRoot(),
+    NgxTrumbowygModule.forRoot()
   ]
 })
 export class MyModule {}

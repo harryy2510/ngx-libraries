@@ -15,6 +15,7 @@ import {
 import {FlatpickrConfig, FlatpickrDisableEnableDate, momentToFpDateFormat} from './ngx-flatpickr.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import flatpickr from 'flatpickr';
+import weekSelectPlugin from 'flatpickr/dist/plugins/weekSelect/weekSelect';
 import * as moment_ from 'moment';
 import {Moment} from 'moment';
 
@@ -258,8 +259,14 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
     if (value instanceof moment) {
       return new Date(value.valueOf());
     }
+    if (key === 'enable' || key === 'disable') {
+      return value.map(v => new Date(moment(v).valueOf()));
+    }
     if (key.includes('Format')) {
       return momentToFpDateFormat(value);
+    }
+    if (key === 'plugins') {
+      return NgxFlatpickrDirective.parsePlugins(value);
     }
     return value;
   }
@@ -273,6 +280,23 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
     if (d instanceof Date || typeof(d) === 'string') {
       return format ? moment(d, format) : moment(d);
     }
+  }
+
+  static parsePlugins(plugins: string[]) {
+    let _plugins = [];
+    if (plugins) {
+      plugins.forEach(p => {
+        switch (p) {
+          case 'weekSelect':
+            _plugins = [
+              ..._plugins,
+              weekSelectPlugin()
+            ];
+            break;
+        }
+      });
+    }
+    return _plugins;
   }
 
   @HostListener('blur')
@@ -365,8 +389,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
       time_24hr: this.time_24hr,
       weekNumbers: this.weekNumbers,
       getWeek: this.getWeek,
-      wrap: this.wrap,
-      plugins: this.plugins
+      wrap: this.wrap
     };
     if (this.locale) {
       options.locale = this.locale;
@@ -380,6 +403,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
     });
     options = {
       ...options,
+      plugins: NgxFlatpickrDirective.parsePlugins(this.plugins),
       onChange: (_dates: Date[], dateString: string, instance: any) => {
         const selectedDates = <Moment[]>NgxFlatpickrDirective.parseDates(_dates);
         this.flatpickrChange.emit({selectedDates, dateString, instance});

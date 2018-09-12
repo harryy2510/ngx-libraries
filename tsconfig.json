@@ -46,6 +46,12 @@
       ],
       "ngx-roles/*": [
         "dist/ngx-roles/*"
+      ],
+      "ngx-trumbowyg": [
+        "dist/ngx-trumbowyg"
+      ],
+      "ngx-trumbowyg/*": [
+        "dist/ngx-trumbowyg/*"
       ]
     }
   }

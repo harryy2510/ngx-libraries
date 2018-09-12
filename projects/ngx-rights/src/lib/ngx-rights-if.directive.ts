@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Directive,
   EmbeddedViewRef,
   Input,
@@ -21,7 +22,7 @@ export class NgxRightsIf implements OnInit {
   private _thenViewRef: EmbeddedViewRef<any> | null = null;
   private _elseViewRef: EmbeddedViewRef<any> | null = null;
 
-  constructor(private _viewContainer: ViewContainerRef, templateRef: TemplateRef<any>, private _rightsService: NgxRightsService) {
+  constructor(private _viewContainer: ViewContainerRef, templateRef: TemplateRef<any>, private _rightsService: NgxRightsService, private _ref: ChangeDetectorRef) {
     this._thenTemplateRef = templateRef;
   }
 
@@ -65,6 +66,7 @@ export class NgxRightsIf implements OnInit {
         }
       }
     }
+    this._ref.markForCheck();
   }
 }
 

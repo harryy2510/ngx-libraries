@@ -82,7 +82,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     if (!this._options.name) {
       return '';
     }
-    const _name: string = this._options.name.replace(/^(?:(Miss|M[rs]{1,2})\.?\s+)?/i, '');
+    const _name: string = this._options.name.replace(/^(?:(Miss|M[rs]{1,2})\.?\s+)?/i, '').replace(/[^\w\s]/gi, '');
     const _parts: string[] = _name.split(' ');
     if (_parts.length >= this._options.characters) {
       return _parts.map(s => s.charAt(0)).join('').substring(0, this._options.characters).toUpperCase();
