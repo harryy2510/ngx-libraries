@@ -27,6 +27,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/trumbowyg/dist/ui/trumbowyg.min.css",
               "node_modules/timepicker/jquery.timepicker.min.css",
               "node_modules/flatpickr/dist/flatpickr.min.css",
               "src/styles.scss"

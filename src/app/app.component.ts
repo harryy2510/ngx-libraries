@@ -55,6 +55,12 @@ export class AppComponent implements OnInit {
         _avatar
       ];
     }
+
+    setTimeout(() => {
+      this.markedDates = [
+        ...this.markedDates
+      ]
+    })
   }
 
   change($event) {

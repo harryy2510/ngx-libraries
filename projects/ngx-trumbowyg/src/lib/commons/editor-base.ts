@@ -6,7 +6,10 @@ declare let jQuery: any;
 
 export abstract class EditorBase
   implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
-  options: TrumbowygOptions | null;
+  options: TrumbowygOptions | null = {
+    svgPath: '/assets/trumbowyg/icons.svg',
+    autogrow: true
+  };
 
   placeholder: string | null;
 
@@ -35,14 +38,14 @@ export abstract class EditorBase
 
   ngAfterViewInit(): void {
     jQuery(this._editor.nativeElement)
-      .trumbowyg({...this._config, ...this.options})
+      .trumbowyg({ ...this.options, ...this._config})
       .on('tbwinit', () => {
         jQuery(this._editor.nativeElement).trumbowyg(
           this._disabled ? 'disable' : 'enable'
         );
         this.setContent(this._initValue);
       })
-      .on('tbwchange', () => {
+      .on('tbwchange tbwpaste', () => {
         this._onChange(this.getContent());
       })
       .on('tbwfocus', () => {
