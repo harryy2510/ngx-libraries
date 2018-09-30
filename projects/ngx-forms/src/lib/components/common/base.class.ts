@@ -109,6 +109,12 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() name = '';
   @Input() hint = '';
 
+  @Input() containerClass = '';
+  @Input() inputClass = '';
+  @Input() labelClass = '';
+  @Input() errorClass = '';
+  @Input() hintClass = '';
+
   @Input() bindLabel = 'title';
   @Input() bindValue: string = undefined;
   @Input() searchFn: any;
