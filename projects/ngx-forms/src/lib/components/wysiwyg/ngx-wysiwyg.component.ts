@@ -18,6 +18,7 @@ import {FormInputBase} from '../common/base.class';
 
 export class NgxWysiwygComponent extends FormInputBase {
   @ViewChild('editor') public editor: any;
+
   constructor(public injector: Injector) {
     super(injector);
   }
