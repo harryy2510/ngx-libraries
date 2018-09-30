@@ -44,8 +44,6 @@ import {
     MessagePipe
   ],
   exports: [
-    FormsModule,
-    CustomFormsModule,
     NgxCheckboxComponent,
     NgxDateComponent,
     NgxInputComponent,
