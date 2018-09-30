@@ -39,7 +39,7 @@ export abstract class EditorBase
 
   ngAfterViewInit(): void {
     jQuery(this._editor.nativeElement)
-      .trumbowyg({ ...this.options, ...this._config})
+      .trumbowyg({...this.options, ...this._config})
       .on('tbwinit', () => {
         jQuery(this._editor.nativeElement).trumbowyg(
           this._disabled ? 'disable' : 'enable'
@@ -52,6 +52,16 @@ export abstract class EditorBase
       .on('tbwfocus', () => {
         this._onTouch();
       });
+  }
+
+  public insertText(text: string) {
+    jQuery(this._editor.nativeElement)
+      .trumbowyg('execCmd', {
+        cmd: 'insertText',
+        param: text,
+        forceCss: false,
+      });
+    this._onChange(this.getContent());
   }
 
   registerOnChange(fn: () => void): void {

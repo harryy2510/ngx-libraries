@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgxRightsService} from 'ngx-rights';
 import * as faker from 'faker';
 import {AvatarConfig} from '../../projects/ngx-avatar/src/lib/ngx-avatar.service';
@@ -36,6 +36,8 @@ export class AppComponent implements OnInit {
     }
   };
 
+  @ViewChild('dfsfsf') dfsfsf: any;
+
   avatars = [];
 
   constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService) {
@@ -63,11 +65,7 @@ export class AppComponent implements OnInit {
       this.markedDates = [
         ...this.markedDates
       ]
-    })
-    //
-    // setTimeout(() => {
-    //   this.min = moment().add(20, 'd');
-    // }, 5000)
+    });
   }
 
   change($event) {

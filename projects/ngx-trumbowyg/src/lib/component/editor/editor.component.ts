@@ -16,7 +16,8 @@ import { TrumbowygOptions } from '../../configs/trumbowyg-options';
   // tslint:disable-next-line:component-selector
   selector: 'ngx-trumbowyg-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.css']
+  styleUrls: ['./editor.component.css'],
+  exportAs: 'editor'
 })
 export class EditorComponent extends EditorBase {
   @Input() options: TrumbowygOptions | null;

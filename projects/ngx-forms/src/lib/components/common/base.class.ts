@@ -32,6 +32,8 @@ export const VALIDATION_TEXT = {
   notEqualTo: ':field must not be equal to :value',
   required: ':field is required',
   pattern: ':field format is invalid',
+  maxLength: ':field must not be greater than :value characters',
+  minLength: ':field must not be less than :value characters'
 };
 
 export function newId() {
@@ -103,10 +105,10 @@ export function parseValidators(validator: any) {
 export abstract class FormInputBase implements ControlValueAccessor, OnChanges, DoCheck {
   @Input() label = '';
   @Input() placeholder = '';
-  @Input() type = 'text';
   @Input() dropdownPosition = 'bottom';
   @Input() inputId = newId();
   @Input() name = '';
+  @Input() type = 'text';
   @Input() hint = '';
 
   @Input() containerClass = '';
@@ -122,7 +124,7 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() minDate: any;
   @Input() maxDate: any;
   @Input() multiple: boolean;
-  @Input() options: any[] = [];
+  @Input() options: any;
 
   @Input() form: NgForm;
 

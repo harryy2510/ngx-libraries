@@ -479,7 +479,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
       });
 
       if (this.instance) {
-        (this.instance as any).buildDays();
+        this.instance.redraw();
       }
     }
   }

@@ -14,7 +14,8 @@
         <ngx-checkbox [(ngModel)]="formValues.premium" [form]="f2" name="Premium"></ngx-checkbox>
         <ngx-textarea [(ngModel)]="formValues.textarea" [form]="f2" validators="required" name="Textarea"></ngx-textarea>
         <ngx-time [(ngModel)]="formValues.time" [form]="f2" validators="required" name="Time"></ngx-time>
-        <ngx-wysiwyg [(ngModel)]="formValues.wysiwyg" [form]="f2" validators="required" name="HTML"></ngx-wysiwyg>
+        <ngx-wysiwyg [(ngModel)]="formValues.wysiwyg" [form]="f2"  [validators]="{ type: 'maxLength', value: 50 }" name="HTML"></ngx-wysiwyg>
+        {{formValues.wysiwyg}}
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -28,7 +29,7 @@
     </div>
     <div class="col-12">
       <form #f="ngForm">
-        <ngx-trumbowyg-editor name="editor" [(ngModel)]="model"></ngx-trumbowyg-editor>
+        <ngx-trumbowyg-editor #dfsfsf="editor" name="editor" [(ngModel)]="model"></ngx-trumbowyg-editor>
         {{ model }}
       </form>
     </div>

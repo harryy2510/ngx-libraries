@@ -21,6 +21,8 @@
     [(ngModel)]="value"
     (input)="emitChange()"
     [required]="!!_validators?.required"
+    [minLength]="_validators?.minLength?.value"
+    [maxLength]="_validators?.maxLength?.value"
     [min]="_validators?.min?.value"
     [gt]="_validators?.gt?.value"
     [gte]="_validators?.gte?.value"

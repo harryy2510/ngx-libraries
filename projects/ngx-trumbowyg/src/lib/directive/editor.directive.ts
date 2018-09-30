@@ -5,7 +5,8 @@ import { TrumbowygOptions } from '../configs/trumbowyg-options';
 import { TRUMBOWYG_OPTIONS } from '../configs/injection-token';
 
 @Directive({
-  selector: '[ngxTrumbowygEditor]'
+  selector: '[ngxTrumbowygEditor]',
+  exportAs: 'editor'
 })
 export class EditorDirective extends EditorBase {
   @Input() options: TrumbowygOptions | null;

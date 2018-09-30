@@ -10,7 +10,9 @@
 
   <textarea
     #inputField="ngModel"
+    #editor="editor"
     ngxTrumbowygEditor
+    [options]="options"
     class="form-control"
     [ngClass]="inputClass"
     [readonly]="readonly"
@@ -19,8 +21,10 @@
     [name]="name"
     [placeholder]="placeholder + (!!_validators?.required && placeholder ? ' *' : '')"
     [(ngModel)]="value"
-    (input)="emitChange()"
+    (ngModelChange)="emitChange()"
     [required]="!!_validators?.required"
+    [minLength]="_validators?.minLength?.value"
+    [maxLength]="_validators?.maxLength?.value"
     [min]="_validators?.min?.value"
     [gt]="_validators?.gt?.value"
     [gte]="_validators?.gte?.value"
