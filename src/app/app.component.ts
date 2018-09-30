@@ -13,7 +13,8 @@ import {Role, RoleType} from '../../projects/ngx-roles/src/lib/protos/appointy.g
 })
 export class AppComponent implements OnInit {
   date = moment();
-  min = moment().add(2, 'd');
+  min = moment().startOf('d').add(2, 'd');
+  date2 = moment().add(10, 'd');
   time = moment();
   rights = ['**/service-providers/{service_provider_id.id}/**/*', '!**/service-providers/{service_provider_id.id}/certificates/*'];
   tests = [
@@ -22,6 +23,8 @@ export class AppComponent implements OnInit {
     '/programs/{base.program_id}/channels/{id}',
     '/programs/{class.base.program_id}/locations/{class.base.location_id}/divisions/{class.base.division_id}/users/{user_id}/classes/{class.id}'
   ];
+
+  formValues: any = {};
 
   markedDates = [moment(), moment().add(1, 'd'), moment().add(2, 'd')];
 
@@ -61,10 +64,18 @@ export class AppComponent implements OnInit {
         ...this.markedDates
       ]
     })
+    //
+    // setTimeout(() => {
+    //   this.min = moment().add(20, 'd');
+    // }, 5000)
   }
 
   change($event) {
     console.log($event);
+  }
+
+  onSubmit(f) {
+    console.log(f);
   }
 
 }

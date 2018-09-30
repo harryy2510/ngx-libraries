@@ -21,3 +21,6 @@ $border-color: $material-color-grey-200;
 @import "../node_modules/daemonite-material/assets/scss/material";
 
 
+.invalid-feedback {
+  display: block;
+}

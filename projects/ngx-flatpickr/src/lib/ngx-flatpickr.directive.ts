@@ -305,34 +305,51 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   }
 
   writeValue(value: any): void {
-    let parsedValue: any = value;
-    if (value) {
-      switch (this.mode) {
-        case 'range':
-          parsedValue = [];
-          if (value) {
-            if (value.start) {
-              parsedValue[0] = new Date(moment(value.start).valueOf());
-            }
-            if (value.end) {
-              parsedValue[1] = new Date(moment(value.end).valueOf());
-            }
-          }
-          break;
-        case 'multiple':
-          parsedValue = value.map(d => new Date(moment(d).valueOf()));
-          break;
-        case 'single':
-        default:
-          parsedValue = new Date(moment(value).valueOf());
-      }
-    }
-
+    const parsedValue: any = this.getValidDates(value);
     if (this.instance) {
       this.instance.setDate(parsedValue);
     } else {
       this.initialValue = parsedValue;
     }
+    if (value && !parsedValue) {
+      this.onChangeFn(parsedValue);
+      this.onChange.emit(parsedValue);
+    }
+  }
+
+  getValidDates(value: any) {
+    let parsedValue: any = null;
+    if (value) {
+      switch (this.mode) {
+        case 'range':
+          parsedValue = [];
+          if (value && value.start && moment(value.start).isValid() && value.end && moment(value.end).isValid()) {
+            if (!this.minDate || (this.minDate && moment(this.minDate).isSameOrBefore(moment(value.start)))) {
+              parsedValue[0] = new Date(moment(value.start).valueOf());
+            }
+            if (!this.maxDate || (this.maxDate && moment(this.maxDate).isSameOrAfter(moment(value.end)))) {
+              parsedValue[1] = new Date(moment(value.end).valueOf());
+            }
+          }
+          if (!parsedValue[0] || !parsedValue[1]) {
+            parsedValue = null;
+          }
+          break;
+        case 'multiple':
+          parsedValue = value
+            .filter(d => (moment(d).isValid() && (!this.minDate || (this.minDate && moment(this.minDate).isSameOrBefore(moment(d)))) &&
+              (!this.maxDate || (this.maxDate && moment(this.maxDate).isSameOrAfter(moment(d))))))
+            .map(d => new Date(moment(d).valueOf()));
+          break;
+        case 'single':
+        default:
+          if (moment(value).isValid() && ((!this.minDate || (this.minDate && moment(this.minDate).isSameOrBefore(moment(value)))) &&
+            (!this.maxDate || (this.maxDate && moment(this.maxDate).isSameOrAfter(moment(value)))))) {
+            parsedValue = new Date(moment(value).valueOf());
+          }
+      }
+    }
+    return parsedValue;
   }
 
   registerOnChange(fn: any): void {
@@ -489,9 +506,9 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
         case 'range':
           const [start, end] = <Moment[]>NgxFlatpickrDirective.parseDates(value.split(this.instance.l10n.rangeSeparator), this.dateFormat);
           parsedValues = {start: null, end: null};
-          if (start && start.isValid()) {
+          if (start && start.isValid() && end && end.isValid()) {
             parsedValues.start = start;
-            parsedValues.end = (end && end.isValid()) ? end : start;
+            parsedValues.end = end;
           }
           break;
         case 'single':

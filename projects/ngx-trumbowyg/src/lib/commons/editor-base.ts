@@ -7,8 +7,9 @@ declare let jQuery: any;
 export abstract class EditorBase
   implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
   options: TrumbowygOptions | null = {
-    svgPath: '/assets/trumbowyg/icons.svg',
-    autogrow: true
+    svgPath: 'assets/trumbowyg/icons.svg',
+    autogrow: false,
+    removeformatPasted: true
   };
 
   placeholder: string | null;

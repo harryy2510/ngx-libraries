@@ -1,13 +1,33 @@
 <div class="container-fluid p-5">
   <div class="row">
     <div class="col-12">
+      <form #f2="ngForm" (submit)="onSubmit(f2)">
+        <ngx-checkbox [(ngModel)]="formValues.premium" [form]="f2" name="Premium"></ngx-checkbox>
+        <ngx-date [(ngModel)]="formValues.date" [form]="f2" validators="required" name="Date"></ngx-date>
+        <ngx-input [(ngModel)]="formValues.serviceName" [form]="f2" validators="required" name="Service Name"></ngx-input>
+        <ngx-password [(ngModel)]="formValues.password" [form]="f2" validators="required" name="Password"></ngx-password>
+        <ngx-radio [(ngModel)]="formValues.radio" [form]="f2" name="Radio"></ngx-radio>
+        <ngx-select [(ngModel)]="formValues.select" [form]="f2" validators="required" name="Select" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>
+        <ngx-select [(ngModel)]="formValues.selectMultiple" [form]="f2" validators="required" name="Select Multiple" [multiple]="true" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>
+        <ngx-checkbox [(ngModel)]="formValues.premium" [form]="f2" name="Premium"></ngx-checkbox>
+        <ngx-textarea [(ngModel)]="formValues.textarea" [form]="f2" validators="required" name="Textarea"></ngx-textarea>
+        <ngx-time [(ngModel)]="formValues.time" [form]="f2" validators="required" name="Time"></ngx-time>
+        <ngx-wysiwyg [(ngModel)]="formValues.wysiwyg" [form]="f2" validators="required" name="HTML"></ngx-wysiwyg>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid p-5">
+  <div class="row">
+    <div class="col-12">
       <h3>WYSIWYG</h3>
     </div>
     <div class="col-12">
       <form #f="ngForm">
         <ngx-trumbowyg-editor name="editor" [(ngModel)]="model"></ngx-trumbowyg-editor>
-{{ model }}
-
+        {{ model }}
       </form>
     </div>
   </div>
@@ -46,13 +66,17 @@
     </ng-template>
   </div>
 </div>
+
 <div class="container-fluid p-5">
   <div class="row">
     <div class="col-12">
       <h3>Datepicker</h3>
     </div>
     <div class="form-group">
-      <input [(ngModel)]="date" (onChange)="change($event)" [minDate]="min" class="form-control" ngxFlatpickr [plugins]="['weekSelect']">
+      <input [(ngModel)]="date" (onChange)="change($event)" [minDate]="min" class="form-control" ngxFlatpickr>
+    </div>
+    <div class="form-group">
+      <input [(ngModel)]="date2" [minDate]="date" class="form-control" ngxFlatpickr>
     </div>
     <div class="col-12">
       Value: {{date}}

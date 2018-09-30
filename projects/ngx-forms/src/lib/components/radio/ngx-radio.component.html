@@ -1,0 +1,33 @@
+<div class="form-group">
+
+  <div class="custom-control custom-radio">
+    <input
+      #inputField="ngModel"
+      class="custom-control-input"
+      [readonly]="readonly"
+      [disabled]="disabled"
+      type="radio"
+      [id]="inputId"
+      [name]="name"
+      [(ngModel)]="value"
+      (change)="emitChange()"
+      [required]="!!_validators?.required">
+
+    <ng-template [ngIf]="label">
+      <label class="custom-control-label" [for]="inputId">
+        {{ label }}
+        <ng-template [ngIf]="!!_validators?.required"><sup class="text-danger">*</sup></ng-template>
+      </label>
+    </ng-template>
+  </div>
+
+
+  <ng-template ngFor [ngForOf]="_validators | keyvalue" let-item>
+    <ng-template [ngIf]="(inputField?.touched || form?.submitted) && (inputField?.errors && inputField?.errors[item?.key])">
+      <div class="invalid-feedback">
+        {{_validators[item?.key] | message: name}}
+      </div>
+    </ng-template>
+  </ng-template>
+</div>
+

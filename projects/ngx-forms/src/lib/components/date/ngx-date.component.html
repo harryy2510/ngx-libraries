@@ -1,0 +1,36 @@
+<div class="form-group">
+
+  <ng-template [ngIf]="label">
+    <label [for]="inputId">
+      {{ label }}
+      <ng-template [ngIf]="!!_validators?.required"><sup class="text-danger">*</sup></ng-template>
+    </label>
+  </ng-template>
+
+
+  <input
+    #inputField="ngModel"
+    ngxFlatpickr
+    class="form-control"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    type="text"
+    [id]="inputId"
+    [name]="name"
+    [placeholder]="placeholder + (!!_validators?.required && placeholder ? ' *' : '')"
+    [(ngModel)]="value"
+    (onChange)="emitChange()"
+    [required]="!!_validators?.required"
+    [minDate]="minDate"
+    [maxDate]="maxDate">
+
+
+  <ng-template ngFor [ngForOf]="_validators | keyvalue" let-item>
+    <ng-template [ngIf]="(inputField?.touched || form?.submitted) && (inputField?.errors && inputField?.errors[item?.key])">
+      <div class="invalid-feedback">
+        {{_validators[item?.key] | message: name}}
+      </div>
+    </ng-template>
+  </ng-template>
+</div>
+

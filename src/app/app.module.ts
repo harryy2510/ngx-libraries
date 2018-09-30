@@ -9,6 +9,7 @@ import {NgxRightsModule} from 'ngx-rights';
 import {NgxAvatarModule} from '../../projects/ngx-avatar/src/lib/ngx-avatar.module';
 import {NgxRolesModule} from '../../projects/ngx-roles/src/lib/ngx-roles.module';
 import {NgxTrumbowygModule} from '../../projects/ngx-trumbowyg/src/lib/ngx-trumbowyg.module';
+import {NgxFormsModule} from '../../projects/ngx-forms/src/lib/ngx-forms.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {NgxTrumbowygModule} from '../../projects/ngx-trumbowyg/src/lib/ngx-trumb
     NgxRightsModule.forRoot(),
     NgxAvatarModule.forRoot(),
     NgxRolesModule.forRoot(),
-    NgxTrumbowygModule
+    NgxTrumbowygModule,
+    NgxFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

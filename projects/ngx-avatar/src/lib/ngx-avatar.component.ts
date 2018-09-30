@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {
   AvatarConfig,
   CSSProperty,
@@ -36,6 +45,8 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
   @Input() labelColor: string;
   @Input() disabled: boolean;
   @Input() upload: boolean;
+  @Input() ariaLabelText: string = '';
+  @Output() click: EventEmitter<KeyboardEvent | MouseEvent> = new EventEmitter<KeyboardEvent | MouseEvent>();
   private instance: Instance = new Instance();
   private options: AvatarConfig = new AvatarConfig();
 
@@ -211,6 +222,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     this.renderImage();
     this.renderUpload();
     this.renderLabel();
+    this.setAriaLabel();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -259,6 +271,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
         this.instance.shape = this.renderColor(this.instance.shape, this._bgColor, 0.5);
         break;
       case 'name':
+        this.setAriaLabel();
         if (!this._initials) {
           this.destroyInitials();
           return;
@@ -271,6 +284,17 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  private setAriaLabel(): void {
+    if (!this.instance.svg) {
+      return;
+    }
+    if (this._options.name) {
+      this.instance.svg.node.setAttribute('aria-label', this.ariaLabelText ? this.ariaLabelText : `Upload image for ${this._options.name}`);
+    } else {
+      this.instance.svg.node.removeAttribute('aria-label');
+    }
+  }
+
   private renderSvg(): void {
     const {top, right, bottom, left} = this._margin;
     const svgElement = <Doc>SVG(this.elm.nativeElement);
@@ -278,6 +302,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
       .style('display', 'flex')
       .size(this._size + left + right, this._size + top + bottom);
     this.instance.svg = svgElement;
+    this.setAriaLabel();
   }
 
   private destroySvg(): void {
@@ -403,6 +428,9 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
       return null;
     }
 
+    this.instance.svg.node.setAttribute('role', 'button');
+    this.instance.svg.node.setAttribute('tabindex', '0');
+
     let uploadShape: Circle | Rect;
     const {top, left} = this._margin;
     if (this._options.rounded) {
@@ -429,7 +457,31 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     });
     this.instance.uploadIcon = uploadIcon;
 
+    this.instance.svg.on('click', (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.click.emit(e);
+      return false;
+    });
+    this.instance.svg.on('keypress', (e: KeyboardEvent) => {
+      switch (e.code) {
+        case 'Space':
+        case 'Enter':
+          e.preventDefault();
+          e.stopPropagation();
+          this.click.emit(e);
+          return false;
+      }
+    });
+
     this.instance.svg.on('mouseover', () => {
+      this.instance.uploadShape
+        .opacity(1);
+      this.instance.uploadIcon
+        .opacity(1);
+    });
+
+    this.instance.svg.on('focus', () => {
       this.instance.uploadShape
         .opacity(1);
       this.instance.uploadIcon
@@ -443,14 +495,27 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
         .opacity(0);
     });
 
+    this.instance.svg.on('blur', () => {
+      this.instance.uploadShape
+        .opacity(0);
+      this.instance.uploadIcon
+        .opacity(0);
+    });
+
     this.instance.svg.style('cursor', 'pointer');
   }
 
   private destroyUpload(): void {
 
     if (this.instance.svg) {
+      this.instance.svg.node.removeAttribute('role');
+      this.instance.svg.node.removeAttribute('tabindex');
       this.instance.svg.off('mouseover');
       this.instance.svg.off('mouseout');
+      this.instance.svg.off('focus');
+      this.instance.svg.off('blur');
+      this.instance.svg.off('click');
+      this.instance.svg.off('keypress');
       this.instance.svg.style('cursor', null);
     }
 

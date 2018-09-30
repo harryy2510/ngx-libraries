@@ -1,0 +1,42 @@
+<div class="form-group">
+
+  <ng-template [ngIf]="label">
+    <label [for]="inputId">
+      {{ label }}
+      <ng-template [ngIf]="!!_validators?.required"><sup class="text-danger">*</sup></ng-template>
+    </label>
+  </ng-template>
+
+
+  <input
+    #inputField="ngModel"
+    class="form-control"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    [type]="type"
+    [id]="inputId"
+    [name]="name"
+    [placeholder]="placeholder + (!!_validators?.required && placeholder ? ' *' : '')"
+    [(ngModel)]="value"
+    (input)="emitChange()"
+    [required]="!!_validators?.required"
+    [min]="_validators?.min?.value"
+    [gt]="_validators?.gt?.value"
+    [gte]="_validators?.gte?.value"
+    [max]="_validators?.max?.value"
+    [lt]="_validators?.lt?.value"
+    [lte]="_validators?.lte?.value"
+    [range]="_validators?.range?.value"
+    [equal]="_validators?.equal?.value"
+    [notEqual]="_validators?.notEqual?.value">
+
+
+  <ng-template ngFor [ngForOf]="_validators | keyvalue" let-item>
+    <ng-template [ngIf]="(inputField?.touched || form?.submitted) && (inputField?.errors && inputField?.errors[item?.key])">
+      <div class="invalid-feedback">
+        {{_validators[item?.key] | message: name}}
+      </div>
+    </ng-template>
+  </ng-template>
+</div>
+

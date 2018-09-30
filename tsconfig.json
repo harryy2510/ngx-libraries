@@ -52,6 +52,12 @@
       ],
       "ngx-trumbowyg/*": [
         "dist/ngx-trumbowyg/*"
+      ],
+      "ngx-forms": [
+        "dist/ngx-forms"
+      ],
+      "ngx-forms/*": [
+        "dist/ngx-forms/*"
       ]
     }
   }
