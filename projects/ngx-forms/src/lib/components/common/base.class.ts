@@ -107,6 +107,7 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() dropdownPosition = 'bottom';
   @Input() inputId = newId();
   @Input() name = '';
+  @Input() hint = '';
 
   @Input() bindLabel = 'title';
   @Input() bindValue: string = undefined;

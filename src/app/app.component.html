@@ -2,6 +2,8 @@
   <div class="row">
     <div class="col-12">
       <form #f2="ngForm" (submit)="onSubmit(f2)">
+        <ngx-input hint="sdhsfhskdfk" type="number" #xx="ngModel" [(ngModel)]="formValues.x" [form]="f2" validators="required" name="X"></ngx-input>
+        <ngx-input type="number" #yy="ngModel" [(ngModel)]="formValues.y" [form]="f2" [validators]="[ 'required', { type: 'lte', value: formValues.x } ]" name="Y"></ngx-input>
         <ngx-checkbox [(ngModel)]="formValues.premium" [form]="f2" name="Premium"></ngx-checkbox>
         <ngx-date [(ngModel)]="formValues.date" [form]="f2" validators="required" name="Date"></ngx-date>
         <ngx-input [(ngModel)]="formValues.serviceName" [form]="f2" validators="required" name="Service Name"></ngx-input>

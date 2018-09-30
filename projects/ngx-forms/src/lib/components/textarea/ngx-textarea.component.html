@@ -27,15 +27,31 @@
     [lte]="_validators?.lte?.value"
     [range]="_validators?.range?.value"
     [equal]="_validators?.equal?.value"
-    [notEqual]="_validators?.notEqual?.value"></textarea>
+    [notEqual]="_validators?.notEqual?.value"
+    [attr.aria-labelledby]="!label && placeholder ? 'ngx-aria-label-' + inputId : null"
+    [attr.aria-invalid]="!!((inputField?.touched || form?.submitted) && inputField?.errors)"
+    [attr.aria-describedby]="!!((inputField?.touched || form?.submitted) && inputField?.errors) ? 'ngx-error-' + inputId : ( hint ? 'ngx-hint-' + inputId : null )"></textarea>
 
 
-  <ng-template ngFor [ngForOf]="_validators | keyvalue" let-item>
-    <ng-template [ngIf]="(inputField?.touched || form?.submitted) && (inputField?.errors && inputField?.errors[item?.key])">
-      <div class="invalid-feedback">
-        {{_validators[item?.key] | message: name}}
+  <ng-template [ngIf]="(inputField?.touched || form?.submitted) && inputField?.errors" [ngIfElse]="hintTemplate">
+    <ng-template ngFor [ngForOf]="_validators | keyvalue" let-item>
+      <ng-template [ngIf]="inputField?.errors[item?.key]">
+        <div [id]="'ngx-error-' + inputId" class="invalid-feedback">
+          {{_validators[item?.key] | message: name}}
+        </div>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+  <ng-template #hintTemplate>
+    <ng-template [ngIf]="hint">
+      <div [id]="'ngx-hint-' + inputId" class="feedback">
+        {{ hint }}
       </div>
     </ng-template>
   </ng-template>
 </div>
 
+
+<ng-template [ngIf]="!label && placeholder">
+  <div [attr.aria-hidden]="true" style="display: none" [id]="'ngx-aria-label-' + inputId">{{ placeholder }}</div>
+</ng-template>
