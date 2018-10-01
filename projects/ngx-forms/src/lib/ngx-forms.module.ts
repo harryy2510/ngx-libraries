@@ -16,6 +16,8 @@ import {NgxTextAreaComponent} from './components/textarea/ngx-textarea.component
 import {NgxTimeComponent} from './components/time/ngx-time.component';
 import {NgxWysiwygComponent} from './components/wysiwyg/ngx-wysiwyg.component';
 import {MessagePipe} from './components/common/message.pipe';
+import {NgxPasswordToggleModule} from 'ngx-password-toggle';
+
 
 @NgModule({
   imports: [
@@ -25,7 +27,8 @@ import {MessagePipe} from './components/common/message.pipe';
     NgxFlatpickrModule,
     NgxTimepickerModule,
     NgSelectModule,
-    NgxTrumbowygModule
+    NgxTrumbowygModule,
+    NgxPasswordToggleModule
   ],
   declarations: [
     NgxCheckboxComponent,

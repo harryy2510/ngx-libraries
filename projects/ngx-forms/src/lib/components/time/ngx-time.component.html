@@ -1,4 +1,27 @@
-<div class="form-group" [ngClass]="containerClass">
+<div class="form-group" [ngClass]="containerClass" [class.prefix-left]="!!prefixLeft || !!prefixLeftIcon" [class.prefix-right]="!!prefixRight || !!prefixRightIcon">
+
+  <ng-template [ngIf]="prefixLeftIcon">
+    <span class="prefix">
+      <span class="icon icon-{{prefixLeftIcon}}"></span>
+    </span>
+  </ng-template>
+  <ng-template [ngIf]="prefixRightIcon">
+    <span class="prefix">
+      <span class="icon icon-{{prefixRightIcon}}"></span>
+    </span>
+  </ng-template>
+
+  <ng-template [ngIf]="prefixLeft">
+    <span class="prefix">
+      {{prefixLeft}}
+    </span>
+  </ng-template>
+  <ng-template [ngIf]="prefixRight">
+    <span class="prefix">
+      {{prefixRight}}
+    </span>
+  </ng-template>
+
 
   <ng-template [ngIf]="label">
     <label [ngClass]="labelClass" [for]="inputId"> {{ label }}
@@ -7,7 +30,7 @@
   </ng-template>
 
 
-  <input #inputField="ngModel" ngxTimepicker class="form-control" [ngClass]="inputClass" [readonly]="readonly" [disabled]="disabled" type="text" [id]="inputId" [name]="name" [placeholder]="placeholder + (!!_validators?.required && placeholder ? ' *' : '')" [(ngModel)]="value" (onChange)="emitChange()" [required]="!!_validators?.required" [minTime]="minTime" [attr.aria-labelledby]="!label && placeholder ? 'ngx-aria-label-' + inputId : null" [attr.aria-invalid]="!!((inputField?.touched || form?.submitted) && inputField?.errors)" [attr.aria-describedby]="!!((inputField?.touched || form?.submitted) && inputField?.errors) ? 'ngx-error-' + inputId : ( hint ? 'ngx-hint-' + inputId : null )">
+  <input #inputField="ngModel" ngxTimepicker class="form-control" [ngClass]="inputClass" [readonly]="readonly" [disabled]="disabled" type="text" [id]="inputId" [name]="name" [placeholder]="placeholder + (!!_validators?.required && placeholder ? ' *' : '')" [(ngModel)]="_ngModel" (onChange)="emitChange()" [required]="!!_validators?.required" [minTime]="minTime" [attr.aria-labelledby]="!label && placeholder ? 'ngx-aria-label-' + inputId : null" [attr.aria-invalid]="!!((inputField?.touched || form?.submitted) && inputField?.errors)" [attr.aria-describedby]="!!((inputField?.touched || form?.submitted) && inputField?.errors) ? 'ngx-error-' + inputId : ( hint ? 'ngx-hint-' + inputId : null )">
 
 
   <ng-template [ngIf]="(inputField?.touched || form?.submitted) && inputField?.errors" [ngIfElse]="hintTemplate">

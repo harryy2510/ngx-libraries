@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, forwardRef, Injector} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, Injector, Input} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {FormInputBase} from '../common/base.class';
 
@@ -16,6 +16,7 @@ import {FormInputBase} from '../common/base.class';
 })
 
 export class NgxCheckboxComponent extends FormInputBase {
+  @Input() type = 'checkbox';
   constructor(public injector: Injector) {
     super(injector);
   }

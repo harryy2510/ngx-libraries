@@ -117,6 +117,11 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() errorClass = '';
   @Input() hintClass = '';
 
+  @Input() prefixLeft = '';
+  @Input() prefixRight = '';
+  @Input() prefixLeftIcon = '';
+  @Input() prefixRightIcon = '';
+
   @Input() bindLabel = 'title';
   @Input() bindValue: string = undefined;
   @Input() searchFn: any;
@@ -125,6 +130,7 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() maxDate: any;
   @Input() multiple: boolean;
   @Input() options: any;
+  @Input() checked: boolean;
 
   @Input() form: NgForm;
 
@@ -132,6 +138,7 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   _validators: any = {};
 
   @Input() value: any;
+  _ngModel: any;
   @Input() readonly = false;
   @Input() disabled = false;
 
@@ -150,14 +157,22 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
 
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.value) {
+      this._ngModel = this.value;
+    }
+    if (changes.checked) {
+      this._ngModel = this.checked;
+    }
+
+    if (this.name) {
+      this.label = this.label ? this.label : (this.placeholder ? '' : this.name);
+    }
+
     if (changes.validators) {
       this._validators = parseValidators(this.validators);
     }
     if (changes.form && this.form) {
       this._formDiffer = this._differs.find(this.form).create();
-    }
-    if (this.name) {
-      this.label = this.label ? this.label : (this.placeholder ? '' : this.name);
     }
     this.markForCheck();
   }
@@ -177,7 +192,7 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   }
 
   writeValue(obj: any): void {
-    this.value = obj;
+    this._ngModel = obj;
     this.markForCheck();
   }
 
@@ -186,7 +201,7 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   }
 
   emitChange() {
-    this.onChange(this.value);
+    this.onChange(this._ngModel);
   }
 
   public markForCheck() {
