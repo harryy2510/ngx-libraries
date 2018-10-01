@@ -24,8 +24,8 @@ import {NgxPasswordToggleModule} from 'ngx-password-toggle';
     CommonModule,
     FormsModule,
     CustomFormsModule,
-    NgxFlatpickrModule,
-    NgxTimepickerModule,
+    NgxFlatpickrModule.forRoot(),
+    NgxTimepickerModule.forRoot(),
     NgSelectModule,
     NgxTrumbowygModule,
     NgxPasswordToggleModule

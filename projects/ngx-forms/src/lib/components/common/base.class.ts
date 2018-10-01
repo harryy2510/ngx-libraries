@@ -6,9 +6,9 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnChanges,
-  SimpleChanges
+  SimpleChanges, ViewChild
 } from '@angular/core';
-import {ControlValueAccessor, NgForm} from '@angular/forms';
+import {ControlValueAccessor, FormControl, NgForm, NgModel, Validator} from '@angular/forms';
 
 export const VALIDATION_TEXT = {
   min: ':field must be at least :value',
@@ -102,7 +102,7 @@ export function parseValidators(validator: any) {
   return result;
 }
 
-export abstract class FormInputBase implements ControlValueAccessor, OnChanges, DoCheck {
+export abstract class FormInputBase implements ControlValueAccessor, OnChanges, DoCheck, Validator {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() dropdownPosition = 'bottom';
@@ -129,6 +129,7 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() minDate: any;
   @Input() maxDate: any;
   @Input() multiple: boolean;
+  @Input() showLabel = true;
   @Input() options: any;
   @Input() checked: boolean;
 
@@ -141,6 +142,8 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   _ngModel: any;
   @Input() readonly = false;
   @Input() disabled = false;
+
+  @ViewChild('inputField') inputField: NgModel;
 
   onChange = (_: any) => {
   };
@@ -202,6 +205,13 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
 
   emitChange() {
     this.onChange(this._ngModel);
+  }
+
+  public validate(c: FormControl) {
+    if (this.inputField) {
+      return this.inputField.errors;
+    }
+    return null;
   }
 
   public markForCheck() {

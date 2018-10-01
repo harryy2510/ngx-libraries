@@ -1,9 +1,9 @@
-<div class="form-group" [ngClass]="containerClass">
+<div class="form-group" [class.has-error]="(inputField?.touched || form?.submitted) && inputField?.errors" [ngClass]="containerClass">
 
   <div class="custom-control custom-radio">
     <input [checked]="checked" [value]="value" #inputField="ngModel" class="custom-control-input" [ngClass]="inputClass" [readonly]="readonly" [disabled]="disabled" type="radio" [id]="inputId" [name]="name" [(ngModel)]="_ngModel" (change)="emitChange()" [required]="!!_validators?.required" [attr.aria-labelledby]="!label && placeholder ? 'ngx-aria-label-' + inputId : null" [attr.aria-invalid]="!!((inputField?.touched || form?.submitted) && inputField?.errors)" [attr.aria-describedby]="!!((inputField?.touched || form?.submitted) && inputField?.errors) ? 'ngx-error-' + inputId : ( hint ? 'ngx-hint-' + inputId : null )">
 
-    <ng-template [ngIf]="label">
+    <ng-template [ngIf]="label && showLabel">
       <label [ngClass]="labelClass" class="custom-control-label" [for]="inputId"> {{ label }}
         <ng-template [ngIf]="!!_validators?.required"><sup class="text-danger">*</sup></ng-template>
       </label>

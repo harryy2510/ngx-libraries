@@ -1,29 +1,29 @@
-<div class="form-group" [ngClass]="containerClass" [class.prefix-left]="!!prefixLeft || !!prefixLeftIcon" [class.prefix-right]="!!prefixRight || !!prefixRightIcon">
+<div class="form-group" [class.has-error]="(inputField?.touched || form?.submitted) && inputField?.errors" [ngClass]="containerClass" [class.prefix-left]="!!prefixLeft || !!prefixLeftIcon" [class.prefix-right]="!!prefixRight || !!prefixRightIcon">
 
   <ng-template [ngIf]="prefixLeftIcon">
-    <span class="prefix">
+    <span class="input-prefix">
       <span class="icon icon-{{prefixLeftIcon}}"></span>
     </span>
   </ng-template>
   <ng-template [ngIf]="prefixRightIcon">
-    <span class="prefix">
+    <span class="input-prefix">
       <span class="icon icon-{{prefixRightIcon}}"></span>
     </span>
   </ng-template>
 
   <ng-template [ngIf]="prefixLeft">
-    <span class="prefix">
+    <span class="input-prefix">
       {{prefixLeft}}
     </span>
   </ng-template>
   <ng-template [ngIf]="prefixRight">
-    <span class="prefix">
+    <span class="input-prefix">
       {{prefixRight}}
     </span>
   </ng-template>
 
 
-  <ng-template [ngIf]="label">
+  <ng-template [ngIf]="label && showLabel">
     <label [ngClass]="labelClass" [for]="inputId"> {{ label }}
       <ng-template [ngIf]="!!_validators?.required"><sup class="text-danger">*</sup></ng-template>
     </label>

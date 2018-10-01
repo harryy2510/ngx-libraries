@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, forwardRef, Injector} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {FormInputBase} from '../common/base.class';
 
 @Component({
@@ -10,6 +10,11 @@ import {FormInputBase} from '../common/base.class';
       provide: NG_VALUE_ACCESSOR,
       multi: true,
       useExisting: forwardRef(() => NgxTextAreaComponent)
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => NgxTextAreaComponent),
+      multi: true,
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

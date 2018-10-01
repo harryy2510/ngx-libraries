@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, forwardRef, Injector, Input} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {FormInputBase} from '../common/base.class';
 
 @Component({
@@ -10,6 +10,11 @@ import {FormInputBase} from '../common/base.class';
       provide: NG_VALUE_ACCESSOR,
       multi: true,
       useExisting: forwardRef(() => NgxCheckboxComponent)
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => NgxCheckboxComponent),
+      multi: true,
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -17,6 +22,7 @@ import {FormInputBase} from '../common/base.class';
 
 export class NgxCheckboxComponent extends FormInputBase {
   @Input() type = 'checkbox';
+
   constructor(public injector: Injector) {
     super(injector);
   }
