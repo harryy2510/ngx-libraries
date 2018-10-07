@@ -15,7 +15,7 @@
     <ng-template ngFor [ngForOf]="_validators | keyvalue" let-item>
       <ng-template [ngIf]="inputField?.errors[item?.key]">
         <div [id]="'ngx-error-' + inputId" class="invalid-feedback" [ngClass]="errorClass">
-          {{_validators[item?.key] | message: name}}
+          {{_validators[item?.key] | message: name: label}}
         </div>
       </ng-template>
     </ng-template>

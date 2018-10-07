@@ -6,7 +6,8 @@ import {
   KeyValueDiffer,
   KeyValueDiffers,
   OnChanges,
-  SimpleChanges, ViewChild
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, FormControl, NgForm, NgModel, Validator} from '@angular/forms';
 
@@ -122,6 +123,8 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() prefixLeftIcon = '';
   @Input() prefixRightIcon = '';
 
+  @Input() date: any;
+  @Input() mode = 'single';
   @Input() bindLabel = 'title';
   @Input() bindValue: string = undefined;
   @Input() searchFn: any;
@@ -133,8 +136,6 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() options: any;
   @Input() checked: boolean;
 
-  @Input() form: NgForm;
-
   @Input() validators: any;
   _validators: any = {};
 
@@ -144,18 +145,22 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   @Input() disabled = false;
 
   @ViewChild('inputField') inputField: NgModel;
-
   onChange = (_: any) => {
   };
   onTouched = () => {
   };
   public _ref: ChangeDetectorRef;
+  public form: NgForm;
   private _formDiffer: KeyValueDiffer<string, any>;
   private _differs: KeyValueDiffers;
+
+  initialized = false;
 
   constructor(public injector: Injector) {
     this._ref = injector.get(ChangeDetectorRef);
     this._differs = injector.get(KeyValueDiffers);
+    this.form = injector.get(NgForm);
+    this._formDiffer = this._differs.find({}).create();
   }
 
 
@@ -174,14 +179,12 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
     if (changes.validators) {
       this._validators = parseValidators(this.validators);
     }
-    if (changes.form && this.form) {
-      this._formDiffer = this._differs.find(this.form).create();
-    }
     this.markForCheck();
   }
 
   public ngDoCheck(): void {
-    if (this.form && this._formDiffer.diff(this.form)) {
+    const changes = this.form && this._formDiffer.diff(this.form);
+    if (changes) {
       this.markForCheck();
     }
   }
@@ -196,6 +199,12 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
 
   writeValue(obj: any): void {
     this._ngModel = obj;
+    if (!this.initialized) {
+      setTimeout(() => {
+        this.emitChange();
+        this.initialized = true;
+      });
+    }
     this.markForCheck();
   }
 
@@ -205,6 +214,7 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
 
   emitChange() {
     this.onChange(this._ngModel);
+    this.markForCheck();
   }
 
   public validate(c: FormControl) {

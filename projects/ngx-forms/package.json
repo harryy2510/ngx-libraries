@@ -1,6 +1,6 @@
 {
   "name": "@harryy/ngx-forms",
-  "version": "0.1.34",
+  "version": "0.1.50",
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
@@ -8,7 +8,7 @@
     "ngx-custom-validators": "^6.1.0",
     "@harryy/ng-select": "^2.9.2",
     "@harryy/ngx-flatpickr": "^0.0.25",
-    "@harryy/ngx-timepicker": "^0.0.20",
+    "@harryy/ngx-timepicker": "^0.1.1",
     "@harryy/ngx-trumbowyg": "^0.1.1",
     "ngx-password-toggle": "^1.0.3"
   }

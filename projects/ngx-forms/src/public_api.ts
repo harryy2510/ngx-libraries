@@ -4,6 +4,7 @@
 
 export * from './lib/ngx-forms.module';
 
+export * from './lib/components/switch/ngx-switch.component';
 export * from './lib/components/checkbox/ngx-checkbox.component';
 export * from './lib/components/date/ngx-date.component';
 export * from './lib/components/input/ngx-input.component';

@@ -17,6 +17,7 @@ import {NgxTimeComponent} from './components/time/ngx-time.component';
 import {NgxWysiwygComponent} from './components/wysiwyg/ngx-wysiwyg.component';
 import {MessagePipe} from './components/common/message.pipe';
 import {NgxPasswordToggleModule} from 'ngx-password-toggle';
+import {NgxSwitchComponent} from './components/switch/ngx-switch.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {NgxPasswordToggleModule} from 'ngx-password-toggle';
     NgxPasswordToggleModule
   ],
   declarations: [
+    NgxSwitchComponent,
     NgxCheckboxComponent,
     NgxDateComponent,
     NgxInputComponent,
@@ -43,6 +45,7 @@ import {NgxPasswordToggleModule} from 'ngx-password-toggle';
     MessagePipe
   ],
   exports: [
+    NgxSwitchComponent,
     NgxCheckboxComponent,
     NgxDateComponent,
     NgxInputComponent,

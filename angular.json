@@ -27,6 +27,9 @@
               "src/assets"
             ],
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "node_modules/trumbowyg/dist/ui/trumbowyg.min.css",
               "node_modules/timepicker/jquery.timepicker.min.css",
               "node_modules/flatpickr/dist/flatpickr.min.css",
@@ -82,6 +85,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "src/styles.scss"
             ],
             "scripts": [],
@@ -404,6 +410,46 @@
             "tsConfig": [
               "projects/ngx-forms/tsconfig.lib.json",
               "projects/ngx-forms/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-select": {
+      "root": "projects/ngx-select",
+      "sourceRoot": "projects/ngx-select/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-select/tsconfig.lib.json",
+            "project": "projects/ngx-select/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngx-select/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-select/src/test.ts",
+            "tsConfig": "projects/ngx-select/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-select/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-select/tsconfig.lib.json",
+              "projects/ngx-select/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

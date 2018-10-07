@@ -5,12 +5,12 @@ import {Pipe, PipeTransform} from '@angular/core';
 })
 
 export class MessagePipe implements PipeTransform {
-  transform(validator: any, name: string): any {
+  transform(validator: any, name: string, label: string): any {
     if (!validator) {
       return '';
     }
     let message = validator.message || '';
-    message = message.replace(':field', name || '');
+    message = message.replace(':field', label ? label : name || '');
     message = message.replace(':value', validator.value || '');
     switch (validator.type) {
       case 'range':

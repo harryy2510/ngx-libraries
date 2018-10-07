@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, forwardRef, Injector} from '@angular/core';
-import {NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 import {FormInputBase} from '../common/base.class';
 
 @Component({
@@ -14,9 +14,15 @@ import {FormInputBase} from '../common/base.class';
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => NgxSelectComponent),
-      multi: true,
+      multi: true
     }
   ],
+  // viewProviders: [
+  //   {
+  //     provide: ControlContainer,
+  //     useExisting: NgForm
+  //   }
+  // ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 

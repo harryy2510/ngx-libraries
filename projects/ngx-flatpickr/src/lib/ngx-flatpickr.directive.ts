@@ -371,6 +371,18 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
     }
   }
 
+  open() {
+    if (this.instance) {
+      this.instance.open();
+    }
+  }
+
+  close() {
+    if (this.instance) {
+      this.instance.close();
+    }
+  }
+
   ngAfterViewInit(): void {
     let options: any = {
       altFormat: this.altFormat,

@@ -1,19 +1,19 @@
-import {ChangeDetectionStrategy, Component, forwardRef, Injector} from '@angular/core';
+import {ChangeDetectionStrategy, Component, forwardRef, Injector, Input} from '@angular/core';
 import {ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
 import {FormInputBase} from '../common/base.class';
 
 @Component({
-  selector: 'ngx-password',
-  templateUrl: 'ngx-password.component.html',
+  selector: 'ngx-switch',
+  templateUrl: 'ngx-switch.component.html',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NgxPasswordComponent),
-      multi: true
+      multi: true,
+      useExisting: forwardRef(() => NgxSwitchComponent)
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => NgxPasswordComponent),
+      useExisting: forwardRef(() => NgxSwitchComponent),
       multi: true
     }
   ],
@@ -26,7 +26,9 @@ import {FormInputBase} from '../common/base.class';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class NgxPasswordComponent extends FormInputBase {
+export class NgxSwitchComponent extends FormInputBase {
+  @Input() type = 'checkbox';
+
   constructor(public injector: Injector) {
     super(injector);
   }

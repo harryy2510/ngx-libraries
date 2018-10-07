@@ -8,15 +8,14 @@ import {
   ViewContainerRef,
   ɵstringify as stringify
 } from '@angular/core';
-import {NgxRightsService} from './ngx-rights.service';
-
+import {NgxRightsService, PatternUserRightTest} from './ngx-rights.service';
 
 @Directive({
   selector: '[ngxRightsIf]'
 })
 export class NgxRightsIf implements OnInit {
 
-  _test: string | string[];
+  _test: PatternUserRightTest;
   private _thenTemplateRef: TemplateRef<any> | null = null;
   private _elseTemplateRef: TemplateRef<any> | null = null;
   private _thenViewRef: EmbeddedViewRef<any> | null = null;
@@ -27,7 +26,7 @@ export class NgxRightsIf implements OnInit {
   }
 
   @Input()
-  set ngxRightsIf(_test: string | string[]) {
+  set ngxRightsIf(_test: PatternUserRightTest) {
     this._test = _test;
     this._updateView();
   }

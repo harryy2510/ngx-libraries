@@ -1,3 +1,4 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 /* You can add global styles to this file, and also import other style files */
 * {
   font-family: sans-serif;
@@ -24,3 +25,6 @@ $border-color: $material-color-grey-200;
 .invalid-feedback {
   display: block;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }

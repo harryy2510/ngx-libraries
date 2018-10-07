@@ -14,7 +14,7 @@ import {FormInputBase} from '../common/base.class';
     {
       provide: NG_VALIDATORS,
       useExisting: forwardRef(() => NgxInputComponent),
-      multi: true,
+      multi: true
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush

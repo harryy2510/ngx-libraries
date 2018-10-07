@@ -1,22 +1,41 @@
+<!--<div class="container-fluid p-5">-->
+  <!--<div class="row">-->
+    <!--<div class="col-12">-->
+      <!--<form #f3="ngForm" (submit)="onSubmit(f2)">-->
+        <!--<mat-form-field>-->
+          <!--<mat-select [formControl]="bankMultiCtrl" placeholder="Banks" [multiple]="true" #multiSelect>-->
+            <!--<ngx-select [formControl]="bankMultiFilterCtrl"></ngx-select>-->
+            <!--<mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank">-->
+              <!--{{bank.name}}-->
+            <!--</mat-option>-->
+          <!--</mat-select>-->
+        <!--</mat-form-field>-->
+        <!--<button type="submit">Submit</button>-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 <div class="container-fluid p-5">
   <div class="row">
     <div class="col-12">
       <form #f2="ngForm" (submit)="onSubmit(f2)">
-        <ngx-input hint="sdhsfhskdfk" type="number" #xx="ngModel" [(ngModel)]="formValues.x" [form]="f2" validators="required" name="X"></ngx-input>
+        <ngx-input hint="sdhsfhskdfk" #xx="ngModel" [(ngModel)]="dsjfgsjfgjs" validators="required" name="X"></ngx-input>
         {{ xx?.errors | json }}
-        <ngx-input type="number" #yy="ngModel" [(ngModel)]="formValues.y" [form]="f2" [validators]="[ 'required', { type: 'lte', value: formValues.x } ]" name="Y"></ngx-input>
-        <ngx-checkbox [(ngModel)]="formValues.premium" [form]="f2" name="Premium"></ngx-checkbox>
-        <ngx-date [(ngModel)]="formValues.date" [form]="f2" validators="required" name="Date"></ngx-date>
-        <ngx-input [(ngModel)]="formValues.serviceName" [form]="f2" validators="required" name="Service Name"></ngx-input>
-        <ngx-password [(ngModel)]="formValues.password" [form]="f2" validators="required" name="Password"></ngx-password>
-        <ngx-radio [(ngModel)]="formValues.radio" [form]="f2" name="Radio"></ngx-radio>
-        <ngx-select [(ngModel)]="formValues.select" [form]="f2" validators="required" name="Select" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>
-        <ngx-select [(ngModel)]="formValues.selectMultiple" [form]="f2" validators="required" name="Select Multiple" [multiple]="true" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>
-        <ngx-checkbox [(ngModel)]="formValues.premium" [form]="f2" name="Premium"></ngx-checkbox>
-        <ngx-textarea [(ngModel)]="formValues.textarea" [form]="f2" validators="required" name="Textarea"></ngx-textarea>
-        <ngx-time [(ngModel)]="formValues.time" [form]="f2" validators="required" name="Time"></ngx-time>
-        <ngx-wysiwyg [(ngModel)]="formValues.wysiwyg" [form]="f2"  [validators]="{ type: 'maxLength', value: 50 }" name="HTML"></ngx-wysiwyg>
-        {{formValues.wysiwyg}}
+        <!--<ngx-input type="number" #yy="ngModel" [(ngModel)]="formValues.y" [validators]="[ 'required', { type: 'lte', value: formValues.x } ]" name="Y"></ngx-input>-->
+        <!--<ngx-checkbox [(ngModel)]="formValues.premium" name="Premium"></ngx-checkbox>-->
+        <!--<ngx-date [(ngModel)]="formValues.date" validators="required" name="Date"></ngx-date>-->
+        <!--<ngx-input [(ngModel)]="formValues.serviceName" validators="required" name="Service Name"></ngx-input>-->
+        <!--<ngx-password [(ngModel)]="formValues.password" validators="required" name="Password"></ngx-password>-->
+        <!--<ngx-radio [(ngModel)]="formValues.radio" name="Radio"></ngx-radio>-->
+        <ngx-select #ds="ngModel" [(ngModel)]="formValues.select" validators="required" name="Select" bindValue="value" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>
+        {{ ds?.errors | json }}
+        {{ f2?.status }}
+        <!--&lt;!&ndash;<ngx-select [(ngModel)]="formValues.selectMultiple" validators="required" name="Select Multiple" [multiple]="true" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>&ndash;&gt;-->
+        <!--<ngx-checkbox [(ngModel)]="formValues.premium" name="Premium"></ngx-checkbox>-->
+        <!--<ngx-textarea [(ngModel)]="formValues.textarea" validators="required" name="Textarea"></ngx-textarea>-->
+        <!--<ngx-time [(ngModel)]="formValues.time" validators="required" name="Time"></ngx-time>-->
+        <!--&lt;!&ndash;<ngx-wysiwyg [(ngModel)]="formValues.wysiwyg"  [validators]="{ type: 'maxLength', value: 50 }" name="HTML"></ngx-wysiwyg>&ndash;&gt;-->
+        <!--&lt;!&ndash;{{formValues.wysiwyg}}&ndash;&gt;-->
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -62,7 +81,7 @@
         <h5 class="mr-2">
           Test <code>{{ test }}</code> against <code>{{ rights | json }}</code>
         </h5>
-        <h4 *ngxRightsIf="test; else elseTemplate" class="text-success font-weight-bold">True</h4>
+        <h4 *ngxRightsIf="{ resource: test, value: 1 }; else elseTemplate" class="text-success font-weight-bold">True</h4>
         <ng-template #elseTemplate>
           <h4 class="text-danger font-weight-bold">False</h4>
         </ng-template>

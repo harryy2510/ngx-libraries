@@ -1,10 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgxRightsService} from 'ngx-rights';
 import * as faker from 'faker';
 import {AvatarConfig} from '../../projects/ngx-avatar/src/lib/ngx-avatar.service';
 import * as moment from 'moment';
 import {NgxRolesService} from '../../projects/ngx-roles/src/lib/ngx-roles.service';
 import {Role, RoleType} from '../../projects/ngx-roles/src/lib/protos/appointy.go.roles.service';
+import {FormControl} from '@angular/forms';
+import {takeUntil} from 'rxjs/operators';
+import {ReplaySubject} from 'rxjs';
+import {NgxRightsService} from '../../projects/ngx-rights/src/lib/ngx-rights.service';
 
 @Component({
   selector: 'lib-root',
@@ -16,7 +19,11 @@ export class AppComponent implements OnInit {
   min = moment().startOf('d').add(2, 'd');
   date2 = moment().add(10, 'd');
   time = moment();
-  rights = ['**/service-providers/{service_provider_id.id}/**/*', '!**/service-providers/{service_provider_id.id}/certificates/*'];
+  rights = {
+    userId: 'dfdsf',
+    allowed: [{ resource: '**/service-providers/{service_provider_id.id}/**/*', values: [1, 2, 3, 4] }, { resource: '!**/service-providers/{service_provider_id.id}/certificates/*', values: [1, 2, 3, 4] }],
+    notAllowed: []
+  };
   tests = [
     '/programs/program_id/locations/location_id/divisions/division_id/service-providers/{service_provider_id.id}/appointments',
     '/programs/{service_provider_id.base.program_id}/service-providers/{service_provider_id.id}/certificates/{id}',
@@ -24,7 +31,10 @@ export class AppComponent implements OnInit {
     '/programs/{class.base.program_id}/locations/{class.base.location_id}/divisions/{class.base.division_id}/users/{user_id}/classes/{class.id}'
   ];
 
-  formValues: any = {};
+  formValues: any = {
+    select: '',
+    x: ''
+  };
 
   markedDates = [moment(), moment().add(1, 'd'), moment().add(2, 'd')];
 
@@ -35,10 +45,48 @@ export class AppComponent implements OnInit {
       serviceProviderId: ''
     }
   };
+  dsjfgsjfgjs = '';
 
+  /** control for the selected bank */
+  public bankCtrl: FormControl = new FormControl();
+
+  /** control for the MatSelect filter keyword */
+  public bankFilterCtrl: FormControl = new FormControl();
+
+  /** control for the selected bank for multi-selection */
+  public bankMultiCtrl: FormControl = new FormControl();
+
+  /** control for the MatSelect filter keyword multi-selection */
+  public bankMultiFilterCtrl: FormControl = new FormControl();
   @ViewChild('dfsfsf') dfsfsf: any;
 
+  // /** list of banks filtered by search keyword */
+  public filteredBanks: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
+  //
+  // /** list of banks filtered by search keyword for multi-selection */
+  public filteredBanksMulti: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   avatars = [];
+  /** list of banks */
+  private banks: any[] = [
+    {name: 'Bank A (Switzerland)', id: 'A'},
+    {name: 'Bank B (Switzerland)', id: 'B'},
+    {name: 'Bank C (France)', id: 'C'},
+    {name: 'Bank D (France)', id: 'D'},
+    {name: 'Bank E (France)', id: 'E'},
+    {name: 'Bank F (Italy)', id: 'F'},
+    {name: 'Bank G (Italy)', id: 'G'},
+    {name: 'Bank H (Italy)', id: 'H'},
+    {name: 'Bank I (Italy)', id: 'I'},
+    {name: 'Bank J (Italy)', id: 'J'},
+    {name: 'Bank Kolombia (United States of America)', id: 'K'},
+    {name: 'Bank L (Germany)', id: 'L'},
+    {name: 'Bank M (Germany)', id: 'M'},
+    {name: 'Bank N (Germany)', id: 'N'},
+    {name: 'Bank O (Germany)', id: 'O'},
+    {name: 'Bank P (Germany)', id: 'P'},
+    {name: 'Bank Q (Germany)', id: 'Q'},
+    {name: 'Bank R (Germany)', id: 'R'}
+  ];
 
   constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService) {
     this._rightsService.setRights(this.rights);
@@ -66,6 +114,33 @@ export class AppComponent implements OnInit {
         ...this.markedDates
       ]
     });
+
+    this.filteredBanks.next(this.banks.slice());
+       // listen for search field value changes
+       this.bankFilterCtrl.valueChanges
+          .subscribe(() => {
+            this.filterBanks();
+          });
+  }
+
+  private filterBanks() {
+    if (!this.banks) {
+      return;
+    }
+
+    // get the search keyword
+    let search = this.bankFilterCtrl.value;
+    if (!search) {
+      this.filteredBanks.next(this.banks.slice());
+      return;
+    } else {
+      search = search.toLowerCase();
+    }
+
+    // filter the banks
+    this.filteredBanks.next(
+      this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
+    );
   }
 
   change($event) {

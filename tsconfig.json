@@ -58,6 +58,12 @@
       ],
       "ngx-forms/*": [
         "dist/ngx-forms/*"
+      ],
+      "ngx-select": [
+        "dist/ngx-select"
+      ],
+      "ngx-select/*": [
+        "dist/ngx-select/*"
       ]
     }
   }
