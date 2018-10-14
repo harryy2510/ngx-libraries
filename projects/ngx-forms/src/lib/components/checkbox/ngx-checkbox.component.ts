@@ -28,6 +28,7 @@ import {FormInputBase} from '../common/base.class';
 
 export class NgxCheckboxComponent extends FormInputBase {
   @Input() type = 'checkbox';
+  @Input() labelPosition = 'after';
 
   constructor(public injector: Injector) {
     super(injector);

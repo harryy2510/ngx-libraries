@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomFormsModule} from 'ngx-custom-validators';
 import {NgxFlatpickrModule} from '@harryy/ngx-flatpickr';
 import {NgxTimepickerModule} from '@harryy/ngx-timepicker';
@@ -18,18 +18,39 @@ import {NgxWysiwygComponent} from './components/wysiwyg/ngx-wysiwyg.component';
 import {MessagePipe} from './components/common/message.pipe';
 import {NgxPasswordToggleModule} from 'ngx-password-toggle';
 import {NgxSwitchComponent} from './components/switch/ngx-switch.component';
+import {
+  MatAutocompleteModule,
+  MatCheckboxModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatRadioModule,
+  MatSelectModule
+} from '@angular/material';
+import {A11yModule} from '@angular/cdk/a11y';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     CustomFormsModule,
     NgxFlatpickrModule.forRoot(),
     NgxTimepickerModule.forRoot(),
     NgSelectModule,
     NgxTrumbowygModule,
-    NgxPasswordToggleModule
+    NgxPasswordToggleModule,
+
+    // Angular Material
+    MatInputModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatRadioModule,
+    A11yModule,
+    OverlayModule,
   ],
   declarations: [
     NgxSwitchComponent,
@@ -54,7 +75,17 @@ import {NgxSwitchComponent} from './components/switch/ngx-switch.component';
     NgxSelectComponent,
     NgxTextAreaComponent,
     NgxTimeComponent,
-    NgxWysiwygComponent
+    NgxWysiwygComponent,
+
+    // Angular Material
+    MatInputModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    MatRadioModule,
+    A11yModule,
+    OverlayModule,
   ]
 })
 export class NgxFormsModule {
