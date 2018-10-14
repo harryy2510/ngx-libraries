@@ -1,44 +1,45 @@
 <!--<div class="container-fluid p-5">-->
-  <!--<div class="row">-->
-    <!--<div class="col-12">-->
-      <!--<form #f3="ngForm" (submit)="onSubmit(f2)">-->
-        <!--<mat-form-field>-->
-          <!--<mat-select [formControl]="bankMultiCtrl" placeholder="Banks" [multiple]="true" #multiSelect>-->
-            <!--<ngx-select [formControl]="bankMultiFilterCtrl"></ngx-select>-->
-            <!--<mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank">-->
-              <!--{{bank.name}}-->
-            <!--</mat-option>-->
-          <!--</mat-select>-->
-        <!--</mat-form-field>-->
-        <!--<button type="submit">Submit</button>-->
-      <!--</form>-->
-    <!--</div>-->
-  <!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-12">-->
+<!--<form #f3="ngForm" (submit)="onSubmit(f2)">-->
+<!--<mat-form-field>-->
+<!--<mat-select [formControl]="bankMultiCtrl" placeholder="Banks" [multiple]="true" #multiSelect>-->
+<!--<ngx-select [formControl]="bankMultiFilterCtrl"></ngx-select>-->
+<!--<mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank">-->
+<!--{{bank.name}}-->
+<!--</mat-option>-->
+<!--</mat-select>-->
+<!--</mat-form-field>-->
+<!--<button type="submit">Submit</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
 <!--</div>-->
 <div class="container-fluid p-5">
   <div class="row">
     <div class="col-12">
       <form #f2="ngForm" (submit)="onSubmit(f2)">
-        <ngx-input hint="sdhsfhskdfk" #xx="ngModel" [(ngModel)]="dsjfgsjfgjs" validators="required" name="X"></ngx-input>
-        {{ xx?.errors | json }}
+        <!--<ngx-input hint="sdhsfhskdfk" #xx="ngModel" [(ngModel)]="dsjfgsjfgjs" validators="required" name="X"></ngx-input>-->
+        <!--{{ xx?.errors | json }}-->
         <!--<ngx-input type="number" #yy="ngModel" [(ngModel)]="formValues.y" [validators]="[ 'required', { type: 'lte', value: formValues.x } ]" name="Y"></ngx-input>-->
         <!--<ngx-checkbox [(ngModel)]="formValues.premium" name="Premium" validators="required"></ngx-checkbox>-->
-        <ngx-date [(ngModel)]="formValues.date" validators="required" name="Date"></ngx-date>
+        <!--<ngx-date [(ngModel)]="formValues.date" validators="required" name="Date"></ngx-date>-->
         <!--<ngx-input [(ngModel)]="formValues.serviceName" validators="required" name="Service Name"></ngx-input>-->
         <!--<ngx-password [(ngModel)]="formValues.password" validators="required" name="Password"></ngx-password>-->
-        <mat-radio-group  [(ngModel)]="formValues.radio" name="radio-group">
-          <ngx-radio name="Radio1" value="radio1"></ngx-radio>
-          <ngx-radio name="Radio2" value="radio2"></ngx-radio>
-        </mat-radio-group>
-        {{formValues?.radio}}
-        <ngx-select #ds="ngModel" [(ngModel)]="formValues.select" validators="required" name="Select" bindValue="value" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>
+        <!--<mat-radio-group  [(ngModel)]="formValues.radio" name="radio-group">-->
+        <!--<ngx-radio name="Radio1" value="radio1"></ngx-radio>-->
+        <!--<ngx-radio name="Radio2" value="radio2"></ngx-radio>-->
+        <!--</mat-radio-group>-->
+        <!--{{formValues?.radio}}-->
+        <ngx-select #ds="ngModel" [(ngModel)]="formValues.select" validators="required" name="Select" bindValue="value"
+                    [options]="[{ title: 'Bhopal', value: 'x' }, { title: 'San Fransisco', value: 'y' }, {title: 'Addison', value: 'z'}, {title: 'Bhojpal', value: 'zZ'}, {title: 'Bhojtar', value: 'zZZZZ'}]"></ngx-select>
         {{ ds?.errors | json }}
         {{ f2?.status }}
         <!--&lt;!&ndash;<ngx-select [(ngModel)]="formValues.selectMultiple" validators="required" name="Select Multiple" [multiple]="true" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>&ndash;&gt;-->
         <!--<ngx-checkbox [(ngModel)]="formValues.premium" name="Premium"></ngx-checkbox>-->
-        <ngx-textarea [(ngModel)]="formValues.textarea" validators="required" name="Textarea"></ngx-textarea>
-        <ngx-time [(ngModel)]="formValues.time" validators="required" name="Time"></ngx-time>
-        <ngx-wysiwyg [(ngModel)]="formValues.wysiwyg"  [validators]="{ type: 'maxLength', value: 50 }" name="HTML"></ngx-wysiwyg>
+        <!--<ngx-textarea [(ngModel)]="formValues.textarea" validators="required" name="Textarea"></ngx-textarea>-->
+        <!--<ngx-time [(ngModel)]="formValues.time" validators="required" name="Time"></ngx-time>-->
+        <!--<ngx-wysiwyg [(ngModel)]="formValues.wysiwyg"  [validators]="{ type: 'maxLength', value: 50 }" name="HTML"></ngx-wysiwyg>-->
         <!--&lt;!&ndash;{{formValues.wysiwyg}}&ndash;&gt;-->
         <button type="submit">Submit</button>
       </form>
@@ -46,80 +47,80 @@
   </div>
 </div>
 
-<div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <h3>WYSIWYG</h3>
-    </div>
-    <div class="col-12">
-      <form #f="ngForm">
-        <ngx-trumbowyg-editor #dfsfsf="editor" name="editor" [(ngModel)]="model"></ngx-trumbowyg-editor>
-        {{ model }}
-      </form>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <h3>Roles</h3>
-    </div>
-    <div class="col-12">
-      <ng-template [ngxRolesIf]="'serviceProvider'"><p>ServiceProvider</p></ng-template>
-    </div>
-  </div>
-</div>
-<div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <h3>Avatar</h3>
-    </div>
-    <ng-template ngFor [ngForOf]="avatars" let-avatar>
-      <ngx-avatar [rounded]="false" [upload]="avatar.upload" [size]="avatar.size" [margin]="avatar.margin" [label]="avatar.label" [disabled]="avatar.disabled" [name]="avatar.name" [randomColor]="avatar.randomColor" [image]="avatar.image" [textColor]="avatar.textColor" [bgColor]="avatar.bgColor"></ngx-avatar>
-    </ng-template>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <h3>Rights</h3>
-    </div>
-    <ng-template ngFor [ngForOf]="tests" let-test>
-      <div class="col-12 d-flex mb-2">
-        <h5 class="mr-2">
-          Test <code>{{ test }}</code> against <code>{{ rights | json }}</code>
-        </h5>
-        <h4 *ngxRightsIf="{ resource: test, value: 1 }; else elseTemplate" class="text-success font-weight-bold">True</h4>
-        <ng-template #elseTemplate>
-          <h4 class="text-danger font-weight-bold">False</h4>
-        </ng-template>
-      </div>
-    </ng-template>
-  </div>
-</div>
+<!--<div class="container-fluid p-5">-->
+<!--<div class="row">-->
+<!--<div class="col-12">-->
+<!--<h3>WYSIWYG</h3>-->
+<!--</div>-->
+<!--<div class="col-12">-->
+<!--<form #f="ngForm">-->
+<!--<ngx-trumbowyg-editor #dfsfsf="editor" name="editor" [(ngModel)]="model"></ngx-trumbowyg-editor>-->
+<!--{{ model }}-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-12">-->
+<!--<h3>Roles</h3>-->
+<!--</div>-->
+<!--<div class="col-12">-->
+<!--<ng-template [ngxRolesIf]="'serviceProvider'"><p>ServiceProvider</p></ng-template>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="container-fluid p-5">-->
+<!--<div class="row">-->
+<!--<div class="col-12">-->
+<!--<h3>Avatar</h3>-->
+<!--</div>-->
+<!--<ng-template ngFor [ngForOf]="avatars" let-avatar>-->
+<!--<ngx-avatar [rounded]="false" [upload]="avatar.upload" [size]="avatar.size" [margin]="avatar.margin" [label]="avatar.label" [disabled]="avatar.disabled" [name]="avatar.name" [randomColor]="avatar.randomColor" [image]="avatar.image" [textColor]="avatar.textColor" [bgColor]="avatar.bgColor"></ngx-avatar>-->
+<!--</ng-template>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-12">-->
+<!--<h3>Rights</h3>-->
+<!--</div>-->
+<!--<ng-template ngFor [ngForOf]="tests" let-test>-->
+<!--<div class="col-12 d-flex mb-2">-->
+<!--<h5 class="mr-2">-->
+<!--Test <code>{{ test }}</code> against <code>{{ rights | json }}</code>-->
+<!--</h5>-->
+<!--<h4 *ngxRightsIf="{ resource: test, value: 1 }; else elseTemplate" class="text-success font-weight-bold">True</h4>-->
+<!--<ng-template #elseTemplate>-->
+<!--<h4 class="text-danger font-weight-bold">False</h4>-->
+<!--</ng-template>-->
+<!--</div>-->
+<!--</ng-template>-->
+<!--</div>-->
+<!--</div>-->
 
-<div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <h3>Datepicker</h3>
-    </div>
-    <div class="form-group">
-      <input [(ngModel)]="date" (onChange)="change($event)" [minDate]="min" class="form-control" ngxFlatpickr>
-    </div>
-    <div class="form-group">
-      <input [(ngModel)]="date2" [minDate]="date" class="form-control" ngxFlatpickr>
-    </div>
-    <div class="col-12">
-      Value: {{date}}
-    </div>
-  </div>
-</div>
-<div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <h3>Timepicker</h3>
-    </div>
-    <div class="form-group">
-      <input [(ngModel)]="time" (onChange)="change($event)" class="form-control" ngxTimepicker>
-    </div>
-    <div class="col-12">
-      Value: {{time}}
-    </div>
-  </div>
-</div>
+<!--<div class="container-fluid p-5">-->
+<!--<div class="row">-->
+<!--<div class="col-12">-->
+<!--<h3>Datepicker</h3>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<input [(ngModel)]="date" (onChange)="change($event)" [minDate]="min" class="form-control" ngxFlatpickr>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<input [(ngModel)]="date2" [minDate]="date" class="form-control" ngxFlatpickr>-->
+<!--</div>-->
+<!--<div class="col-12">-->
+<!--Value: {{date}}-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="container-fluid p-5">-->
+<!--<div class="row">-->
+<!--<div class="col-12">-->
+<!--<h3>Timepicker</h3>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<input [(ngModel)]="time" (onChange)="change($event)" class="form-control" ngxTimepicker>-->
+<!--</div>-->
+<!--<div class="col-12">-->
+<!--Value: {{time}}-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

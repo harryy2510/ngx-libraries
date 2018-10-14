@@ -51,6 +51,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
     MatRadioModule,
     A11yModule,
     OverlayModule,
+
   ],
   declarations: [
     NgxSwitchComponent,
@@ -86,6 +87,7 @@ import {OverlayModule} from '@angular/cdk/overlay';
     MatRadioModule,
     A11yModule,
     OverlayModule,
+
   ]
 })
 export class NgxFormsModule {
