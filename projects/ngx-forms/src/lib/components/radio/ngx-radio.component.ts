@@ -28,6 +28,7 @@ import {FormInputBase} from '../common/base.class';
 
 export class NgxRadioComponent extends FormInputBase {
   @Input() type = 'radio';
+  @Input() labelPosition = 'after';
   constructor(public injector: Injector) {
     super(injector);
   }
