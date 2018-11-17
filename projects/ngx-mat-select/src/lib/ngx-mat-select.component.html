@@ -48,13 +48,106 @@
   (remove)="removeEvent.emit($event)"
   (scroll)="scrollEvent.emit($event)"
   (scrollToEnd)="scrollToEndEvent.emit($event)">
-  <ng-template ng-multi-label-tmp let-items="items">
-    <span class="ng-value">{{ bindLabel ? items[0][bindLabel] : items[0] }}</span>
-    <small class="ng-value" *ngIf="items.length > 1">{{ (items.length - 1) | i18nPlural : pluralMapping.other }}</small>
+
+  <ng-template [ngIf]="items?.length">
+
+    <ng-template [ngIf]="!labelTemplateRef && multiple">
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <ng-template [ngIf]="multiLabelTemplateRef">
+          <ng-template
+            [ngTemplateOutlet]="multiLabelTemplateRef"
+            [ngTemplateOutletContext]="{ items: items, clear: clear }">
+          </ng-template>
+        </ng-template>
+        <ng-template [ngIf]="!multiLabelTemplateRef">
+          <span class="ng-value">{{ bindLabel ? items[0][bindLabel] : items[0] }}</span>
+          <small class="ng-value" *ngIf="items.length > 1">{{ (items.length - 1) | i18nPlural : pluralMapping.other }}</small>
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="labelTemplateRef">
+      <ng-template ng-label-tmp let-item="item" let-clear="clear" let-label="label">
+        <ng-template
+          [ngTemplateOutlet]="labelTemplateRef"
+          [ngTemplateOutletContext]="{ item: item, clear: clear, label: item }">
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="!optionTemplateRef">
+      <ng-template [ngIf]="multiple">
+        <ng-template ng-option-tmp let-item$="item$">
+          <mat-checkbox [ngModel]="item$.selected">{{ item$.label }}</mat-checkbox>
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="optionTemplateRef">
+      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index" let-searchTerm="searchTerm">
+        <ng-template
+          [ngTemplateOutlet]="optionTemplateRef"
+          [ngTemplateOutletContext]="{ item: item, item$: item$, index: index, searchTerm: searchTerm }">
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="optgroupTemplateRef">
+      <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index" let-searchTerm="searchTerm">
+        <ng-template
+          [ngTemplateOutlet]="optgroupTemplateRef"
+          [ngTemplateOutletContext]="{ item: item, item$: item$, index: index, searchTerm: searchTerm }">
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="headerTemplateRef">
+      <ng-template ng-header-tmp>
+        <ng-template [ngTemplateOutlet]="headerTemplateRef"></ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="footerTemplateRef">
+      <ng-template ng-footer-tmp>
+        <ng-template [ngTemplateOutlet]="footerTemplateRef"></ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="typetosearchTemplateRef">
+      <ng-template ng-typetosearch-tmp>
+        <ng-template [ngTemplateOutlet]="typetosearchTemplateRef"></ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="notfoundTemplateRef">
+      <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
+        <ng-template
+          [ngTemplateOutlet]="notfoundTemplateRef"
+          [ngTemplateOutletContext]="{ searchTerm: searchTerm }">
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="loadingtextTemplateRef">
+      <ng-template ng-loadingtext-tmp let-searchTerm="searchTerm">
+        <ng-template
+          [ngTemplateOutlet]="loadingtextTemplateRef"
+          [ngTemplateOutletContext]="{ searchTerm: searchTerm }">
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
+    <ng-template [ngIf]="tagTemplateRef">
+      <ng-template ng-tag-tmp let-searchTerm="searchTerm">
+        <ng-template
+          [ngTemplateOutlet]="tagTemplateRef"
+          [ngTemplateOutletContext]="{ searchTerm: searchTerm }">
+        </ng-template>
+      </ng-template>
+    </ng-template>
+
   </ng-template>
-  <ng-template *ngIf="multiple" ng-option-tmp let-item$="item$">
-    <mat-checkbox [ngModel]="item$.selected">{{ item$.label }}</mat-checkbox>
-  </ng-template>
+
 </ng-select>
 
 <ng-template #templatePortal></ng-template>

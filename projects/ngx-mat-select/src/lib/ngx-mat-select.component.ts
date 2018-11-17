@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  ContentChild, ContentChildren,
   EventEmitter,
   HostBinding,
   HostListener,
@@ -9,7 +10,7 @@ import {
   OnChanges,
   OnDestroy,
   Optional,
-  Output,
+  Output, QueryList,
   Self,
   SimpleChanges,
   TemplateRef,
@@ -95,6 +96,18 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Output('remove') removeEvent = new EventEmitter();
   @Output('scroll') scrollEvent = new EventEmitter<{ start: number; end: number }>();
   @Output('scrollToEnd') scrollToEndEvent = new EventEmitter<{ start: number; end: number }>();
+
+  // template ref
+  @ContentChild('labelTemplate', { read: TemplateRef }) labelTemplateRef: TemplateRef<any>;
+  @ContentChild('multiLabelTemplate', { read: TemplateRef }) multiLabelTemplateRef: TemplateRef<any>;
+  @ContentChild('optionTemplate', { read: TemplateRef }) optionTemplateRef: TemplateRef<any>;
+  @ContentChild('optgroupTemplate', { read: TemplateRef }) optgroupTemplateRef: TemplateRef<any>;
+  @ContentChild('headerTemplate', { read: TemplateRef }) headerTemplateRef: TemplateRef<any>;
+  @ContentChild('footerTemplate', { read: TemplateRef }) footerTemplateRef: TemplateRef<any>;
+  @ContentChild('typetosearchTemplate', { read: TemplateRef }) typetosearchTemplateRef: TemplateRef<any>;
+  @ContentChild('notfoundTemplate', { read: TemplateRef }) notfoundTemplateRef: TemplateRef<any>;
+  @ContentChild('loadingtextTemplate', { read: TemplateRef }) loadingtextTemplateRef: TemplateRef<any>;
+  @ContentChild('tagTemplate', { read: TemplateRef }) tagTemplateRef: TemplateRef<any>;
 
   pluralMapping = {
     other: {
@@ -245,8 +258,8 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   }
 
   onFocus(event) {
-    if (this.select) {
-      this.select.open();
+    if (this.items.length) {
+      this.open();
     }
     this.focused = true;
     this.propogateTouched();

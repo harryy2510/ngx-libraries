@@ -32,13 +32,13 @@
         border-top: none;
 
         .ng-clear {
-          font-size: 15px;
-          top: -3px;
+          font-size: 1rem;
+          top: 0;
           position: relative;
         }
 
         .ng-arrow {
-          top: -4px;
+          top: -2px;
         }
       }
 
@@ -46,7 +46,7 @@
         padding: 0;
         align-items: center;
         border-top: none;
-        height: 15px;
+        height: 18px;
         display: block;
         white-space: nowrap;
         overflow: hidden;

@@ -4,7 +4,14 @@
       <form #f="ngForm">
         <mat-form-field appearance="standard">
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [closeOnSelect]="false" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" [multiple]="true" required (change)="onChange($event)"></ngx-mat-select>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)">
+            <ng-template #labelTemplate let-item="item">
+              {{ item.id }} - {{ item.name }}
+            </ng-template>
+            <ng-template #optionTemplate let-item="item">
+              {{ item.id }} - {{ item.name }}
+            </ng-template>
+          </ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>

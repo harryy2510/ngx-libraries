@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxRightsModule} from '../../projects/ngx-rights/src/lib/ngx-rights.module';
 import {NgxMatSelectModule} from '../../projects/ngx-mat-select/src/lib/ngx-mat-select.module';
 import {MatFormFieldModule, MatInputModule} from '@angular/material';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {MatFormFieldModule, MatInputModule} from '@angular/material';
     BrowserAnimationsModule,
     NgxMatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
