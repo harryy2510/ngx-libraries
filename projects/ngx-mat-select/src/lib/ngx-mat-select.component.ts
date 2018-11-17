@@ -56,10 +56,10 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Input() clearable = true;
   @Input() markFirst = true;
   @Input() notFoundText = 'No results found';
-  @Input() typeToSearchText: string;
-  @Input() addTagText: string;
-  @Input() loadingText: string;
-  @Input() clearAllText: string;
+  @Input() typeToSearchText = 'Type to search';
+  @Input() addTagText = 'Add';
+  @Input() loadingText = 'Loading...';
+  @Input() clearAllText = 'Clear all';
   @Input() dropdownPosition: DropdownPosition = 'auto';
   @Input() appendTo = 'body';
   @Input() loading = false;

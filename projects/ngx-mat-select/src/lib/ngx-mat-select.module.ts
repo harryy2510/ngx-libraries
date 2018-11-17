@@ -10,7 +10,7 @@ import {PortalModule} from '@angular/cdk/portal';
 @NgModule({
   imports: [CommonModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, NgSelectModule, MatCheckboxModule, OverlayModule, PortalModule],
   declarations: [NgxMatSelectComponent],
-  exports: [NgxMatSelectComponent],
+  exports: [NgxMatSelectComponent, NgSelectModule],
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
