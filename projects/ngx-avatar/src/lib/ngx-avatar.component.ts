@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Inject,
   Input,
   OnChanges,
   Output,
@@ -20,8 +21,18 @@ import {
 import * as SVG_ from 'svg.js';
 import {Circle, Doc, Image, Rect, Text} from 'svg.js';
 import 'svg.filter.js';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material';
 
 const SVG = SVG_;
+
+@Component({
+  selector: 'ngx-avatar-img-dialog',
+  template: `<img style="width: 100%" [src]="data?.url">`
+})
+export class NgxAvatarImgDialogComponent {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+}
 
 @Component({
   selector: 'ngx-avatar',
@@ -32,6 +43,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
   @Input() name: string;
   @Input() characters: number;
   @Input() image: string;
+  @Input() fullImage: string;
   @Input() bgColor: string;
   @Input() textColor: string;
   @Input() size: number | string;
@@ -45,14 +57,16 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
   @Input() labelColor: string;
   @Input() disabled: boolean;
   @Input() upload: boolean;
+  @Input() zoom: boolean;
   @Input() ariaLabelText: string = '';
-  @Output() click: EventEmitter<KeyboardEvent | MouseEvent> = new EventEmitter<KeyboardEvent | MouseEvent>();
+  @Output() onClick: EventEmitter<KeyboardEvent | MouseEvent> = new EventEmitter<KeyboardEvent | MouseEvent>();
   private instance: Instance = new Instance();
   private options: AvatarConfig = new AvatarConfig();
 
   constructor(
     private config: AvatarConfig,
-    private elm: ElementRef
+    private elm: ElementRef,
+    public dialog: MatDialog
   ) {
   }
 
@@ -190,6 +204,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
       name: this.name,
       characters: this.characters,
       image: this.image,
+      fullImage: this.fullImage,
       bgColor: this.bgColor,
       textColor: this.textColor,
       size: this.size,
@@ -202,7 +217,8 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
       labelBgColor: this.labelBgColor,
       labelColor: this.labelColor,
       disabled: this.disabled,
-      upload: this.upload
+      upload: this.upload,
+      zoom: this.zoom
     };
     Object.keys(options).forEach((key: string) => {
       if (typeof options[key] === 'undefined') {
@@ -212,6 +228,12 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     });
     this._options = options;
     this.render();
+    setTimeout(() => {
+      this.render();
+    }, 300);
+    setTimeout(() => {
+      this.render();
+    }, 1000);
   }
 
   render() {
@@ -424,43 +446,73 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
 
   private renderUpload(): void {
     this.destroyUpload();
-    if (!this.instance.svg || !this._options.upload) {
+    if (!this.instance.svg || (!this._options.upload && !this._options.zoom)) {
       return null;
     }
 
     this.instance.svg.node.setAttribute('role', 'button');
     this.instance.svg.node.setAttribute('tabindex', '0');
 
-    let uploadShape: Circle | Rect;
-    const {top, left} = this._margin;
-    if (this._options.rounded) {
-      uploadShape = <Circle>this.instance.svg
-        .circle(this._size);
-    } else {
-      uploadShape = <Rect>this.instance.svg
-        .rect(this._size, this._size)
-        .radius(this._options.radius);
-    }
-    uploadShape
-      .fill('rgba(0,0,0,0.7)')
-      .opacity(0)
-      .move(left, top);
-    this.instance.uploadShape = uploadShape;
-
-    const uploadIcon: Image = <Image>this.instance.svg.image('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAABD0lEQVR4Ae2UMU7DMBRAHSF1q5QJFtpeJbegU7kJTSbKUHVpjwEcIZEQJ4CxMNuTzQke0p9iiyJ/MyF4m9/wlPzk2/xBOOedlDcutJkpr3zFC1NNZsIzp3hiYk5DRYdFi6WjikMbSrmLQ4FSfByinLyQp2fPnh5fHrIszQiW2JLQkUuTwIKjNmSZi69Z09OzppbzHKsLrcQ2+NG0GnErTShQydN4xnhq+XVDfuhRXEtKK/4+P7QTN5AyiN/lh7bfhrb5oYesV1MMO8RWhn3GR8nnD6NMI+4aNCHHTHxNy8BASy3nGU6/IovSFUlxydJeYX92jRw4MGivET1JyFKKjUO3lLIxMdzg0OLozC/mn08zYTU6ftNUcgAAAABJRU5ErkJggg==');
-    uploadIcon.loaded(() => {
-      uploadIcon
-        .size(this._size * 0.5)
-        .center((this._size / 2) + left, (this._size / 2) + top)
+    if (this._options.upload && !(this._options.zoom && (this._options.image || this._options.fullImage))) {
+      let uploadShape: Circle | Rect;
+      const {top, left} = this._margin;
+      if (this._options.rounded) {
+        uploadShape = <Circle>this.instance.svg
+          .circle(this._size);
+      } else {
+        uploadShape = <Rect>this.instance.svg
+          .rect(this._size, this._size)
+          .radius(this._options.radius);
+      }
+      uploadShape
+        .fill('rgba(0,0,0,0.7)')
         .opacity(0)
-        .clipWith(this.getClip());
-    });
-    this.instance.uploadIcon = uploadIcon;
+        .move(left, top);
+      this.instance.uploadShape = uploadShape;
+
+      const uploadIcon: Image = <Image>this.instance.svg.image('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAABD0lEQVR4Ae2UMU7DMBRAHSF1q5QJFtpeJbegU7kJTSbKUHVpjwEcIZEQJ4CxMNuTzQke0p9iiyJ/MyF4m9/wlPzk2/xBOOedlDcutJkpr3zFC1NNZsIzp3hiYk5DRYdFi6WjikMbSrmLQ4FSfByinLyQp2fPnh5fHrIszQiW2JLQkUuTwIKjNmSZi69Z09OzppbzHKsLrcQ2+NG0GnErTShQydN4xnhq+XVDfuhRXEtKK/4+P7QTN5AyiN/lh7bfhrb5oYesV1MMO8RWhn3GR8nnD6NMI+4aNCHHTHxNy8BASy3nGU6/IovSFUlxydJeYX92jRw4MGivET1JyFKKjUO3lLIxMdzg0OLozC/mn08zYTU6ftNUcgAAAABJRU5ErkJggg==');
+      uploadIcon.loaded(() => {
+        uploadIcon
+          .size(this._size * 0.5)
+          .center((this._size / 2) + left, (this._size / 2) + top)
+          .opacity(0)
+          .clipWith(this.getClip());
+      });
+      this.instance.uploadIcon = uploadIcon;
+
+      this.instance.svg.on('mouseover', () => {
+        this.instance.uploadShape
+          .opacity(1);
+        this.instance.uploadIcon
+          .opacity(1);
+      });
+
+      this.instance.svg.on('focus', () => {
+        this.instance.uploadShape
+          .opacity(1);
+        this.instance.uploadIcon
+          .opacity(1);
+      });
+
+      this.instance.svg.on('mouseout', () => {
+        this.instance.uploadShape
+          .opacity(0);
+        this.instance.uploadIcon
+          .opacity(0);
+      });
+
+      this.instance.svg.on('blur', () => {
+        this.instance.uploadShape
+          .opacity(0);
+        this.instance.uploadIcon
+          .opacity(0);
+      });
+    }
 
     this.instance.svg.on('click', (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
-      this.click.emit(e);
+      this.clickEvent(e);
       return false;
     });
     this.instance.svg.on('keypress', (e: KeyboardEvent) => {
@@ -469,38 +521,11 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
         case 'Enter':
           e.preventDefault();
           e.stopPropagation();
-          this.click.emit(e);
+          this.clickEvent(e);
           return false;
       }
     });
 
-    this.instance.svg.on('mouseover', () => {
-      this.instance.uploadShape
-        .opacity(1);
-      this.instance.uploadIcon
-        .opacity(1);
-    });
-
-    this.instance.svg.on('focus', () => {
-      this.instance.uploadShape
-        .opacity(1);
-      this.instance.uploadIcon
-        .opacity(1);
-    });
-
-    this.instance.svg.on('mouseout', () => {
-      this.instance.uploadShape
-        .opacity(0);
-      this.instance.uploadIcon
-        .opacity(0);
-    });
-
-    this.instance.svg.on('blur', () => {
-      this.instance.uploadShape
-        .opacity(0);
-      this.instance.uploadIcon
-        .opacity(0);
-    });
 
     this.instance.svg.style('cursor', 'pointer');
   }
@@ -564,5 +589,17 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     }
     clip.move(left + 2, top + 2);
     return clip;
+  }
+
+  private clickEvent(e: KeyboardEvent | MouseEvent) {
+    if (this._options.zoom && (this._options.image || this._options.fullImage)) {
+      const dialogRef = this.dialog.open(NgxAvatarImgDialogComponent, {
+        width: '480px',
+        data: {url: this._options.fullImage || this._options.image}
+      });
+      console.log(dialogRef);
+    } else if (this._options.upload) {
+      this.onClick.emit(e);
+    }
   }
 }

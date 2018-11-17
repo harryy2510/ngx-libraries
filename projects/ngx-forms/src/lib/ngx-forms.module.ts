@@ -5,7 +5,7 @@ import {CustomFormsModule} from 'ngx-custom-validators';
 import {NgxFlatpickrModule} from '@harryy/ngx-flatpickr';
 import {NgxTimepickerModule} from '@harryy/ngx-timepicker';
 import {NgxTrumbowygModule} from '@harryy/ngx-trumbowyg';
-import {NgSelectModule} from '@harryy/ng-select';
+import {NgSelectModule} from '@ng-select/ng-select';
 import {NgxCheckboxComponent} from './components/checkbox/ngx-checkbox.component';
 import {NgxDateComponent} from './components/date/ngx-date.component';
 import {NgxInputComponent} from './components/input/ngx-input.component';

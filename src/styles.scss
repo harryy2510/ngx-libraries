@@ -3,8 +3,8 @@
 * {
   font-family: sans-serif;
 }
-
-@import '../node_modules/daemonite-material/assets/scss/colors';
+@import "~@ng-select/ng-select/scss/material.theme";
+@import '~daemonite-material/assets/scss/colors';
 
 $primary: (
   color: $material-color-light-blue-400,
@@ -13,18 +13,23 @@ $primary: (
 );
 
 $secondary: (
-color: $material-color-light-blue-a400,
-dark: $material-color-light-blue-a700,
-light: $material-color-light-blue-a200
+  color: $material-color-light-blue-a400,
+  dark: $material-color-light-blue-a700,
+  light: $material-color-light-blue-a200
 );
 
 $border-color: $material-color-grey-200;
-@import "../node_modules/daemonite-material/assets/scss/material";
-
+@import '~daemonite-material/assets/scss/material';
 
 .invalid-feedback {
   display: block;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: 'Roboto', sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}

@@ -64,6 +64,7 @@ export class AvatarConfig {
 
   // Defines the image
   image?: string;
+  fullImage?: string;
 
   // Defines the label
   label?: string;
@@ -72,6 +73,8 @@ export class AvatarConfig {
 
   // Defines upload icon
   upload?: boolean;
+
+  zoom?: boolean;
 
   constructor() {
     this.size = Size['md'];

@@ -8,6 +8,7 @@ import {FormControl} from '@angular/forms';
 import {takeUntil} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs';
 import {NgxRightsService} from '../../projects/ngx-rights/src/lib/ngx-rights.service';
+import 'moment-timezone';
 
 @Component({
   selector: 'lib-root',
@@ -15,10 +16,11 @@ import {NgxRightsService} from '../../projects/ngx-rights/src/lib/ngx-rights.ser
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  date = moment();
+  date
   min = moment().startOf('d').add(2, 'd');
-  date2 = moment().add(10, 'd');
-  time = moment();
+  date2;
+  time;
+
   rights = {
     userId: 'dfdsf',
     allowed: [{ resource: '**/service-providers/{service_provider_id.id}/**/*', values: [1, 2, 3, 4] }, { resource: '!**/service-providers/{service_provider_id.id}/certificates/*', values: [1, 2, 3, 4] }],
@@ -46,6 +48,8 @@ export class AppComponent implements OnInit {
     }
   };
   dsjfgsjfgjs = '';
+
+  asdasds = 'J';
 
   /** control for the selected bank */
   public bankCtrl: FormControl = new FormControl();
@@ -85,12 +89,32 @@ export class AppComponent implements OnInit {
     {name: 'Bank O (Germany)', id: 'O'},
     {name: 'Bank P (Germany)', id: 'P'},
     {name: 'Bank Q (Germany)', id: 'Q'},
-    {name: 'Bank R (Germany)', id: 'R'}
+    {name: 'Bank R (Germany)', id: 'R'},
   ];
+
+  bank = 'K';
 
   constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService) {
     this._rightsService.setRights(this.rights);
     this._rolesService.role = this.role;
+    moment.tz.setDefault('America/Chicago');
+    this.time = moment();
+    this.date2 = moment();
+  }
+
+  onDateChange(e) {
+    setTimeout(() => {
+
+    console.log(moment(e.selectedDates[0]).format());
+    console.log(moment(this.date).format())
+    console.log(moment(e.selectedDates[0]).endOf('d').format());
+    console.log(moment(this.date).endOf('d').format())
+    }, 300);
+
+  }
+
+  onChange($event) {
+    console.log($event);
   }
 
   ngOnInit() {
@@ -123,6 +147,22 @@ export class AppComponent implements OnInit {
           });
   }
 
+  mongthChange($event) {
+    console.log($event);
+    const m = $event.instance.currentMonth;
+
+    setTimeout(() => {
+      this.markedDates = [
+        ...this.markedDates,
+        moment().month(m).date(1),
+        moment().month(m).date(3),
+        moment().month(m).date(6),
+        moment().month(m).date(10)
+      ];
+    }, 1000);
+
+  }
+
   private filterBanks() {
     if (!this.banks) {
       return;
@@ -145,6 +185,7 @@ export class AppComponent implements OnInit {
 
   change($event) {
     console.log($event);
+    console.log(moment($event).toISOString())
   }
 
   onSubmit(f) {

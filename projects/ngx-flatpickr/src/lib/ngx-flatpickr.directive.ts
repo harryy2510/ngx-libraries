@@ -44,6 +44,43 @@ export interface FlatpickrDayCreateOutputOptions extends FlatpickrOutputOptions 
 })
 export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestroy, ControlValueAccessor {
 
+  _options = [
+    'altFormat',
+    'altInput',
+    'altInputClass',
+    'allowInput',
+    'appendTo',
+    'ariaDateFormat',
+    'conjunction',
+    'clickOpens',
+    'dateFormat',
+    'defaultHour',
+    'defaultMinute',
+    'disable',
+    'disableMobile',
+    'enable',
+    'enableTime',
+    'enableSeconds',
+    'formatDate',
+    'hourIncrement',
+    'defaultDate',
+    'inline',
+    'maxDate',
+    'minDate',
+    'minuteIncrement',
+    'mode',
+    'nextArrow',
+    'noCalendar',
+    'parseDate',
+    'prevArrow',
+    'shorthandCurrentMonth',
+    'static',
+    'time_24hr',
+    'weekNumbers',
+    'getWeek',
+    'wrap'
+  ];
+
   /**
    * Exactly the same as date format, but for the altInput field.
    */
@@ -463,7 +500,8 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
       },
       onDayCreate: (_dates: Date[], dateString: string, instance: any, dayElement: HTMLElement) => {
         if (this.markedDates && this.markedDates.length) {
-          if ((this.markedDates as any).indexOf(moment((dayElement as any).dateObj).startOf('d').valueOf()) > -1) {
+          const d = ((dayElement as any).dateObj as Date);
+          if ((this.markedDates as any).indexOf(`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`) > -1) {
             dayElement.innerHTML += `<span class="flatpickr-marked"></span>`;
           }
         }
@@ -478,21 +516,26 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   ngOnChanges(changes: SimpleChanges): void {
     if (this.instance) {
       Object.keys(changes).forEach((key: any) => {
-        const value = NgxFlatpickrDirective.convertFormat(key, this[key]);
-        this.instance.set(key, value);
-      });
-    }
-    if (this.markedDates && this.markedDates.length) {
-      this.markedDates = (this.markedDates as any).map(d => {
-        if (!isNaN(d)) {
-          d = +d;
+        switch (key) {
+          case 'markedDates':
+            if (this.markedDates && this.markedDates.length) {
+              this.markedDates = (this.markedDates as any).map(d => {
+                if (!isNaN(d)) {
+                  d = +d;
+                }
+                const _d = moment(d).startOf('d');
+                return `${_d.year()}-${_d.month()}-${_d.date()}`;
+              });
+              this.instance.redraw();
+            }
+            break;
+          default:
+            if (this._options.indexOf(key) > -1) {
+              const value = NgxFlatpickrDirective.convertFormat(key, this[key]);
+              this.instance.set(key, value);
+            }
         }
-        return moment(d).startOf('d').valueOf();
       });
-
-      if (this.instance) {
-        this.instance.redraw();
-      }
     }
   }
 

@@ -64,6 +64,12 @@
       ],
       "ngx-select/*": [
         "dist/ngx-select/*"
+      ],
+      "ngx-mat-select": [
+        "dist/ngx-mat-select"
+      ],
+      "ngx-mat-select/*": [
+        "dist/ngx-mat-select/*"
       ]
     }
   }

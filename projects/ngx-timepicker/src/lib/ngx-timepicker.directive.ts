@@ -164,7 +164,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
    * Default: 'hh:mm a'
    * How times should be displayed in the list and input element.
    */
-  @Input() timeFormat: string;
+  @Input() timeFormat: string = TIME_FORMAT;
   /**
    * Default: true
    * Highlight the nearest corresponding time option as a value is typed into the form input.
@@ -229,6 +229,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   @Output()
   onChange: EventEmitter<Moment> = new EventEmitter();
 
+  private parsedFormat = momentToTpDateFormat(this.timeFormat);
   private instance: any;
   private isDisabled = false;
   private initialValue: any;
@@ -242,19 +243,22 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
     private config: TimepickerConfig,
     private elm: ElementRef
   ) {
+    Object.keys(config).forEach((key: string) => {
+      if (typeof config[key] !== 'undefined') {
+        this[key] = config[key];
+      }
+    });
   }
 
   // tslint:disable-next-line
-  static convertFormat(key: string, value: any) {
+  convertFormat(key: string, value: any) {
     switch (key) {
-      case 'timeFormat':
-        return momentToTpDateFormat(value);
       case 'scrollDefault':
       case 'minTime':
       case 'maxTime':
       case 'durationTime':
         if (moment.isMoment(value) && value.isValid()) {
-          return new Date(moment(value).valueOf());
+          return moment(value).format(this.timeFormat);
         }
         break;
       case 'disableTimeRanges':
@@ -262,9 +266,9 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
         if (value instanceof Array) {
           dateRanges = value.map((date: any) => {
             if (typeof date === 'string' || date instanceof Date || (moment.isMoment(date) && date.isValid())) {
-              return NgxTimepickerDirective._buildTime(date);
+              return this._buildTime(date);
             } else if (typeof date === 'object' && typeof date.from !== 'undefined' && typeof date.to !== 'undefined') {
-              return NgxTimepickerDirective._buildTime(date.from, date.to);
+              return this._buildTime(date.from, date.to);
             }
           });
         }
@@ -273,18 +277,16 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
     return value;
   }
 
-  // tslint:disable-next-line
-  static _buildTime(d1: any, d2?: any): string[] {
+  _buildTime(d1: any, d2?: any): string[] {
     return [
-      moment(d1).format(TIME_FORMAT),
-      moment(d2 ? d2 : d1).add(1, 'm').format(TIME_FORMAT)
+      moment(d1).format(this.timeFormat),
+      moment(d2 ? d2 : d1).add(1, 'm').format(this.timeFormat)
     ];
   }
 
-  // tslint:disable-next-line
-  parseTime(d: any, format?: string): Moment {
+  parseTime(d: any): Moment {
     if (d instanceof Date || typeof(d) === 'string') {
-      const _time = format ? moment(d, format) : moment(d);
+      const _time = moment(d, this.timeFormat);
       const _date = moment(this.date);
       return _date.clone().startOf('d').set({
         hours: _time.hours(),
@@ -350,16 +352,18 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
       showOn: this.showOn,
       step: this.step,
       stopScrollPropagation: this.stopScrollPropagation,
-      timeFormat: this.timeFormat,
+      timeFormat: this.parsedFormat,
       typeaheadHighlight: this.typeaheadHighlight,
       useSelect: this.useSelect
     };
-    Object.keys(options).forEach((key: string) => {
+    this.timeFormat = this.config.timeFormat;
+    options.timeFormat = this.parsedFormat = momentToTpDateFormat(this.timeFormat);
+    Object.keys(options).filter(k => k !== 'timeFormat').forEach((key: string) => {
       if (typeof options[key] === 'undefined') {
         options[key] = (this.config as any)[key];
       }
       this[key] = options[key];
-      options[key] = NgxTimepickerDirective.convertFormat(key, options[key]);
+      options[key] = this.convertFormat(key, options[key]);
     });
     this.instance = jQuery(this.elm.nativeElement);
     this.instance.timepicker(options);
@@ -369,33 +373,33 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
 
   setEventListeners() {
     this.instance.on('change', () => {
-      const value = this.parseTime(this.elm.nativeElement.value, this.timeFormat);
+      const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerChange.emit({
         selectedTime: value.isValid() ? value : null
       });
     });
     this.instance.on('changeTime', () => {
-      const value = this.parseTime(this.elm.nativeElement.value, this.timeFormat);
+      const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerChangeTime.emit({
         selectedTime: value.isValid() ? value : null
       });
       this.validate();
     });
     this.instance.on('selectTime', () => {
-      const value = this.parseTime(this.elm.nativeElement.value, this.timeFormat);
+      const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerSelectTime.emit({
         selectedTime: value.isValid() ? value : null
       });
     });
     this.instance.on('hideTimepicker', () => {
-      const value = this.parseTime(this.elm.nativeElement.value, this.timeFormat);
+      const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerOpen.emit({
         selectedTime: value.isValid() ? value : null
       });
       this.validate();
     });
     this.instance.on('showTimepicker', () => {
-      const value = this.parseTime(this.elm.nativeElement.value, this.timeFormat);
+      const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerOpen.emit({
         selectedTime: value.isValid() ? value : null
       });
@@ -404,8 +408,12 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.instance) {
-      Object.keys(changes).forEach((key: any) => {
-        const value = NgxTimepickerDirective.convertFormat(key, this[key]);
+      if (Object.keys(changes).indexOf('timeFormat') > -1) {
+        this.parsedFormat = momentToTpDateFormat(this.timeFormat);
+        this.instance.timepicker('option', 'timeFormat', this.parsedFormat);
+      }
+      Object.keys(changes).filter(k => k !== 'timeFormat').forEach((key: any) => {
+        const value = this.convertFormat(key, this[key]);
         this.instance.timepicker('option', key, value);
       });
     }
@@ -423,7 +431,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }
 
   validate() {
-    let parsedValue: Moment = this.parseTime(this.elm.nativeElement.value, this.timeFormat);
+    let parsedValue: Moment = this.parseTime(this.elm.nativeElement.value);
     parsedValue = parsedValue.isValid() ? parsedValue : null;
     if (this.isChanged(parsedValue)) {
       this.currentValue = parsedValue;
@@ -445,7 +453,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }
 
   private setTime(value: any) {
-    const parsedValue: any = value ? new Date(moment(value).valueOf()) : null;
+    const parsedValue: any = value ? moment(value).format(this.timeFormat) : null;
     if (this.instance) {
       this.instance.timepicker('setTime', parsedValue);
     } else {

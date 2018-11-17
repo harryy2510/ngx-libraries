@@ -1,0 +1,85 @@
+:host {
+  display: inline-block;
+  animation-name: cdk-text-field-autofill-end;
+  margin-top: -.0625em;
+  vertical-align: bottom;
+  width: 100%;
+  max-width: 100%;
+  font: inherit;
+}
+
+::ng-deep {
+  .ng-select, .ng-select.ng-select-multiple, .ng-select.ng-select-single {
+    padding: 0;
+
+    .ng-select-container {
+      align-items: center;
+      min-height: auto;
+      &:after {
+        content: none;
+      }
+
+      .ng-arrow-wrapper,
+      .ng-clear-wrapper {
+        bottom: auto;
+        bottom: unset;
+        text-align: center;
+
+        .ng-clear {
+          font-size: 15px;
+          top: -3px;
+          position: relative;
+        }
+
+        .ng-arrow {
+          top: -4px;
+        }
+      }
+
+      .ng-value-container {
+        padding: 0;
+        align-items: center;
+        border-top: none;
+        min-height: 15px;
+
+        .ng-input {
+          line-height: inherit;
+          bottom: 0;
+
+          input {
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .ng-dropdown-panel {
+    max-height: 256px;
+
+    &.ng-select-bottom {
+      transform-origin: top;
+    }
+
+    &.ng-select-top {
+      transform-origin: bottom;
+    }
+
+    &.ng-select-bottom, &.ng-select-top {
+      border-radius: 4px;
+      box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+      animation: 120ms cubic-bezier(0, 0, 0.2, 1) transformPanelAnimation;
+    }
+  }
+
+  @keyframes transformPanelAnimation {
+    0% {
+      transform: scaleY(0.8);
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+  }
+}

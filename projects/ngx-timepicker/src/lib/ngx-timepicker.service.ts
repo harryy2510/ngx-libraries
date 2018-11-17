@@ -169,6 +169,8 @@ export class TimepickerConfig {
    */
   date?: Date | string | Moment;
 
+  private parsedFormat?: string;
+
   constructor() {
     this.closeOnWindowScroll = false;
     this.disableTextInput = false;
@@ -182,6 +184,7 @@ export class TimepickerConfig {
     this.step = 30;
     this.stopScrollPropagation = false;
     this.timeFormat = TIME_FORMAT;
+    this.parsedFormat = momentToTpDateFormat(this.timeFormat);
     this.typeaheadHighlight = true;
     this.useSelect = false;
     this.date = moment().startOf('d');
@@ -218,8 +221,7 @@ export const momentToTpDateFormat = (format: string) => {
     'X': 'U'
   };
   format = format ? format.toString() : TIME_FORMAT;
-  format = strtr(format, replacement);
-  return format;
+  return strtr(format, replacement);
 };
 
 const strtr = (str: string, replacement: any) => {

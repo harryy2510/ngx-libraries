@@ -10,8 +10,9 @@ import {NgxRolesModule} from '../../projects/ngx-roles/src/lib/ngx-roles.module'
 import {NgxTrumbowygModule} from '../../projects/ngx-trumbowyg/src/lib/ngx-trumbowyg.module';
 import {NgxFormsModule} from '../../projects/ngx-forms/src/lib/ngx-forms.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgxSelectModule} from '../../projects/ngx-select/src/lib/ngx-select.module';
 import {NgxRightsModule} from '../../projects/ngx-rights/src/lib/ngx-rights.module';
+import {NgxMatSelectModule} from '../../projects/ngx-mat-select/src/lib/ngx-mat-select.module';
+import {MatFormFieldModule, MatInputModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,9 @@ import {NgxRightsModule} from '../../projects/ngx-rights/src/lib/ngx-rights.modu
     NgxTrumbowygModule,
     NgxFormsModule,
     BrowserAnimationsModule,
+    NgxMatSelectModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
