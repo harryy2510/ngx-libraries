@@ -5,7 +5,6 @@ import * as moment from 'moment';
 import {NgxRolesService} from '../../projects/ngx-roles/src/lib/ngx-roles.service';
 import {Role, RoleType} from '../../projects/ngx-roles/src/lib/protos/appointy.go.roles.service';
 import {FormControl} from '@angular/forms';
-import {takeUntil} from 'rxjs/operators';
 import {ReplaySubject} from 'rxjs';
 import {NgxRightsService} from '../../projects/ngx-rights/src/lib/ngx-rights.service';
 import 'moment-timezone';
@@ -23,7 +22,10 @@ export class AppComponent implements OnInit {
 
   rights = {
     userId: 'dfdsf',
-    allowed: [{ resource: '**/service-providers/{service_provider_id.id}/**/*', values: [1, 2, 3, 4] }, { resource: '!**/service-providers/{service_provider_id.id}/certificates/*', values: [1, 2, 3, 4] }],
+    allowed: [{
+      resource: '**/service-providers/{service_provider_id.id}/**/*',
+      values: [1, 2, 3, 4]
+    }, {resource: '!**/service-providers/{service_provider_id.id}/certificates/*', values: [1, 2, 3, 4]}],
     notAllowed: []
   };
   tests = [
@@ -70,6 +72,7 @@ export class AppComponent implements OnInit {
   // /** list of banks filtered by search keyword for multi-selection */
   public filteredBanksMulti: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   avatars = [];
+  bank = 'K';
   /** list of banks */
   private banks: any[] = [
     {name: 'Bank A (Switzerland)', id: 'A'},
@@ -92,8 +95,6 @@ export class AppComponent implements OnInit {
     {name: 'Bank R (Germany)', id: 'R'},
   ];
 
-  bank = 'K';
-
   constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService) {
     this._rightsService.setRights(this.rights);
     this._rolesService.role = this.role;
@@ -105,10 +106,10 @@ export class AppComponent implements OnInit {
   onDateChange(e) {
     setTimeout(() => {
 
-    console.log(moment(e.selectedDates[0]).format());
-    console.log(moment(this.date).format())
-    console.log(moment(e.selectedDates[0]).endOf('d').format());
-    console.log(moment(this.date).endOf('d').format())
+      console.log(moment(e.selectedDates[0]).format());
+      console.log(moment(this.date).format())
+      console.log(moment(e.selectedDates[0]).endOf('d').format());
+      console.log(moment(this.date).endOf('d').format())
     }, 300);
 
   }
@@ -140,11 +141,11 @@ export class AppComponent implements OnInit {
     });
 
     this.filteredBanks.next(this.banks.slice());
-       // listen for search field value changes
-       this.bankFilterCtrl.valueChanges
-          .subscribe(() => {
-            this.filterBanks();
-          });
+    // listen for search field value changes
+    this.bankFilterCtrl.valueChanges
+      .subscribe(() => {
+        this.filterBanks();
+      });
   }
 
   mongthChange($event) {
@@ -161,6 +162,15 @@ export class AppComponent implements OnInit {
       ];
     }, 1000);
 
+  }
+
+  change($event) {
+    console.log($event);
+    console.log(moment($event).toISOString())
+  }
+
+  onSubmit(f) {
+    console.log(f);
   }
 
   private filterBanks() {
@@ -181,15 +191,6 @@ export class AppComponent implements OnInit {
     this.filteredBanks.next(
       this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
     );
-  }
-
-  change($event) {
-    console.log($event);
-    console.log(moment($event).toISOString())
-  }
-
-  onSubmit(f) {
-    console.log(f);
   }
 
 }

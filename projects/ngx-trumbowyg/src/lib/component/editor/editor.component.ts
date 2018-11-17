@@ -1,16 +1,9 @@
-import {
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  Optional,
-  ViewChild
-} from '@angular/core';
-import { NgControl } from '@angular/forms';
+import {Component, ElementRef, Inject, Input, Optional, ViewChild} from '@angular/core';
+import {NgControl} from '@angular/forms';
 
-import { EditorBase } from '../../commons/editor-base';
-import { TRUMBOWYG_OPTIONS } from '../../configs/injection-token';
-import { TrumbowygOptions } from '../../configs/trumbowyg-options';
+import {EditorBase} from '../../commons/editor-base';
+import {TRUMBOWYG_OPTIONS} from '../../configs/injection-token';
+import {TrumbowygOptions} from '../../configs/trumbowyg-options';
 
 @Component({
   // tslint:disable-next-line:component-selector

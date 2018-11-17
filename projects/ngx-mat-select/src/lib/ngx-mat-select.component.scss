@@ -15,8 +15,13 @@
     .ng-select-container {
       align-items: center;
       min-height: auto;
+
       &:after {
         content: none;
+      }
+
+      .ng-clear-wrapper {
+        z-index: 2;
       }
 
       .ng-arrow-wrapper,
@@ -24,6 +29,7 @@
         bottom: auto;
         bottom: unset;
         text-align: center;
+        border-top: none;
 
         .ng-clear {
           font-size: 15px;
@@ -40,15 +46,52 @@
         padding: 0;
         align-items: center;
         border-top: none;
-        min-height: 15px;
+        height: 15px;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        > * {
+          display: inline-block;
+        }
+
+        .ng-value {
+          background-color: transparent;
+          border-radius: 0;
+          color: initial;
+          padding: 0;
+          margin: 0;
+        }
 
         .ng-input {
           line-height: inherit;
+          left: 0;
           bottom: 0;
+          position: absolute;
+          width: 100%;
 
           input {
             padding: 0;
           }
+        }
+      }
+
+      &.ng-has-value {
+        .ng-arrow-wrapper,
+        .ng-clear-wrapper {
+          border-top: none;
+        }
+        .ng-value-container {
+          padding: 0;
+        }
+      }
+    }
+
+    &.ng-select-filtered {
+      .ng-value-container {
+        .ng-value {
+          visibility: hidden;
         }
       }
     }
@@ -69,6 +112,25 @@
       border-radius: 4px;
       box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
       animation: 120ms cubic-bezier(0, 0, 0.2, 1) transformPanelAnimation;
+    }
+
+    .mat-checkbox {
+      pointer-events: none;
+      display: block;
+      max-width: 100%;
+
+      .mat-checkbox-layout {
+        color: rgba(0, 0, 0, 0.87);
+        font-size: 14px;
+        max-width: 100%;
+
+        .mat-checkbox-label {
+          display: block;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
   }
 

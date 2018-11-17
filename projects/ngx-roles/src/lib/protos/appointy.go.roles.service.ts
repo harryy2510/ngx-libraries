@@ -1,6 +1,4 @@
-import { Observable } from 'rxjs';
-import { LocationRoot } from './appointy.go.location.service';
-import { ProgramRoot } from './appointy.go.program.service';
+import {LocationRoot} from './appointy.go.location.service';
 
 export enum RoleType {
   PROGRAM_MANAGER = 0,

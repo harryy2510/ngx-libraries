@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, forwardRef, Injector} from '@angular/core';
 import {FormInputBase} from '../common/base.class';
-import {ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
+import {NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'ngx-date',

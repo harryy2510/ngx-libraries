@@ -1,8 +1,8 @@
-import { Directive, ElementRef, Inject, Input, Optional } from '@angular/core';
-import { NgControl } from '@angular/forms';
-import { EditorBase } from '../commons/editor-base';
-import { TrumbowygOptions } from '../configs/trumbowyg-options';
-import { TRUMBOWYG_OPTIONS } from '../configs/injection-token';
+import {Directive, ElementRef, Inject, Input, Optional} from '@angular/core';
+import {NgControl} from '@angular/forms';
+import {EditorBase} from '../commons/editor-base';
+import {TrumbowygOptions} from '../configs/trumbowyg-options';
+import {TRUMBOWYG_OPTIONS} from '../configs/injection-token';
 
 @Directive({
   selector: '[ngxTrumbowygEditor]',

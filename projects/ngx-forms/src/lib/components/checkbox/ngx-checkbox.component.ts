@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, forwardRef, Injector, Input} from '@angular/core';
-import {ControlContainer, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
+import {NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {FormInputBase} from '../common/base.class';
 
 @Component({

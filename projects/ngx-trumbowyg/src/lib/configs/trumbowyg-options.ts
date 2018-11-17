@@ -1,4 +1,4 @@
-import { CustomButton } from './custom-button';
+import {CustomButton} from './custom-button';
 
 export interface TrumbowygOptions {
   prefix?: string;

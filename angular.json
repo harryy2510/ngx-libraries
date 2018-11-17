@@ -463,6 +463,11 @@
           "options": {
             "tsConfig": "projects/ngx-mat-select/tsconfig.lib.json",
             "project": "projects/ngx-mat-select/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngx-select/ng-package.prod.json"
+            }
           }
         },
         "test": {

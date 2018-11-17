@@ -1,13 +1,19 @@
-import { Observable } from 'rxjs';
-import { ProgramRoot } from './appointy.go.program.service';
+import {Observable} from 'rxjs';
+import {ProgramRoot} from './appointy.go.program.service';
 
 export abstract class ServiceLocations {
   abstract addLocation(location: Location): Observable<LocationIdentifier>;
+
   abstract getLocation(locationIdentifier: LocationIdentifier): Observable<Location>;
+
   abstract updateLocation(location: Location): Observable<void>;
+
   abstract deleteLocation(locationIdentifier: LocationIdentifier): Observable<void>;
+
   abstract getLocationsByProgram(programRoot: ProgramRoot): Observable<LocationList>;
+
   abstract getLocationByCode(getLocationByCodeReq: GetLocationByCodeReq): Observable<Location>;
+
   abstract changeLocationStatus(changeLocationStatusReq: ChangeLocationStatusReq): Observable<void>;
 }
 

@@ -2,16 +2,9 @@
   <div class="row">
     <div class="col-12">
       <form #f="ngForm">
-        <mat-form-field>
+        <mat-form-field appearance="standard">
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)">
-            <ng-template #lableTemplate let-item="item">
-              {{ item.id }} {{ item.title }}
-            </ng-template>
-            <ng-template #optionTemplate let-item="item">
-              {{ item.id }} {{ item.title }}
-            </ng-template>
-          </ngx-mat-select>
+          <ngx-mat-select name="select" [closeOnSelect]="false" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" [multiple]="true" required (change)="onChange($event)"></ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>
@@ -39,7 +32,7 @@
       <form #f="ngForm">
         <mat-form-field>
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>
@@ -65,7 +58,7 @@
       <form #f="ngForm">
         <mat-form-field>
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>
@@ -91,7 +84,7 @@
       <form #f="ngForm">
         <mat-form-field>
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>
@@ -117,7 +110,7 @@
       <form #f="ngForm">
         <mat-form-field>
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>
@@ -143,132 +136,7 @@
       <form #f="ngForm">
         <mat-form-field>
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-      </form>
-    </div>
-  </div>
-</div><div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <form #f="ngForm">
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-      </form>
-    </div>
-  </div>
-</div><div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <form #f="ngForm">
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-      </form>
-    </div>
-  </div>
-</div><div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <form #f="ngForm">
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-      </form>
-    </div>
-  </div>
-</div><div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <form #f="ngForm">
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
-          <mat-hint>Include area code</mat-hint>
-          <mat-error>Required</mat-error>
-        </mat-form-field>
-      </form>
-    </div>
-  </div>
-</div><div class="container-fluid p-5">
-  <div class="row">
-    <div class="col-12">
-      <form #f="ngForm">
-        <mat-form-field>
-          <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>
@@ -294,7 +162,7 @@
       <form #f="ngForm">
         <mat-form-field>
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>
@@ -320,7 +188,7 @@
       <form #f="ngForm">
         <mat-form-field>
           <mat-label>Phone number</mat-label>
-          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name"  bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
           <mat-hint>Include area code</mat-hint>
           <mat-error>Required</mat-error>
         </mat-form-field>
@@ -340,12 +208,136 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
+<div class="container-fluid p-5">
+  <div class="row">
+    <div class="col-12">
+      <form #f="ngForm">
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container-fluid p-5">
+  <div class="row">
+    <div class="col-12">
+      <form #f="ngForm">
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container-fluid p-5">
+  <div class="row">
+    <div class="col-12">
+      <form #f="ngForm">
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container-fluid p-5">
+  <div class="row">
+    <div class="col-12">
+      <form #f="ngForm">
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container-fluid p-5">
+  <div class="row">
+    <div class="col-12">
+      <form #f="ngForm">
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Phone number</mat-label>
+          <input name="sadd" [(ngModel)]="dsjfgsjfgjs" matInput>
+          <mat-hint>Include area code</mat-hint>
+          <mat-error>Required</mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 <!--&lt;!&ndash;<div class="container-fluid p-5">&ndash;&gt;--><!--&lt;!&ndash;<div class="row">&ndash;&gt;--><!--&lt;!&ndash;<div class="col-12">&ndash;&gt;--><!--&lt;!&ndash;<form #f3="ngForm" (submit)="onSubmit(f2)">&ndash;&gt;--><!--&lt;!&ndash;<mat-form-field>&ndash;&gt;--><!--&lt;!&ndash;<mat-select [formControl]="bankMultiCtrl" placeholder="Banks" [multiple]="true" #multiSelect>&ndash;&gt;--><!--&lt;!&ndash;<ngx-select [formControl]="bankMultiFilterCtrl"></ngx-select>&ndash;&gt;--><!--&lt;!&ndash;<mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank">&ndash;&gt;--><!--&lt;!&ndash;{{bank.name}}&ndash;&gt;--><!--&lt;!&ndash;</mat-option>&ndash;&gt;--><!--&lt;!&ndash;</mat-select>&ndash;&gt;--><!--&lt;!&ndash;</mat-form-field>&ndash;&gt;--><!--&lt;!&ndash;<button type="submit">Submit</button>&ndash;&gt;--><!--&lt;!&ndash;</form>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f2="ngForm" (submit)="onSubmit(f2)">--><!--<ngx-input hint="sdhsfhskdfk" #xx="ngModel" [(ngModel)]="dsjfgsjfgjs" validators="required" name="X"></ngx-input>--><!--{{ xx?.errors | json }}--><!--&lt;!&ndash;<ngx-input type="number" #yy="ngModel" [(ngModel)]="formValues.y" [validators]="[ 'required', { type: 'lte', value: formValues.x } ]" name="Y"></ngx-input>&ndash;&gt;--><!--&lt;!&ndash;<ngx-checkbox [(ngModel)]="formValues.premium" name="Premium"></ngx-checkbox>&ndash;&gt;--><!--&lt;!&ndash;<ngx-date [(ngModel)]="formValues.date" validators="required" name="Date"></ngx-date>&ndash;&gt;--><!--&lt;!&ndash;<ngx-input [(ngModel)]="formValues.serviceName" validators="required" name="Service Name"></ngx-input>&ndash;&gt;--><!--&lt;!&ndash;<ngx-password [(ngModel)]="formValues.password" validators="required" name="Password"></ngx-password>&ndash;&gt;--><!--&lt;!&ndash;<ngx-radio [(ngModel)]="formValues.radio" name="Radio"></ngx-radio>&ndash;&gt;--><!--<ngx-select #ds="ngModel" [(ngModel)]="formValues.select" validators="required" name="Select" bindValue="value" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>--><!--{{ ds?.errors | json }}--><!--{{ f2?.status }}--><!--&lt;!&ndash;&lt;!&ndash;<ngx-select [(ngModel)]="formValues.selectMultiple" validators="required" name="Select Multiple" [multiple]="true" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>&ndash;&gt;&ndash;&gt;--><!--&lt;!&ndash;<ngx-checkbox [(ngModel)]="formValues.premium" name="Premium"></ngx-checkbox>&ndash;&gt;--><!--&lt;!&ndash;<ngx-textarea [(ngModel)]="formValues.textarea" validators="required" name="Textarea"></ngx-textarea>&ndash;&gt;--><!--&lt;!&ndash;<ngx-time [(ngModel)]="formValues.time" validators="required" name="Time"></ngx-time>&ndash;&gt;--><!--&lt;!&ndash;&lt;!&ndash;<ngx-wysiwyg [(ngModel)]="formValues.wysiwyg"  [validators]="{ type: 'maxLength', value: 50 }" name="HTML"></ngx-wysiwyg>&ndash;&gt;&ndash;&gt;--><!--&lt;!&ndash;&lt;!&ndash;{{formValues.wysiwyg}}&ndash;&gt;&ndash;&gt;--><!--<button type="submit">Submit</button>--><!--</form>--><!--</div>--><!--</div>--><!--</div>-->

@@ -1,6 +1,6 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { NgxSelectService } from './ngx-select.service';
+import {NgxSelectService} from './ngx-select.service';
 
 describe('NgxSelectService', () => {
   beforeEach(() => {

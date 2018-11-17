@@ -151,10 +151,9 @@ export abstract class FormInputBase implements ControlValueAccessor, OnChanges, 
   };
   public _ref: ChangeDetectorRef;
   public form: NgForm;
+  initialized = false;
   private _formDiffer: KeyValueDiffer<string, any>;
   private _differs: KeyValueDiffers;
-
-  initialized = false;
 
   constructor(public injector: Injector) {
     this._ref = injector.get(ChangeDetectorRef);

@@ -1,11 +1,16 @@
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
 export abstract class ServicePrograms {
   abstract addProgram(program: Program): Observable<ProgramIdentifier>;
+
   abstract getProgram(programIdentifier: ProgramIdentifier): Observable<Program>;
+
   abstract updateProgram(program: Program): Observable<void>;
+
   abstract deleteProgram(programIdentifier: ProgramIdentifier): Observable<void>;
+
   abstract getPrograms(): Observable<ProgramList>;
+
   abstract changeProgramStatus(changeProgramStatusReq: ChangeProgramStatusReq): Observable<void>;
 }
 

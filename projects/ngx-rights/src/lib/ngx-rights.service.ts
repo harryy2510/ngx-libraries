@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {distinctUntilChanged} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
 
 import * as mm_ from 'multimatch';
 
@@ -26,8 +25,8 @@ export interface PatternUserRightTest {
 export class NgxRightsService {
 
   private _rights: PatternUserRight;
-  private _parsedRights: PatternRight[];
   public rights: BehaviorSubject<PatternUserRight> = new BehaviorSubject<PatternUserRight>(this._rights);
+  private _parsedRights: PatternRight[];
 
   setRights(rights: PatternUserRight): void {
     if (rights.allowed && rights.notAllowed && rights.userId) {

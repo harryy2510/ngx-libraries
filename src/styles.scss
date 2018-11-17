@@ -1,10 +1,19 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/theming';
+
+@include mat-core();
+$app-primary: mat-palette($mat-blue, 700, 300, 900);
+$app-accent: mat-palette($mat-blue, A400, A200, A700);
+$app-warn: mat-palette($mat-red, 700, 300, 900);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+@include angular-material-theme($app-theme);
+
 * {
   font-family: sans-serif;
 }
-@import "~@ng-select/ng-select/scss/material.theme";
+
 @import '~daemonite-material/assets/scss/colors';
+$highlight-color: $material-color-blue-700;
+@import "~@ng-select/ng-select/scss/material.theme";
 
 $primary: (
   color: $material-color-light-blue-400,

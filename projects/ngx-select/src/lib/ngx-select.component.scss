@@ -12,6 +12,7 @@ $multiple-check-width: 33px;
 .mat-select-search-hidden {
   visibility: hidden;
 }
+
 .mat-select-search-inner {
   position: absolute;
   top: 0;
@@ -45,14 +46,17 @@ $multiple-check-width: 33px;
   padding-right: $mat-menu-side-padding + $clear-button-width;
   box-sizing: border-box;
 }
+
 .mat-select-search-no-entries-found {
   padding: $mat-menu-side-padding;
 }
+
 .mat-select-search-clear {
   position: absolute;
   right: 4px;
   top: 5px;
 }
+
 /deep/ .cdk-overlay-pane-select-search {
   /* correct offsetY so that the selected option is at the position of the select box when opening */
   margin-top: -50px;

@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   ChangeDetectorRef,
-  Component, ContentChild, ElementRef,
+  Component,
   EventEmitter,
   HostBinding,
   HostListener,
@@ -11,7 +11,7 @@ import {
   Optional,
   Output,
   Self,
-  SimpleChanges, TemplateRef,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
@@ -71,7 +71,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Input() selectableGroup: boolean;
   @Input() selectableGroupAsModel: boolean;
   @Input() searchFn: Function;
-  @Input() clearOnBackspace = true;
+  @Input() clearOnBackspace = false;
   @Input() typeahead: Subject<string>;
   @Input() multiple: boolean;
   @Input() addTag: boolean | AddTagFn;
@@ -93,9 +93,13 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Output('scroll') scrollEvent = new EventEmitter<{ start: number; end: number }>();
   @Output('scrollToEnd') scrollToEndEvent = new EventEmitter<{ start: number; end: number }>();
 
-  @ContentChild('labelTemplate') labelTemplate: TemplateRef<ElementRef>;
-  @ContentChild('optionTemplate') optionTemplate: TemplateRef<ElementRef>;
-
+  pluralMapping = {
+    other: {
+      '=0': '',
+      '=1': '(+# other)',
+      'other': '(+# others)'
+    }
+  };
 
   constructor(private fm: FocusMonitor, private cdRef: ChangeDetectorRef, @Optional() @Self() public ngControl: NgControl) {
     if (this.ngControl) {

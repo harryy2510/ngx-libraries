@@ -56,7 +56,7 @@ export class NgxSelectComponent implements OnInit, OnDestroy, AfterViewInit, Con
 
   /** Reference to custom search input clear icon */
 
-  // @ContentChild(MatSelectSearchClearDirective) clearIcon: MatSelectSearchClearDirective;
+    // @ContentChild(MatSelectSearchClearDirective) clearIcon: MatSelectSearchClearDirective;
   onChange: Function = (_: any) => {
   };
   onTouched: Function = (_: any) => {
