@@ -1,11 +1,60 @@
-<ng-select [(ngModel)]="_value" [labelForId]="id" [name]="id" [required]="required" [placeholder]="placeholder" [disabled]="disabled" [items]="items" [bindLabel]="bindLabel" [bindValue]="bindValue" [clearable]="clearable" [markFirst]="markFirst" [notFoundText]="notFoundText" [typeToSearchText]="typeToSearchText" [addTagText]="addTagText" [loadingText]="loadingText" [clearAllText]="clearAllText" [dropdownPosition]="dropdownPosition" [appendTo]="appendTo" [loading]="loading" [closeOnSelect]="closeOnSelect" [hideSelected]="hideSelected" [selectOnTab]="selectOnTab" [openOnEnter]="openOnEnter" [maxSelectedItems]="maxSelectedItems" [groupBy]="groupBy" [groupValue]="groupValue" [bufferAmount]="bufferAmount" [virtualScroll]="virtualScroll" [selectableGroup]="selectableGroup" [selectableGroupAsModel]="selectableGroupAsModel" [searchFn]="searchFn" [clearOnBackspace]="clearOnBackspace" [typeahead]="typeahead" [multiple]="multiple" [addTag]="addTag" [searchable]="searchable" [isOpen]="isOpen" [clearSearchOnAdd]="clearSearchOnAdd" (blur)="onBlur($event)" (focus)="onFocus($event)" (change)="emitChange($event)" (open)="openEvent.emit($event)" (close)="closeEvent.emit($event)" (search)="searchEvent.emit($event)" (clear)="clearEvent.emit($event)" (add)="addEvent.emit($event)" (remove)="removeEvent.emit($event)" (scroll)="scrollEvent.emit($event)" (scrollToEnd)="scrollToEndEvent.emit($event)">
+<ng-select
+  [(ngModel)]="_value"
+  [labelForId]="id"
+  [name]="id"
+  [required]="required"
+  [placeholder]="placeholder"
+  [disabled]="disabled"
+  [items]="items"
+  [bindLabel]="bindLabel"
+  [bindValue]="bindValue"
+  [clearable]="clearable"
+  [markFirst]="markFirst"
+  [notFoundText]="notFoundText"
+  [typeToSearchText]="typeToSearchText"
+  [addTagText]="addTagText"
+  [loadingText]="loadingText"
+  [clearAllText]="clearAllText"
+  [dropdownPosition]="dropdownPosition"
+  [appendTo]="appendTo"
+  [loading]="loading"
+  [closeOnSelect]="closeOnSelect"
+  [hideSelected]="hideSelected"
+  [selectOnTab]="selectOnTab"
+  [openOnEnter]="openOnEnter"
+  [maxSelectedItems]="maxSelectedItems"
+  [groupBy]="groupBy"
+  [groupValue]="groupValue"
+  [bufferAmount]="bufferAmount"
+  [virtualScroll]="virtualScroll"
+  [selectableGroup]="selectableGroup"
+  [selectableGroupAsModel]="selectableGroupAsModel"
+  [searchFn]="searchFn"
+  [clearOnBackspace]="clearOnBackspace"
+  [typeahead]="typeahead"
+  [multiple]="multiple"
+  [addTag]="addTag"
+  [searchable]="searchable"
+  [isOpen]="isOpen"
+  [clearSearchOnAdd]="clearSearchOnAdd"
+  (blur)="onBlur($event)"
+  (focus)="onFocus($event)"
+  (change)="emitChange($event)"
+  (open)="onOpen($event)"
+  (close)="onClose($event)"
+  (search)="searchEvent.emit($event)"
+  (clear)="clearEvent.emit($event)"
+  (add)="addEvent.emit($event)"
+  (remove)="removeEvent.emit($event)"
+  (scroll)="scrollEvent.emit($event)"
+  (scrollToEnd)="scrollToEndEvent.emit($event)">
   <ng-template ng-multi-label-tmp let-items="items">
     <span class="ng-value">{{ bindLabel ? items[0][bindLabel] : items[0] }}</span>
     <small class="ng-value" *ngIf="items.length > 1">{{ (items.length - 1) | i18nPlural : pluralMapping.other }}</small>
   </ng-template>
   <ng-template *ngIf="multiple" ng-option-tmp let-item$="item$">
-    <div>
-      <mat-checkbox style="pointer-events: none" [ngModel]="item$.selected">{{ item$.label }}</mat-checkbox>
-    </div>
+    <mat-checkbox [ngModel]="item$.selected">{{ item$.label }}</mat-checkbox>
   </ng-template>
 </ng-select>
+
+<ng-template #templatePortal></ng-template>

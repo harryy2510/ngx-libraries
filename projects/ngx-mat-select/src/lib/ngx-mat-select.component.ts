@@ -12,7 +12,9 @@ import {
   Output,
   Self,
   SimpleChanges,
-  ViewChild
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
@@ -21,6 +23,8 @@ import {Subject} from 'rxjs';
 import {FocusMonitor} from '@angular/cdk/a11y';
 import {NgSelectComponent} from '@ng-select/ng-select';
 import {AddTagFn, CompareWithFn, DropdownPosition} from '@ng-select/ng-select/ng-select/ng-select.component';
+import {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
+import {TemplatePortal} from '@angular/cdk/portal';
 
 @Component({
   selector: 'ngx-mat-select',
@@ -43,10 +47,9 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   propogateTouched = () => {
   } // tslint:disable-line
   @ViewChild(NgSelectComponent) select: NgSelectComponent;
+
   // inputs
   @Input() items: T[] = [];
-
-  // Ng Select Properties
   @Input() bindLabel: string;
   @Input() bindValue: string;
   @Input() clearable = true;
@@ -101,7 +104,14 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
     }
   };
 
-  constructor(private fm: FocusMonitor, private cdRef: ChangeDetectorRef, @Optional() @Self() public ngControl: NgControl) {
+  @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
+  overlayRef: OverlayRef;
+
+  constructor(private viewContainerRef: ViewContainerRef,
+              private fm: FocusMonitor,
+              private cdRef: ChangeDetectorRef,
+              @Optional() @Self() public ngControl: NgControl,
+              private overlay: Overlay) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
@@ -253,6 +263,51 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
     this.propogateTouched();
     this.stateChanges.next();
     this.blurEvent.emit(event);
+    this.removeOverlay();
+  }
+
+  onOpen(event) {
+    this.createOverlay();
+    this.openEvent.emit(event);
+  }
+
+  open() {
+    if (this.select && !this.select.isOpen) {
+      this.select.open();
+    }
+  }
+
+  close() {
+    if (this.select && this.select.isOpen) {
+      this.select.close();
+    }
+  }
+
+  onClose(event) {
+    this.removeOverlay();
+    this.closeEvent.emit(event)
+  }
+
+  createOverlay() {
+    const portalHost = new TemplatePortal(this.templatePortal, this.viewContainerRef);
+    let config = new OverlayConfig();
+    config.positionStrategy = this.overlay
+      .position()
+      .global();
+    config.scrollStrategy = this.overlay.scrollStrategies.block();
+    this.overlayRef = this.overlay.create(config);
+    this.overlayRef.backdropClick().subscribe(() => {
+      this.close();
+      this.removeOverlay();
+    });
+    this.overlayRef.attach(portalHost);
+  }
+
+  removeOverlay() {
+    if (this.overlayRef) {
+      this.overlayRef.dispose();
+      this.overlayRef = null;
+    }
   }
 
   emitChange($event) {
