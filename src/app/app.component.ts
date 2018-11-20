@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
   // /** list of banks filtered by search keyword for multi-selection */
   public filteredBanksMulti: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   avatars = [];
-  bank = 'K';
+  bank = '';
   /** list of banks */
   private banks: any[] = [
     {name: 'Bank A (Switzerland)', id: 'A'},
@@ -94,6 +94,17 @@ export class AppComponent implements OnInit {
     {name: 'Bank Q (Germany)', id: 'Q'},
     {name: 'Bank R (Germany)', id: 'R'},
   ];
+  private banks2: any[] = [
+    {name: 'Bank A (Switzerland)', id: 0},
+    {name: 'Bank B (Switzerland)', id: 1},
+    {name: 'Bank C (France)', id: 2},
+    {name: 'Bank D (France)', id: 3},
+    {name: 'Bank E (France)', id: 4},
+    {name: 'Bank F (Italy)', id: 5},
+    {name: 'Bank G (Italy)', id: 6}
+  ];
+
+
 
   constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService) {
     this._rightsService.setRights(this.rights);

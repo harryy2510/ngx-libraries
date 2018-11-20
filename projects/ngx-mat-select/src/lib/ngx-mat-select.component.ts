@@ -2,7 +2,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ContentChild, ContentChildren,
+  ContentChild,
   EventEmitter,
   HostBinding,
   HostListener,
@@ -10,7 +10,7 @@ import {
   OnChanges,
   OnDestroy,
   Optional,
-  Output, QueryList,
+  Output,
   Self,
   SimpleChanges,
   TemplateRef,
@@ -43,12 +43,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   controlType = 'ngx-mat-select';
   @HostBinding() id = `${this.controlType}-${NgxMatSelectComponent.nextId++}`;
   @HostBinding('attr.aria-describedBy') describedBy = '';
-  propogateChange = (_: any) => {
-  } // tslint:disable-line
-  propogateTouched = () => {
-  } // tslint:disable-line
   @ViewChild(NgSelectComponent) select: NgSelectComponent;
-
   // inputs
   @Input() items: T[] = [];
   @Input() bindLabel: string;
@@ -83,7 +78,6 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Input() searchable = true;
   @Input() compareWith: CompareWithFn;
   @Input() clearSearchOnAdd: boolean;
-
   // output events
   @Output('blur') blurEvent = new EventEmitter();
   @Output('focus') focusEvent = new EventEmitter();
@@ -96,19 +90,17 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Output('remove') removeEvent = new EventEmitter();
   @Output('scroll') scrollEvent = new EventEmitter<{ start: number; end: number }>();
   @Output('scrollToEnd') scrollToEndEvent = new EventEmitter<{ start: number; end: number }>();
-
   // template ref
-  @ContentChild('labelTemplate', { read: TemplateRef }) labelTemplateRef: TemplateRef<any>;
-  @ContentChild('multiLabelTemplate', { read: TemplateRef }) multiLabelTemplateRef: TemplateRef<any>;
-  @ContentChild('optionTemplate', { read: TemplateRef }) optionTemplateRef: TemplateRef<any>;
-  @ContentChild('optgroupTemplate', { read: TemplateRef }) optgroupTemplateRef: TemplateRef<any>;
-  @ContentChild('headerTemplate', { read: TemplateRef }) headerTemplateRef: TemplateRef<any>;
-  @ContentChild('footerTemplate', { read: TemplateRef }) footerTemplateRef: TemplateRef<any>;
-  @ContentChild('typetosearchTemplate', { read: TemplateRef }) typetosearchTemplateRef: TemplateRef<any>;
-  @ContentChild('notfoundTemplate', { read: TemplateRef }) notfoundTemplateRef: TemplateRef<any>;
-  @ContentChild('loadingtextTemplate', { read: TemplateRef }) loadingtextTemplateRef: TemplateRef<any>;
-  @ContentChild('tagTemplate', { read: TemplateRef }) tagTemplateRef: TemplateRef<any>;
-
+  @ContentChild('labelTemplate', {read: TemplateRef}) labelTemplateRef: TemplateRef<any>;
+  @ContentChild('multiLabelTemplate', {read: TemplateRef}) multiLabelTemplateRef: TemplateRef<any>;
+  @ContentChild('optionTemplate', {read: TemplateRef}) optionTemplateRef: TemplateRef<any>;
+  @ContentChild('optgroupTemplate', {read: TemplateRef}) optgroupTemplateRef: TemplateRef<any>;
+  @ContentChild('headerTemplate', {read: TemplateRef}) headerTemplateRef: TemplateRef<any>;
+  @ContentChild('footerTemplate', {read: TemplateRef}) footerTemplateRef: TemplateRef<any>;
+  @ContentChild('typetosearchTemplate', {read: TemplateRef}) typetosearchTemplateRef: TemplateRef<any>;
+  @ContentChild('notfoundTemplate', {read: TemplateRef}) notfoundTemplateRef: TemplateRef<any>;
+  @ContentChild('loadingtextTemplate', {read: TemplateRef}) loadingtextTemplateRef: TemplateRef<any>;
+  @ContentChild('tagTemplate', {read: TemplateRef}) tagTemplateRef: TemplateRef<any>;
   pluralMapping = {
     other: {
       '=0': '',
@@ -116,7 +108,6 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
       'other': '(+# others)'
     }
   };
-
   @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
   overlayRef: OverlayRef;
 
@@ -198,6 +189,12 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
     return this.select ? !this.select.hasValue : true;
   }
 
+  propogateChange = (_: any) => {
+  } // tslint:disable-line
+
+  propogateTouched = () => {
+  } // tslint:disable-line
+
   detectChanges() {
     if (!this.cdRef['destroyed']) {
       this.cdRef.markForCheck();
@@ -225,7 +222,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   }
 
   writeValue(value: T | T[] | undefined): void {
-    this._value = value || undefined;
+    this._value = this.coerceValue(value);
     setTimeout(() => {
       this.stateChanges.next();
       this.detectChanges();
@@ -327,5 +324,12 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
     this.writeValue(this.value);
     this.propogateChange(this.value);
     this.changeEvent.emit($event);
+  }
+
+  coerceValue(value: T | T[] | undefined) {
+    if (typeof value === 'undefined' || value === null || (typeof value === 'string' && value === '')) {
+      return undefined;
+    }
+    return value;
   }
 }
