@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Circle, Doc, Image, Rect, Text} from 'svg.js';
 
 export const defaultColor = '#1e88e5';
 export const defaultLabelColor = '#f44336';
@@ -35,13 +34,6 @@ export enum Size {
   large = 60,
   xl = 80,
   'extra-large' = 80
-}
-
-export class CSSProperty {
-  top: number;
-  right: number;
-  bottom: number;
-  left: number;
 }
 
 @Injectable()
@@ -80,31 +72,7 @@ export class AvatarConfig {
     this.size = Size['md'];
     this.rounded = true;
     this.radius = 4;
-
     this.characters = 2;
-
     this.labelBgColor = defaultLabelColor;
-  }
-}
-
-export class Instance {
-  svg: Doc;
-  shape: Circle | Rect;
-  image: Image;
-  initials: Text;
-  labelText: Text;
-  labelShape: Rect;
-  uploadShape: Circle | Rect;
-  uploadIcon: Image;
-
-  constructor() {
-    this.svg = null;
-    this.shape = null;
-    this.image = null;
-    this.initials = null;
-    this.labelText = null;
-    this.labelShape = null;
-    this.uploadShape = null;
-    this.uploadIcon = null;
   }
 }

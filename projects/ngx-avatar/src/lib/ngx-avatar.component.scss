@@ -1,0 +1,98 @@
+::ng-deep {
+  .mat-ngx-avatar-img-dialog {
+    .mat-dialog-container {
+      padding: 0;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .ngx-avatar {
+    display: inline-block;
+    position: relative;
+    float: left;
+    clear: both;
+
+    &.ngx-avatar-action {
+      cursor: pointer;
+    }
+
+    .ngx-avatar-initials {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .ngx-avatar-img {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 100%;
+      border-radius: inherit;
+      overflow: hidden;
+    }
+
+    .ngx-avatar-upload {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+      transition: 0.1s ease;
+      border-radius: inherit;
+      overflow: hidden;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+
+      svg {
+        position: absolute;
+        width: 50%;
+        height: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .ngx-avatar-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0.9;
+      text-align: center;
+      display: inline-block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    &.ngx-avatar-disabled {
+      background-color: #9E9E9E !important;
+
+      .ngx-avatar-img {
+        filter: grayscale(100%);
+      }
+    }
+
+    &:active, &:focus, &:hover {
+      .ngx-avatar-upload {
+        opacity: 1;
+      }
+    }
+  }
+}

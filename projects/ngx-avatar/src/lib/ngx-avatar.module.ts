@@ -2,6 +2,7 @@ import {InjectionToken, ModuleWithProviders, NgModule} from '@angular/core';
 import {NgxAvatarComponent, NgxAvatarImgDialogComponent} from './ngx-avatar.component';
 import {AvatarConfig} from './ngx-avatar.service';
 import {MatDialogModule} from '@angular/material';
+import {CommonModule} from '@angular/common';
 
 export const AVATAR_CONFIG = new InjectionToken('Avatar Config');
 
@@ -10,7 +11,7 @@ export function defaultsFactory(config) {
 }
 
 @NgModule({
-  imports: [MatDialogModule],
+  imports: [MatDialogModule, CommonModule],
   declarations: [NgxAvatarComponent, NgxAvatarImgDialogComponent],
   entryComponents: [NgxAvatarImgDialogComponent],
   exports: [NgxAvatarComponent]

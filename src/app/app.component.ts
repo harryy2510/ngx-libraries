@@ -131,13 +131,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.avatars = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 50; i++) {
       const _avatar: AvatarConfig = {
+        size: faker.random.number(20) + 40,
         name: faker.name.firstName(),
         image: faker.random.arrayElement(['', faker.image.avatar()]),
+        textColor: faker.random.arrayElement(['', faker.internet.color()]),
         bgColor: faker.random.arrayElement(['', faker.internet.color()]),
         label: faker.random.arrayElement(['', 'Active', 'Inactive']),
-        upload: true
+        zoom: faker.random.boolean(),
+        upload: faker.random.boolean(),
+        rounded: faker.random.boolean(),
+        disabled: faker.random.boolean(),
+        margin: faker.random.number(10)
       };
       this.avatars = [
         ...this.avatars,

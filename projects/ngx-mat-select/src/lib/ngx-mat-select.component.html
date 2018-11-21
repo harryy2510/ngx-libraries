@@ -61,7 +61,7 @@
         </ng-template>
         <ng-template [ngIf]="!multiLabelTemplateRef">
           <span class="ng-value">{{ bindLabel ? items[0][bindLabel] : items[0] }}</span>
-          <small class="ng-value" *ngIf="items.length > 1">{{ (items.length - 1) | i18nPlural : pluralMapping.other }}</small>
+          <small style="margin-left: 2px" class="ng-value" *ngIf="items.length > 1">{{ (items.length - 1) | i18nPlural : pluralMapping.other }}</small>
         </ng-template>
       </ng-template>
     </ng-template>

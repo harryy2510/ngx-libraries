@@ -1,33 +1,22 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   EventEmitter,
+  HostBinding,
+  HostListener,
   Inject,
   Input,
   OnChanges,
   Output,
   SimpleChanges
 } from '@angular/core';
-import {
-  AvatarConfig,
-  CSSProperty,
-  defaultColor,
-  defaultLabelColor,
-  Instance,
-  palette,
-  Size
-} from './ngx-avatar.service';
-import * as SVG_ from 'svg.js';
-import {Circle, Doc, Image, Rect, Text} from 'svg.js';
-import 'svg.filter.js';
+import {AvatarConfig, defaultColor, defaultLabelColor, palette, Size} from './ngx-avatar.service';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material';
-
-const SVG = SVG_;
+import {coerceCssPixelValue} from '@angular/cdk/coercion';
 
 @Component({
   selector: 'ngx-avatar-img-dialog',
-  template: `<img style="width: 100%" [src]="data?.url">`
+  template: `<img [src]="data?.url" alt="">`
 })
 export class NgxAvatarImgDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
@@ -36,8 +25,9 @@ export class NgxAvatarImgDialogComponent {
 
 @Component({
   selector: 'ngx-avatar',
-  template: ``,
-  exportAs: 'avatar'
+  exportAs: 'avatar',
+  templateUrl: `./ngx-avatar.component.html`,
+  styleUrls: [`./ngx-avatar.component.scss`]
 })
 export class NgxAvatarComponent implements AfterViewInit, OnChanges {
   @Input() name: string;
@@ -60,12 +50,23 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
   @Input() zoom: boolean;
   @Input() ariaLabelText: string = '';
   @Output() onClick: EventEmitter<KeyboardEvent | MouseEvent> = new EventEmitter<KeyboardEvent | MouseEvent>();
-  private instance: Instance = new Instance();
+
+  @HostBinding('attr.aria-label') ngxAvatarArialLabel = '';
+  @HostBinding('attr.role') ngxAvatarRole = 'button';
+  @HostBinding('attr.tabindex') ngxAvatarTabIndex = -1;
+  @HostBinding('class.ngx-avatar') ngxAvatarClass = true;
+  @HostBinding('class.ngx-avatar-action') ngxAvatarActionClass = false;
+  @HostBinding('style.background-color') cssBackgroundColor: string;
+  @HostBinding('style.color') cssTextColor: string;
+  @HostBinding('style.width') @HostBinding('style.height') cssSize: string;
+  @HostBinding('style.margin') cssMargin: string;
+  @HostBinding('style.font-size') cssFontSize: string;
+  @HostBinding('style.border-radius') cssBorderRadius: string;
+
   private options: AvatarConfig = new AvatarConfig();
 
   constructor(
     private config: AvatarConfig,
-    private elm: ElementRef,
     public dialog: MatDialog
   ) {
   }
@@ -78,7 +79,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     this.options = options;
   }
 
-  get _size(): number {
+  get _size(): string {
     let s: number;
     switch (typeof this._options.size) {
       case 'string':
@@ -92,11 +93,24 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     if (!s) {
       s = Size['md'];
     }
-    return s;
+    return coerceCssPixelValue(s);
   }
 
-  get _margin(): CSSProperty {
-    return NgxAvatarComponent.expandProperty(this._options.margin);
+  get _margin(): string {
+    if (this._options.margin === null || typeof this._options.margin === 'undefined') {
+      return '';
+    }
+    return this._options.margin.toString().split(' ').map(v => `${v}px`).join(' ');
+  }
+
+  get _borderRadius(): string {
+    if (this._options.rounded) {
+      return '50%';
+    }
+    if (this._options.radius === null || typeof this._options.radius === 'undefined') {
+      return '';
+    }
+    return this._options.radius.toString().split(' ').map(v => `${v}px`).join(' ');
   }
 
   get _bgColor(): string {
@@ -121,8 +135,8 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     return this._options.textColor ? this._options.textColor : (NgxAvatarComponent.isDark(this._bgColor) ? '#fff' : '#000');
   }
 
-  get _fontSize(): number {
-    return this._options.fontSize ? this._options.fontSize : this._size * 0.4;
+  get _fontSize(): string {
+    return coerceCssPixelValue(this._options.fontSize ? this._options.fontSize : parseInt(this._size, 10) * 0.4);
   }
 
   get _labelBgColor(): string {
@@ -131,6 +145,26 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
 
   get _labelColor(): string {
     return this._options.labelColor ? this._options.labelColor : (NgxAvatarComponent.isDark(this._labelBgColor) ? '#fff' : '#000');
+  }
+
+  get _labelSize(): string {
+    return coerceCssPixelValue(parseInt(this._size, 10) * 0.25);
+  }
+
+  get _ariaLabel(): string {
+    return this.ariaLabelText ? this.ariaLabelText : (this._options.name ? this._options.name : '');
+  }
+
+  get _hasAction(): boolean {
+    return this._canUpload || this._canZoom;
+  }
+
+  get _canUpload(): boolean {
+    return this.upload && (!this.zoom || (this.zoom && !this.image && !this.fullImage));
+  }
+
+  get _canZoom(): boolean {
+    return this.zoom && !!(this.image || this.fullImage);
   }
 
   static isDark(color: string): boolean {
@@ -162,43 +196,6 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     return (hsp < 200);
   }
 
-  static expandProperty(value?: string | number): CSSProperty {
-    const returnObj: CSSProperty = {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-    if (value) {
-      switch (typeof value) {
-        case 'number':
-          returnObj.top = returnObj.bottom = returnObj.left = returnObj.right = (value as number);
-          break;
-        case 'string':
-          const properties = (value as string).split(' ').map((m: string) => +m.replace(/\D/g, ''));
-          switch (properties.length) {
-            case 1:
-              returnObj.top = returnObj.bottom = returnObj.left = returnObj.right = properties[0];
-              break;
-            case 2:
-              returnObj.left = returnObj.right = properties[1];
-              break;
-            case 3:
-              returnObj.left = returnObj.right = properties[1];
-              returnObj.bottom = properties[2];
-              break;
-            case 4:
-              returnObj.right = properties[1];
-              returnObj.bottom = properties[2];
-              returnObj.left = properties[3];
-              break;
-          }
-          break;
-      }
-    }
-    return returnObj;
-  }
-
   ngAfterViewInit(): void {
     const options: AvatarConfig = {
       name: this.name,
@@ -227,379 +224,44 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
       this[key] = options[key];
     });
     this._options = options;
-    this.render();
-    setTimeout(() => {
-      this.render();
-    }, 300);
-    setTimeout(() => {
-      this.render();
-    }, 1000);
-  }
-
-  render() {
-    this.destroySvg();
-    this.renderSvg();
-    this.renderShape();
-    this.renderInitials();
-    this.renderImage();
-    this.renderUpload();
-    this.renderLabel();
-    this.setAriaLabel();
+    this.update();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.instance.svg) {
-      Object.keys(changes).forEach((key: any) => {
-        this._options[key] = changes[key].currentValue;
-      });
-
-      if (changes.size || changes.margin || changes.rounded || changes.radius || changes.disabled) {
-        this.render();
-        return;
-      }
-
-      if (changes.randomColor || changes.bgColor) {
-        this.update('bgColor');
-      }
-
-      if (changes.name || changes.characters || changes.fontSize) {
-        this.update('name');
-      }
-
-      if (changes.textColor) {
-        this.update('textColor');
-      }
-
-      if (changes.image) {
-        this.renderImage();
-        this.renderUpload();
-        this.renderLabel();
-      }
-
-      if (changes.upload) {
-        this.renderUpload();
-        this.renderLabel();
-      }
-
-      if (changes.label || changes.labelBgColor || changes.labelColor) {
-        this.renderLabel();
-      }
-    }
+    Object.keys(changes).forEach((key: any) => {
+      this._options[key] = changes[key].currentValue;
+    });
+    this.update();
   }
 
-  update(prop: string) {
-    switch (prop) {
-      case 'bgColor':
-        this.instance.shape = this.renderColor(this.instance.shape, this._bgColor, 0.5);
-        break;
-      case 'name':
-        this.setAriaLabel();
-        if (!this._initials) {
-          this.destroyInitials();
-          return;
-        }
-        this.instance.initials = this.setText(this.instance.initials, this._initials, this._fontSize);
-        break;
-      case 'textColor':
-        this.instance.initials = this.renderColor(this.instance.initials, this._textColor, 0.8);
-        break;
-    }
+  update() {
+    this.ngxAvatarArialLabel = this._ariaLabel;
+    this.cssBackgroundColor = this._bgColor;
+    this.cssFontSize = this._fontSize;
+    this.cssTextColor = this._textColor;
+    this.cssMargin = this._margin;
+    this.cssSize = this._size;
+    this.cssBorderRadius = this._borderRadius;
+    this.ngxAvatarTabIndex = this._hasAction ? 0 : -1;
+    this.ngxAvatarActionClass = this._hasAction;
   }
 
-  private setAriaLabel(): void {
-    if (!this.instance.svg) {
-      return;
-    }
-    if (this._options.name) {
-      this.instance.svg.node.setAttribute('aria-label', this.ariaLabelText ? this.ariaLabelText : `Upload image for ${this._options.name}`);
-    } else {
-      this.instance.svg.node.removeAttribute('aria-label');
-    }
-  }
-
-  private renderSvg(): void {
-    const {top, right, bottom, left} = this._margin;
-    const svgElement = <Doc>SVG(this.elm.nativeElement);
-    svgElement
-      .style('display', 'flex')
-      .size(this._size + left + right, this._size + top + bottom);
-    this.instance.svg = svgElement;
-    this.setAriaLabel();
-  }
-
-  private destroySvg(): void {
-    if (this.instance.svg) {
-      this.instance.svg.remove();
-      this.instance.svg = null;
-      this.instance.shape = null;
-      this.instance.initials = null;
-      this.instance.image = null;
-    }
-  }
-
-  private renderShape(): void {
-    if (!this.instance.svg) {
-      return null;
-    }
-    let shape: Circle | Rect;
-    const {top, left} = this._margin;
-    if (this._options.rounded) {
-      shape = <Circle>this.instance.svg
-        .circle(this._size);
-    } else {
-      shape = <Rect>this.instance.svg
-        .rect(this._size, this._size)
-        .radius(this._options.radius);
-    }
-    shape.move(left, top);
-    this.instance.shape = this.renderColor(shape, this._bgColor, 0.5);
-  }
-
-  private renderInitials(): void {
-    this.destroyInitials();
-    if (!this.instance.svg || !this._initials) {
-      return null;
-    }
-    const {top, left} = this._margin;
-    let shape: Text = <Text>this.instance.svg
-      .text('');
-    shape = this.setText(shape, this._initials, this._fontSize);
-    shape.center((this._size / 2) + left, (this._size / 2) + top);
-    shape = this.renderColor(shape, this._textColor, 0.8);
-    this.instance.initials = shape;
-  }
-
-  private destroyInitials(): void {
-    if (this.instance.initials) {
-      this.instance.initials.remove();
-      this.instance.initials = null;
-    }
-  }
-
-  private renderImage(): void {
-    this.destroyImage();
-    if (!this.instance.svg || !this._options.image) {
-      return null;
-    }
-    const {top, left} = this._margin;
-    const image: Image = <Image>this.instance.svg.image(this.options.image);
-    image.loaded(() => {
-      image.size(this._size)
-        .center((this._size / 2) + left, (this._size / 2) + top)
-        .clipWith(this.getClip());
-      if (this._options.disabled) {
-        (image as any).filter((add: any) => {
-          add.colorMatrix('saturate', 0);
+  @HostListener('keyup.space', ['$event'])
+  @HostListener('keyup.enter', ['$event'])
+  @HostListener('click', ['$event'])
+  onAvatarClick(event: MouseEvent | KeyboardEvent) {
+    if (this._hasAction) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (this._canZoom) {
+        this.dialog.open(NgxAvatarImgDialogComponent, {
+          width: '480px',
+          data: {url: this._options.fullImage || this._options.image},
+          panelClass: 'mat-ngx-avatar-img-dialog'
         });
+      } else if (this._canUpload) {
+        this.onClick.emit(event);
       }
-      this.destroyInitials();
-    });
-    this.instance.image = image;
-  }
-
-  private destroyImage(): void {
-    if (this.instance.image) {
-      const c = this.instance.image.reference('clip-path');
-      if (c) {
-        c.remove();
-      }
-      this.instance.image.remove();
-      this.instance.image = null;
-    }
-
-    if (this._options.name) {
-      this.renderInitials();
-    }
-  }
-
-  private renderLabel(): void {
-    this.destroyLabel();
-    if (!this.instance.svg || !this._options.label) {
-      return null;
-    }
-    const {top, left} = this._margin;
-    let labelShape: Rect = <Rect>this.instance.svg
-      .rect(this._size, this._size * 0.25)
-      .radius(2)
-      .move(left, top + this._size - (this._size * 0.25));
-    labelShape = this.renderColor(labelShape, this._labelBgColor, 0.8);
-    this.instance.labelShape = labelShape;
-
-    let labelText: Text = <Text>this.instance.svg
-      .text('');
-    labelText = this.setText(labelText, this._options.label, this._size * 0.25);
-    labelText.center((this._size / 2) + left, top + this._size - ((this._size * 0.25) / 2));
-    labelText = this.renderColor(labelText, this._labelColor, 0.8);
-    this.instance.labelText = labelText;
-  }
-
-  private destroyLabel(): void {
-    if (this.instance.labelShape) {
-      this.instance.labelShape.remove();
-      this.instance.labelShape = null;
-    }
-    if (this.instance.labelText) {
-      this.instance.labelText.remove();
-      this.instance.labelText = null;
-    }
-  }
-
-  private renderUpload(): void {
-    this.destroyUpload();
-    if (!this.instance.svg || (!this._options.upload && !this._options.zoom)) {
-      return null;
-    }
-
-    this.instance.svg.node.setAttribute('role', 'button');
-    this.instance.svg.node.setAttribute('tabindex', '0');
-
-    if (this._options.upload && !(this._options.zoom && (this._options.image || this._options.fullImage))) {
-      let uploadShape: Circle | Rect;
-      const {top, left} = this._margin;
-      if (this._options.rounded) {
-        uploadShape = <Circle>this.instance.svg
-          .circle(this._size);
-      } else {
-        uploadShape = <Rect>this.instance.svg
-          .rect(this._size, this._size)
-          .radius(this._options.radius);
-      }
-      uploadShape
-        .fill('rgba(0,0,0,0.7)')
-        .opacity(0)
-        .move(left, top);
-      this.instance.uploadShape = uploadShape;
-
-      const uploadIcon: Image = <Image>this.instance.svg.image('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAABD0lEQVR4Ae2UMU7DMBRAHSF1q5QJFtpeJbegU7kJTSbKUHVpjwEcIZEQJ4CxMNuTzQke0p9iiyJ/MyF4m9/wlPzk2/xBOOedlDcutJkpr3zFC1NNZsIzp3hiYk5DRYdFi6WjikMbSrmLQ4FSfByinLyQp2fPnh5fHrIszQiW2JLQkUuTwIKjNmSZi69Z09OzppbzHKsLrcQ2+NG0GnErTShQydN4xnhq+XVDfuhRXEtKK/4+P7QTN5AyiN/lh7bfhrb5oYesV1MMO8RWhn3GR8nnD6NMI+4aNCHHTHxNy8BASy3nGU6/IovSFUlxydJeYX92jRw4MGivET1JyFKKjUO3lLIxMdzg0OLozC/mn08zYTU6ftNUcgAAAABJRU5ErkJggg==');
-      uploadIcon.loaded(() => {
-        uploadIcon
-          .size(this._size * 0.5)
-          .center((this._size / 2) + left, (this._size / 2) + top)
-          .opacity(0)
-          .clipWith(this.getClip());
-      });
-      this.instance.uploadIcon = uploadIcon;
-
-      this.instance.svg.on('mouseover', () => {
-        this.instance.uploadShape
-          .opacity(1);
-        this.instance.uploadIcon
-          .opacity(1);
-      });
-
-      this.instance.svg.on('focus', () => {
-        this.instance.uploadShape
-          .opacity(1);
-        this.instance.uploadIcon
-          .opacity(1);
-      });
-
-      this.instance.svg.on('mouseout', () => {
-        this.instance.uploadShape
-          .opacity(0);
-        this.instance.uploadIcon
-          .opacity(0);
-      });
-
-      this.instance.svg.on('blur', () => {
-        this.instance.uploadShape
-          .opacity(0);
-        this.instance.uploadIcon
-          .opacity(0);
-      });
-    }
-
-    this.instance.svg.on('click', (e: MouseEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      this.clickEvent(e);
-      return false;
-    });
-    this.instance.svg.on('keypress', (e: KeyboardEvent) => {
-      switch (e.code) {
-        case 'Space':
-        case 'Enter':
-          e.preventDefault();
-          e.stopPropagation();
-          this.clickEvent(e);
-          return false;
-      }
-    });
-
-
-    this.instance.svg.style('cursor', 'pointer');
-  }
-
-  private destroyUpload(): void {
-
-    if (this.instance.svg) {
-      this.instance.svg.node.removeAttribute('role');
-      this.instance.svg.node.removeAttribute('tabindex');
-      this.instance.svg.off('mouseover');
-      this.instance.svg.off('mouseout');
-      this.instance.svg.off('focus');
-      this.instance.svg.off('blur');
-      this.instance.svg.off('click');
-      this.instance.svg.off('keypress');
-      this.instance.svg.style('cursor', null);
-    }
-
-    if (this.instance.uploadShape) {
-      this.instance.uploadShape.remove();
-      this.instance.uploadShape = null;
-    }
-    if (this.instance.uploadIcon) {
-      const c = this.instance.uploadIcon.reference('clip-path');
-      if (c) {
-        c.remove();
-      }
-      this.instance.uploadIcon.remove();
-      this.instance.uploadIcon = null;
-    }
-  }
-
-  private renderColor<T>(shape: T, color: string, opacity: number): T {
-    if (!shape) {
-      return null;
-    }
-    return (shape as any)
-      .fill(color)
-      .opacity(this._options.disabled ? opacity : 1);
-  }
-
-  private setText<T>(shape: T, text: string, size: number): T {
-    if (!shape) {
-      return null;
-    }
-    return (shape as any)
-      .text(text)
-      .font({size: size});
-  }
-
-  private getClip(): Circle | Rect {
-    let clip: Circle | Rect;
-    const {top, left} = this._margin;
-    if (this._options.rounded) {
-      clip = <Circle>this.instance.svg
-        .circle(this._size - 4);
-    } else {
-      clip = <Rect>this.instance.svg
-        .rect(this._size - 4, this._size - 4)
-        .radius(this._options.radius);
-    }
-    clip.move(left + 2, top + 2);
-    return clip;
-  }
-
-  private clickEvent(e: KeyboardEvent | MouseEvent) {
-    if (this._options.zoom && (this._options.image || this._options.fullImage)) {
-      const dialogRef = this.dialog.open(NgxAvatarImgDialogComponent, {
-        width: '480px',
-        data: {url: this._options.fullImage || this._options.image}
-      });
-      console.log(dialogRef);
-    } else if (this._options.upload) {
-      this.onClick.emit(e);
     }
   }
 }

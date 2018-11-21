@@ -48,7 +48,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Input() items: T[] = [];
   @Input() bindLabel: string;
   @Input() bindValue: string;
-  @Input() clearable = true;
+  @Input() clearable = false;
   @Input() markFirst = true;
   @Input() notFoundText = 'No results found';
   @Input() typeToSearchText = 'Type to search';
@@ -218,6 +218,9 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.multiple) {
+      this.clearable = this.multiple;
+    }
     this.stateChanges.next();
   }
 

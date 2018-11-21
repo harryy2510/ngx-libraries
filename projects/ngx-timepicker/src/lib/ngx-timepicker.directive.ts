@@ -264,7 +264,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
       case 'disableTimeRanges':
         let dateRanges: string[][] = [];
         if (value instanceof Array) {
-          dateRanges = value.map((date: any) => {
+          dateRanges = value.filter(d => !!d).map((date: any) => {
             if (typeof date === 'string' || date instanceof Date || (moment.isMoment(date) && date.isValid())) {
               return this._buildTime(date);
             } else if (typeof date === 'object' && typeof date.from !== 'undefined' && typeof date.to !== 'undefined') {
