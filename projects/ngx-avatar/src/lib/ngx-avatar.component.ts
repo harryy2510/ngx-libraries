@@ -56,6 +56,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
   @HostBinding('attr.tabindex') ngxAvatarTabIndex = -1;
   @HostBinding('class.ngx-avatar') ngxAvatarClass = true;
   @HostBinding('class.ngx-avatar-action') ngxAvatarActionClass = false;
+  @HostBinding('class.ngx-avatar-disabled') ngxAvatarActionDisabledClass = false;
   @HostBinding('style.background-color') cssBackgroundColor: string;
   @HostBinding('style.color') cssTextColor: string;
   @HostBinding('style.width') @HostBinding('style.height') cssSize: string;
@@ -244,6 +245,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
     this.cssBorderRadius = this._borderRadius;
     this.ngxAvatarTabIndex = this._hasAction ? 0 : -1;
     this.ngxAvatarActionClass = this._hasAction;
+    this.ngxAvatarActionDisabledClass = this._options.disabled;
   }
 
   @HostListener('keyup.space', ['$event'])
