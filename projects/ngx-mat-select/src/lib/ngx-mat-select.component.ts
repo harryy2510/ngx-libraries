@@ -293,7 +293,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
 
   close() {
     if (this.select && this.select.isOpen) {
-      // this.select.close();
+      this.select.close();
     }
   }
 
