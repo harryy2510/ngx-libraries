@@ -1,103 +1,44 @@
-<ng-select
-  [(ngModel)]="_value"
-  [labelForId]="id"
-  [name]="id"
-  [required]="required"
-  [placeholder]="placeholder"
-  [disabled]="disabled"
-  [items]="items"
-  [bindLabel]="bindLabel"
-  [bindValue]="bindValue"
-  [clearable]="clearable"
-  [markFirst]="markFirst"
-  [notFoundText]="notFoundText"
-  [typeToSearchText]="typeToSearchText"
-  [addTagText]="addTagText"
-  [loadingText]="loadingText"
-  [clearAllText]="clearAllText"
-  [dropdownPosition]="dropdownPosition"
-  [appendTo]="appendTo"
-  [loading]="loading"
-  [closeOnSelect]="closeOnSelect"
-  [hideSelected]="hideSelected"
-  [selectOnTab]="selectOnTab"
-  [openOnEnter]="openOnEnter"
-  [maxSelectedItems]="maxSelectedItems"
-  [groupBy]="groupBy"
-  [groupValue]="groupValue"
-  [bufferAmount]="bufferAmount"
-  [virtualScroll]="virtualScroll"
-  [selectableGroup]="selectableGroup"
-  [selectableGroupAsModel]="selectableGroupAsModel"
-  [searchFn]="searchFn"
-  [clearOnBackspace]="clearOnBackspace"
-  [typeahead]="typeahead"
-  [multiple]="multiple"
-  [addTag]="addTag"
-  [searchable]="searchable"
-  [isOpen]="isOpen"
-  [clearSearchOnAdd]="clearSearchOnAdd"
-  (blur)="onBlur($event)"
-  (focus)="onFocus($event)"
-  (change)="emitChange($event)"
-  (open)="onOpen($event)"
-  (close)="onClose($event)"
-  (search)="searchEvent.emit($event)"
-  (clear)="clearEvent.emit($event)"
-  (add)="addEvent.emit($event)"
-  (remove)="removeEvent.emit($event)"
-  (scroll)="scrollEvent.emit($event)"
-  (scrollToEnd)="scrollToEndEvent.emit($event)">
+<ng-select [(ngModel)]="_value" [labelForId]="id" [name]="id" [required]="required" [placeholder]="placeholder" [disabled]="disabled" [items]="items" [bindLabel]="bindLabel" [bindValue]="bindValue" [clearable]="clearable" [markFirst]="markFirst" [notFoundText]="notFoundText" [typeToSearchText]="typeToSearchText" [addTagText]="addTagText" [loadingText]="loadingText" [clearAllText]="clearAllText" [dropdownPosition]="dropdownPosition" [appendTo]="appendTo" [loading]="loading" [closeOnSelect]="closeOnSelect" [hideSelected]="hideSelected" [selectOnTab]="selectOnTab" [openOnEnter]="openOnEnter" [maxSelectedItems]="maxSelectedItems" [groupBy]="groupBy" [groupValue]="groupValue" [bufferAmount]="bufferAmount" [virtualScroll]="virtualScroll" [selectableGroup]="selectableGroup" [selectableGroupAsModel]="selectableGroupAsModel" [searchFn]="searchFn" [clearOnBackspace]="clearOnBackspace" [typeahead]="typeahead" [multiple]="multiple" [addTag]="addTag" [searchable]="searchable" [isOpen]="isOpen" [clearSearchOnAdd]="clearSearchOnAdd" (blur)="onBlur($event)" (focus)="onFocus($event)" (change)="emitChange($event)" (open)="onOpen($event)" (close)="onClose($event)" (search)="searchEvent.emit($event)" (clear)="clearEvent.emit($event)" (add)="addEvent.emit($event)" (remove)="removeEvent.emit($event)" (scroll)="scrollEvent.emit($event)" (scrollToEnd)="scrollToEndEvent.emit($event)">
 
   <ng-template [ngIf]="items?.length">
 
-    <ng-template [ngIf]="!labelTemplateRef && multiple">
+    <ng-template [ngIf]="!labelTemplateRef && multiple && !typeahead">
       <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
         <ng-template [ngIf]="multiLabelTemplateRef">
-          <ng-template
-            [ngTemplateOutlet]="multiLabelTemplateRef"
-            [ngTemplateOutletContext]="{ items: items, clear: clear }">
-          </ng-template>
+          <ng-template [ngTemplateOutlet]="multiLabelTemplateRef" [ngTemplateOutletContext]="{ items: items, clear: clear }"></ng-template>
         </ng-template>
         <ng-template [ngIf]="!multiLabelTemplateRef">
-          <span class="ng-value">{{ bindLabel ? items[0][bindLabel] : items[0] }}</span>
-          <small style="margin-left: 2px" class="ng-value" *ngIf="items.length > 1">{{ (items.length - 1) | i18nPlural : pluralMapping.other }}</small>
+          <div class="ng-value">
+            <span>{{ bindLabel ? items[0][bindLabel] : items[0] }}</span>
+            <small *ngIf="items.length > 1">{{ (items.length - 1) | i18nPlural : pluralMapping.other }}</small>
+          </div>
         </ng-template>
       </ng-template>
     </ng-template>
 
     <ng-template [ngIf]="labelTemplateRef">
       <ng-template ng-label-tmp let-item="item" let-clear="clear" let-label="label">
-        <ng-template
-          [ngTemplateOutlet]="labelTemplateRef"
-          [ngTemplateOutletContext]="{ item: item, clear: clear, label: item }">
-        </ng-template>
+        <ng-template [ngTemplateOutlet]="labelTemplateRef" [ngTemplateOutletContext]="{ item: item, clear: clear, label: item }"></ng-template>
       </ng-template>
     </ng-template>
 
     <ng-template [ngIf]="!optionTemplateRef">
       <ng-template [ngIf]="multiple">
-        <ng-template ng-option-tmp let-item$="item$">
-          <mat-checkbox [ngModel]="item$.selected">{{ item$.label }}</mat-checkbox>
+        <ng-template ng-option-tmp let-item$="item$" let-item="item">
+          <mat-checkbox [disabled]="item.disabled" [ngModel]="item$.selected">{{ item$.label }}</mat-checkbox>
         </ng-template>
       </ng-template>
     </ng-template>
 
     <ng-template [ngIf]="optionTemplateRef">
       <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index" let-searchTerm="searchTerm">
-        <ng-template
-          [ngTemplateOutlet]="optionTemplateRef"
-          [ngTemplateOutletContext]="{ item: item, item$: item$, index: index, searchTerm: searchTerm }">
-        </ng-template>
+        <ng-template [ngTemplateOutlet]="optionTemplateRef" [ngTemplateOutletContext]="{ item: item, item$: item$, index: index, searchTerm: searchTerm }"></ng-template>
       </ng-template>
     </ng-template>
 
     <ng-template [ngIf]="optgroupTemplateRef">
       <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index" let-searchTerm="searchTerm">
-        <ng-template
-          [ngTemplateOutlet]="optgroupTemplateRef"
-          [ngTemplateOutletContext]="{ item: item, item$: item$, index: index, searchTerm: searchTerm }">
-        </ng-template>
+        <ng-template [ngTemplateOutlet]="optgroupTemplateRef" [ngTemplateOutletContext]="{ item: item, item$: item$, index: index, searchTerm: searchTerm }"></ng-template>
       </ng-template>
     </ng-template>
 
@@ -121,28 +62,19 @@
 
     <ng-template [ngIf]="notfoundTemplateRef">
       <ng-template ng-notfound-tmp let-searchTerm="searchTerm">
-        <ng-template
-          [ngTemplateOutlet]="notfoundTemplateRef"
-          [ngTemplateOutletContext]="{ searchTerm: searchTerm }">
-        </ng-template>
+        <ng-template [ngTemplateOutlet]="notfoundTemplateRef" [ngTemplateOutletContext]="{ searchTerm: searchTerm }"></ng-template>
       </ng-template>
     </ng-template>
 
     <ng-template [ngIf]="loadingtextTemplateRef">
       <ng-template ng-loadingtext-tmp let-searchTerm="searchTerm">
-        <ng-template
-          [ngTemplateOutlet]="loadingtextTemplateRef"
-          [ngTemplateOutletContext]="{ searchTerm: searchTerm }">
-        </ng-template>
+        <ng-template [ngTemplateOutlet]="loadingtextTemplateRef" [ngTemplateOutletContext]="{ searchTerm: searchTerm }"></ng-template>
       </ng-template>
     </ng-template>
 
     <ng-template [ngIf]="tagTemplateRef">
       <ng-template ng-tag-tmp let-searchTerm="searchTerm">
-        <ng-template
-          [ngTemplateOutlet]="tagTemplateRef"
-          [ngTemplateOutletContext]="{ searchTerm: searchTerm }">
-        </ng-template>
+        <ng-template [ngTemplateOutlet]="tagTemplateRef" [ngTemplateOutletContext]="{ searchTerm: searchTerm }"></ng-template>
       </ng-template>
     </ng-template>
 

@@ -42,3 +42,52 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
 }
+
+
+mat-form-field.mat-form-field.mat-form-field-appearance-outline {
+  .mat-form-field-infix {
+    padding: 0.9em 0 0.9em 0;
+    border-top-width: 0.3em;
+  }
+
+  .mat-form-field-label-wrapper {
+    top: -0.65em;
+    padding-top: 0.65em;
+  }
+
+  &.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
+  &.mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label {
+    transform: translateY(-1.4em) scale(0.75);
+  }
+
+  .mat-select-arrow-wrapper {
+    transform: none;
+  }
+
+  .mat-form-field-prefix, .mat-form-field-suffix {
+    top: .5em;
+  }
+}
+
+mat-form-field.mat-form-field {
+  width: 100%;
+  font-size: 1rem;
+  max-width: 400px;
+}
+
+mat-option.mat-option {
+  .mat-option-text > * {
+    line-height: 1;
+  }
+}
+
+mat-pseudo-checkbox.mat-pseudo-checkbox {
+  &:after {
+    box-sizing: content-box;
+  }
+}
+
+.mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button, .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+  width: 1.5em;
+  height: 1.5em;
+}

@@ -77,7 +77,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Input() isOpen: boolean;
   @Input() searchable = true;
   @Input() compareWith: CompareWithFn;
-  @Input() clearSearchOnAdd: boolean;
+  @Input() clearSearchOnAdd = true;
   // output events
   @Output('blur') blurEvent = new EventEmitter();
   @Output('focus') focusEvent = new EventEmitter();
@@ -166,7 +166,6 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
 
   set disabled(dis) {
     this._disabled = coerceBooleanProperty(dis);
-
     if (this.focused) {
       this.focused = false;
       this.stateChanges.next();
@@ -220,6 +219,10 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   ngOnChanges(changes: SimpleChanges) {
     if (changes.multiple) {
       this.clearable = this.multiple;
+      this.closeOnSelect = !this.multiple;
+    }
+    if (changes.typeahead) {
+      this.clearOnBackspace = !!this.typeahead;
     }
     this.stateChanges.next();
   }
@@ -244,11 +247,8 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
     this.describedBy = ids.join(' ');
   }
 
-  focus(): void {
-    if (this.select) {
-      this.select.focus();
-      this.select.open();
-    }
+  focus() {
+    this.open();
   }
 
   onContainerClick() {
@@ -269,9 +269,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
 
   @HostListener('focusout', ['$event'])
   onBlur(event) {
-    if (this.select) {
-      this.select.close();
-    }
+    this.close();
     this.focused = false;
     this.propogateTouched();
     this.stateChanges.next();
@@ -285,14 +283,17 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   }
 
   open() {
-    if (this.select && !this.select.isOpen) {
-      this.select.open();
-    }
+    setTimeout(() => {
+      if (this.select && !this.select.isOpen) {
+        this.select.focus();
+        this.select.open();
+      }
+    });
   }
 
   close() {
     if (this.select && this.select.isOpen) {
-      this.select.close();
+      // this.select.close();
     }
   }
 

@@ -12,8 +12,7 @@ import {NgxFormsModule} from '../../projects/ngx-forms/src/lib/ngx-forms.module'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxRightsModule} from '../../projects/ngx-rights/src/lib/ngx-rights.module';
 import {NgxMatSelectModule} from '../../projects/ngx-mat-select/src/lib/ngx-mat-select.module';
-import {MatFormFieldModule, MatInputModule} from '@angular/material';
-import {NgSelectModule} from '@ng-select/ng-select';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, MatInputModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -33,10 +32,16 @@ import {NgSelectModule} from '@ng-select/ng-select';
     BrowserAnimationsModule,
     NgxMatSelectModule,
     MatFormFieldModule,
-    MatInputModule,
-    NgSelectModule
+    MatInputModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: {
+        appearance: 'outline'
+      }
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
