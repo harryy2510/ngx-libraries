@@ -17,7 +17,7 @@ export interface PatternUserRight {
 }
 
 export interface PatternUserRightTest {
-  resource: string;
+  resource: string | string[];
   value: number;
 }
 
@@ -33,7 +33,7 @@ export class NgxRightsService {
       this._rights = rights;
       this._parsedRights = [
         ...this._rights.allowed,
-        ...this._rights.notAllowed.map((_r: { resource: string; values: number[] }) => {
+        ...this._rights.notAllowed.map((_r: { resource: string | string[]; values: number[] }) => {
           return {
             ..._r,
             resource: `!${_r.resource}`
