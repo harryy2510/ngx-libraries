@@ -172,6 +172,7 @@ export class TimepickerConfig {
   private parsedFormat?: string;
 
   constructor() {
+    this.maxTime = '11:59 pm';
     this.closeOnWindowScroll = false;
     this.disableTextInput = false;
     this.disableTouchKeyboard = false;
@@ -180,7 +181,7 @@ export class TimepickerConfig {
     this.selectOnBlur = true;
     this.show2400 = false;
     this.showDuration = false;
-    this.showOn = ["click", "focus"];
+    this.showOn = ['click', 'focus'];
     this.step = 30;
     this.stopScrollPropagation = false;
     this.timeFormat = TIME_FORMAT;

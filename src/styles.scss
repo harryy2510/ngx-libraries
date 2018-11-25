@@ -43,7 +43,6 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-
 mat-form-field.mat-form-field.mat-form-field-appearance-outline {
   .mat-form-field-infix {
     padding: 0.9em 0 0.9em 0;
@@ -57,7 +56,7 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline {
 
   &.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label,
   &.mat-form-field-can-float .mat-input-server:focus + .mat-form-field-label-wrapper .mat-form-field-label {
-    transform: translateY(-1.4em) scale(0.75);
+    transform: translateY(-1.2em) scale(0.75);
   }
 
   .mat-select-arrow-wrapper {
@@ -72,7 +71,6 @@ mat-form-field.mat-form-field.mat-form-field-appearance-outline {
 mat-form-field.mat-form-field {
   width: 100%;
   font-size: 1rem;
-  max-width: 400px;
 }
 
 mat-option.mat-option {
@@ -90,4 +88,50 @@ mat-pseudo-checkbox.mat-pseudo-checkbox {
 .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button, .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
   width: 1.5em;
   height: 1.5em;
+}
+
+
+.mat-form-field.with-ng-select {
+  .mat-form-field-prefix {
+    top: unset !important;
+  }
+
+  ng-select.ng-select.input-select,
+  ng-select.ng-select.ng-select-multiple.input-select,
+  ng-select.ng-select.ng-select-single.input-select {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    right: unset;
+    bottom: unset;
+    padding-bottom: 0;
+
+    .ng-select-container {
+      min-height: auto;
+      height: 29px;
+      border: none !important;
+      box-shadow: none !important;
+
+      &:after {
+        content: none;
+      }
+
+      .ng-arrow-wrapper {
+        bottom: 6px;
+      }
+
+      .ng-value-container {
+        border-top: 0;
+      }
+
+      &:active, &:focus, &:hover {
+        border: none !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+}
+
+.ng-dropdown-panel.input-select {
+  min-width: 100px !important;
 }

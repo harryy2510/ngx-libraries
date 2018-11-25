@@ -49,7 +49,7 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
    * Override where the dropdown is appended.
    * Takes either a string to use as a selector, a function that gets passed the clicked input element as argument or a jquery object to use directly.
    */
-  @Input() appendTo: string | ((clickedElement) => string) = jQuery(this.elm.nativeElement).parent();
+  @Input() appendTo: string | ((clickedElement) => string) = 'body';
   /**
    * Default: null
    * A class name to apply to the HTML element that contains the timepicker dropdown.
@@ -260,6 +260,9 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
         if (moment.isMoment(value) && value.isValid()) {
           return moment(value).format(this.timeFormat);
         }
+        if (typeof value === 'string') {
+          return value;
+        }
         break;
       case 'disableTimeRanges':
         let dateRanges: string[][] = [];
@@ -285,6 +288,9 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }
 
   parseTime(d: any): Moment {
+    if (!d) {
+      return null;
+    }
     if (d instanceof Date || typeof(d) === 'string') {
       const _time = moment(d, this.timeFormat);
       const _date = moment(this.date);
@@ -299,7 +305,20 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
 
   @HostListener('blur')
   onBlur() {
+    this.close();
     this.onTouchedFn();
+  }
+
+  open() {
+    if (this.instance) {
+      this.instance.timepicker('show');
+    }
+  }
+
+  close() {
+    if (this.instance) {
+      this.instance.timepicker('hide');
+    }
   }
 
   writeValue(value: any): void {
@@ -375,33 +394,33 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
     this.instance.on('change', () => {
       const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerChange.emit({
-        selectedTime: value.isValid() ? value : null
+        selectedTime: value
       });
     });
     this.instance.on('changeTime', () => {
       const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerChangeTime.emit({
-        selectedTime: value.isValid() ? value : null
+        selectedTime: value
       });
       this.validate();
     });
     this.instance.on('selectTime', () => {
       const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerSelectTime.emit({
-        selectedTime: value.isValid() ? value : null
+        selectedTime: value
       });
     });
     this.instance.on('hideTimepicker', () => {
       const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerOpen.emit({
-        selectedTime: value.isValid() ? value : null
+        selectedTime: value
       });
       this.validate();
     });
     this.instance.on('showTimepicker', () => {
       const value = this.parseTime(this.elm.nativeElement.value);
       this.timepickerOpen.emit({
-        selectedTime: value.isValid() ? value : null
+        selectedTime: value
       });
     });
   }
@@ -420,9 +439,11 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
   }
 
   ngOnDestroy(): void {
-    this.instance.off();
-    this.instance.timepicker('remove');
-    this.instance = null;
+    if (this.instance) {
+      this.instance.off();
+      this.instance.timepicker('remove');
+      this.instance = null;
+    }
   }
 
   @HostListener('change')
@@ -432,7 +453,6 @@ export class NgxTimepickerDirective implements AfterViewInit, OnChanges, OnDestr
 
   validate() {
     let parsedValue: Moment = this.parseTime(this.elm.nativeElement.value);
-    parsedValue = parsedValue.isValid() ? parsedValue : null;
     if (this.isChanged(parsedValue)) {
       this.currentValue = parsedValue;
       this.onChangeFn(this.currentValue);

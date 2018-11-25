@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {ControlValueAccessor, NgControl} from '@angular/forms';
-import {MatFormFieldControl} from '@angular/material';
+import {MatFormFieldControl, MatPrefix, MatSuffix} from '@angular/material';
 import {Subject} from 'rxjs';
 import {FocusMonitor} from '@angular/cdk/a11y';
 import {NgSelectComponent} from '@ng-select/ng-select';
@@ -44,6 +44,10 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @HostBinding() id = `${this.controlType}-${NgxMatSelectComponent.nextId++}`;
   @HostBinding('attr.aria-describedBy') describedBy = '';
   @ViewChild(NgSelectComponent) select: NgSelectComponent;
+
+  @Input() matPrefix: MatPrefix;
+  @Input() matSuffix: MatSuffix;
+
   // inputs
   @Input() items: T[] = [];
   @Input() bindLabel: string;
@@ -252,13 +256,13 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   }
 
   onContainerClick() {
-    if (!this.focused) {
+    if (!this.focused && !coerceBooleanProperty(this.matPrefix) && !coerceBooleanProperty(this.matSuffix)) {
       this.focus();
     }
   }
 
   onFocus(event) {
-    if (this.items.length) {
+    if (this.items && this.items.length) {
       this.open();
     }
     this.focused = true;

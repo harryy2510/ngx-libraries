@@ -75,7 +75,7 @@ export class AppComponent implements OnInit {
   avatars = [];
   bank = '';
   /** list of banks */
-  private banks: any[] = [
+  banks: any[] = [
     {name: 'Bank A (Switzerland)', id: 'A'},
     {name: 'Bank B (Switzerland)', id: 'B'},
     {name: 'Bank C (France)', id: 'C'},
@@ -95,7 +95,7 @@ export class AppComponent implements OnInit {
     {name: 'Bank Q (Germany)', id: 'Q'},
     {name: 'Bank R (Germany)', id: 'R'},
   ];
-  private banks2: any[] = [
+  banks2: any[] = [
     {name: 'Bank A (Switzerland)', id: 0},
     {name: 'Bank B (Switzerland)', id: 1},
     {name: 'Bank C (France)', id: 2},

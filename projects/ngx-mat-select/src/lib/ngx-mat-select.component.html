@@ -25,7 +25,7 @@
     <ng-template [ngIf]="!optionTemplateRef">
       <ng-template [ngIf]="multiple">
         <ng-template ng-option-tmp let-item$="item$" let-item="item">
-          <mat-checkbox [disabled]="item.disabled" [ngModel]="item$.selected">{{ item$.label }}</mat-checkbox>
+          <mat-checkbox [ngModelOptions]="{ standalone: true }" [disabled]="item.disabled" [ngModel]="item$.selected">{{ item$.label }}</mat-checkbox>
         </ng-template>
       </ng-template>
     </ng-template>

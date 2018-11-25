@@ -63,6 +63,7 @@
 
         .ng-input {
           line-height: inherit;
+          bottom: 0;
 
           input {
             padding: 0;
@@ -100,7 +101,6 @@
 
         .ng-input {
           left: 0;
-          bottom: 0;
           position: absolute;
           width: 100%;
         }
