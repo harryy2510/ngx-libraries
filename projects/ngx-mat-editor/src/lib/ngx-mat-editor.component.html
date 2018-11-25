@@ -1,0 +1,14 @@
+<ng-template [ngIf]="initialized">
+  <editor #editor
+          [disabled]="disabled"
+          [id]="id"
+          [init]="_init"
+          [inline]="inline"
+          [plugins]="plugins"
+          [toolbar]="toolbar"
+          [(ngModel)]="_value"
+          (ngModelChange)="emitChange()"
+          (onFocus)="focusEvent()"
+          (onBlur)="blurEvent()"
+  ></editor>
+</ng-template>

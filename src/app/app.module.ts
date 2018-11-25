@@ -13,10 +13,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxRightsModule} from '../../projects/ngx-rights/src/lib/ngx-rights.module';
 import {NgxMatSelectModule} from '../../projects/ngx-mat-select/src/lib/ngx-mat-select.module';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {NgxMatEditorModule} from '../../projects/ngx-mat-editor/src/lib/ngx-mat-editor.module';
+import {TestComponent} from './test/test.component';
+import {RouterModule} from '@angular/router';
+import {Test2Component} from './test2/test2.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestComponent,
+    Test2Component
   ],
   imports: [
     BrowserModule,
@@ -32,7 +38,23 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, MatInputModule} from
     BrowserAnimationsModule,
     NgxMatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    NgxMatEditorModule,
+    RouterModule.forRoot([
+      {
+        path: '',
+        redirectTo: 'test1',
+        pathMatch:'full'
+      },
+      {
+        path: 'test1',
+        component: TestComponent
+      },
+      {
+        path: 'test2',
+        component: Test2Component
+      }
+    ])
   ],
   providers: [
     {

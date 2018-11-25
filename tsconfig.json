@@ -70,6 +70,12 @@
       ],
       "ngx-mat-select/*": [
         "dist/ngx-mat-select/*"
+      ],
+      "ngx-mat-editor": [
+        "dist/ngx-mat-editor"
+      ],
+      "ngx-mat-editor/*": [
+        "dist/ngx-mat-editor/*"
       ]
     }
   }

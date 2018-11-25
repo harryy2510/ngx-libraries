@@ -491,6 +491,41 @@
           }
         }
       }
+    },
+    "ngx-mat-editor": {
+      "root": "projects/ngx-mat-editor",
+      "sourceRoot": "projects/ngx-mat-editor/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-mat-editor/tsconfig.lib.json",
+            "project": "projects/ngx-mat-editor/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-mat-editor/src/test.ts",
+            "tsConfig": "projects/ngx-mat-editor/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-mat-editor/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-mat-editor/tsconfig.lib.json",
+              "projects/ngx-mat-editor/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngx-libraries",
