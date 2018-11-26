@@ -1,0 +1,13 @@
+{
+  "name": "@harryy/ngx-mat-editor",
+  "version": "0.0.12",
+  "peerDependencies": {
+    "@angular/common": "^7.0.0",
+    "@angular/core": "^7.0.0",
+    "@angular/cdk": "^7.0.0",
+    "@angular/forms": "^7.0.0",
+    "@angular/material": "^7.0.0",
+    "@tinymce/tinymce-angular": "^2.3.1",
+    "tinymce": "^4.8.5"
+  }
+}
