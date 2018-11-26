@@ -40,21 +40,21 @@ import {Test2Component} from './test2/test2.component';
     MatFormFieldModule,
     MatInputModule,
     NgxMatEditorModule,
-    RouterModule.forRoot([
-      {
-        path: '',
-        redirectTo: 'test1',
-        pathMatch:'full'
-      },
-      {
-        path: 'test1',
-        component: TestComponent
-      },
-      {
-        path: 'test2',
-        component: Test2Component
-      }
-    ])
+    // RouterModule.forRoot([
+    //   {
+    //     path: '',
+    //     redirectTo: 'test1',
+    //     pathMatch:'full'
+    //   },
+    //   {
+    //     path: 'test1',
+    //     component: TestComponent
+    //   },
+    //   {
+    //     path: 'test2',
+    //     component: Test2Component
+    //   }
+    // ])
   ],
   providers: [
     {

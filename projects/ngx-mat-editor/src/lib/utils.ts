@@ -1,5 +1,5 @@
 const id = 'tiny-script';
-const url = '/assets/tinymce/tinymce.min.js';
+const url = 'assets/tinymce/tinymce.min.js';
 
 export type callbackFn = () => void;
 

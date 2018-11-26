@@ -4,7 +4,7 @@ import {AvatarConfig} from '../../projects/ngx-avatar/src/lib/ngx-avatar.service
 import * as moment from 'moment';
 import {NgxRolesService} from '../../projects/ngx-roles/src/lib/ngx-roles.service';
 import {Role, RoleType} from '../../projects/ngx-roles/src/lib/protos/appointy.go.roles.service';
-import {FormControl} from '@angular/forms';
+import {FormControl, NgForm} from '@angular/forms';
 import {concat, Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {NgxRightsService} from '../../projects/ngx-rights/src/lib/ngx-rights.service';
 import 'moment-timezone';
@@ -106,13 +106,10 @@ export class AppComponent implements OnInit {
   ];
 
 
-
-
   people3$: Observable<any[]>;
   people3Loading = false;
   people3input$ = new Subject<string>();
   selectedPersons: any[] = <any>[];
-
 
 
   constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService) {
@@ -124,19 +121,9 @@ export class AppComponent implements OnInit {
     this.loadPeople3();
   }
 
-  private loadPeople3() {
-    this.people3$ = concat(
-      of([]),
-      this.people3input$.pipe(
-        debounceTime(200),
-        distinctUntilChanged(),
-        tap(() => this.people3Loading = true),
-        switchMap(term => this.getPeople(term).pipe(
-          catchError(() => of([])),
-          tap(() => this.people3Loading = false)
-        ))
-      )
-    );
+
+  submit(f: NgForm) {
+    console.log(f);
   }
 
   getPeople(term: string = null): Observable<any[]> {
@@ -221,6 +208,21 @@ export class AppComponent implements OnInit {
 
   onSubmit(f) {
     console.log(f);
+  }
+
+  private loadPeople3() {
+    this.people3$ = concat(
+      of([]),
+      this.people3input$.pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        tap(() => this.people3Loading = true),
+        switchMap(term => this.getPeople(term).pipe(
+          catchError(() => of([])),
+          tap(() => this.people3Loading = false)
+        ))
+      )
+    );
   }
 
   private filterBanks() {
@@ -442,4 +444,5 @@ function getMockPeople() {
       'phone': '+1 (830) 555-3209'
     }
   ]
+
 }

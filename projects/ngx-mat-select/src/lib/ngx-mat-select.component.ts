@@ -223,10 +223,14 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   ngOnChanges(changes: SimpleChanges) {
     if (changes.multiple) {
       this.clearable = this.multiple;
-      this.closeOnSelect = !this.multiple;
+      this.closeOnSelect = !this.multiple && !!this.typeahead;
     }
     if (changes.typeahead) {
       this.clearOnBackspace = !!this.typeahead;
+      this.closeOnSelect = !this.multiple && !!this.typeahead;
+    }
+    if (changes.closeOnSelect) {
+      this.closeOnSelect = changes.closeOnSelect.currentValue;
     }
     this.stateChanges.next();
   }

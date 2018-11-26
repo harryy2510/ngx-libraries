@@ -1,23 +1,23 @@
-<a routerLink="test1" mat-button>Test 1</a>
-<a routerLink="test2" mat-button>Test 2</a>
+<!--<a routerLink="test1" mat-button>Test 1</a><a routerLink="test2" mat-button>Test 2</a>-->
 
-<router-outlet></router-outlet>
+<!--<router-outlet></router-outlet>-->
+<div>
+  <div class="container-fluid p-5">
+    <div class="row">
+      <div class="col-12">
+        <form #f="ngForm" (submit)="submit(f)">
+          <mat-form-field>
+            <ngx-mat-select name="bank" required [searchable]="false" [clearable]="false" [(ngModel)]="bank" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>
+            <mat-error>Required</mat-error>
+          </mat-form-field>
+          <button type="submit" mat-button>Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-
-<!--<div>-->
-  <!--<div class="container-fluid p-5">-->
-    <!--<div class="row">-->
-      <!--<div class="col-12">-->
-        <!--<form #f="ngForm">-->
-          <!--<mat-form-field>-->
-            <!--<mat-label>Time</mat-label>-->
-            <!--<input type="text" matInput name="time" timeFormat="HH:mm" ngxTimepicker>-->
-          <!--</mat-form-field>-->
-        <!--</form>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
+<!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Time</mat-label>--><!--<input type="text" matInput name="time" timeFormat="HH:mm" ngxTimepicker>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>-->
 
 <!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field class="with-ng-select">--><!--<ngx-mat-select name="currency" [searchable]="false" [clearable]="false" [(ngModel)]="bank" [items]="banks2" bindLabel="name" bindValue="id" matPrefix class="input-select"></ngx-mat-select>--><!--<input placeholder="Amount" matInput type="number" name="amount" [(ngModel)]="dsjfgsjfgjs" required number>--><!--<mat-error>Enter a valid amount</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div><div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [searchable]="false" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select2" [items]="people3$ | async"--><!--bindLabel="name"--><!--[multiple]="true"--><!--[loading]="people3Loading"--><!--[typeahead]="people3input$"--><!--[(ngModel)]="selectedPersons">--><!--</ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div><div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>-->
 
