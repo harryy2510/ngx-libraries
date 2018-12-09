@@ -1,15 +1,15 @@
 {
   "name": "ngx-libraries",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "start": "ng serve --port 4201 --open",
-    "avatar": "cd projects/ngx-avatar && npm-bump minor && cd ../../ && ng build ngx-avatar --prod && npm run build:avatar && cd dist/ngx-avatar && npm publish --access=public",
-    "flatpickr": "cd projects/ngx-flatpickr && npm-bump minor && cd ../../ npm run build:flatpickr && cd dist/ngx-flatpickr && npm publish --access=public",
-    "editor": "cd projects/ngx-mat-editor && npm-bump minor && cd ../../ npm run build:editor && cd dist/ngx-mat-editor && npm publish --access=public",
-    "select": "cd projects/ngx-mat-select && npm-bump minor && cd ../../ npm run build:select && cd dist/ngx-mat-select && npm publish --access=public",
-    "rights": "cd projects/ngx-rights && npm-bump minor && cd ../../ npm run build:rights && cd dist/ngx-rights && npm publish --access=public",
-    "roles": "cd projects/ngx-roles && npm-bump minor && cd ../../ npm run build:roles && cd dist/ngx-roles && npm publish --access=public",
-    "timepicker": "cd projects/ngx-timepicker && npm-bump minor && cd ../../ npm run build:timepicker && cd dist/ngx-timepicker && npm publish --access=public",
+    "avatar": "cd projects/ngx-avatar && bump --minor && cd ../../ && ng build ngx-avatar --prod && cd dist/ngx-avatar && npm publish --access=public",
+    "flatpickr": "cd projects/ngx-flatpickr && bump --minor && cd ../../ && ng build ngx-flatpickr && cd dist/ngx-flatpickr && npm publish --access=public",
+    "editor": "cd projects/ngx-mat-editor && bump --minor && cd ../../ && ng build ngx-mat-editor && cd dist/ngx-mat-editor && npm publish --access=public",
+    "select": "cd projects/ngx-mat-select && bump --minor && cd ../../ && ng build ngx-mat-select && cd dist/ngx-mat-select && npm publish --access=public",
+    "rights": "cd projects/ngx-rights && bump --minor && cd ../../ && ng build ngx-rights && cd dist/ngx-rights && npm publish --access=public",
+    "roles": "cd projects/ngx-roles && bump --minor && cd ../../ && ng build ngx-roles && cd dist/ngx-roles && npm publish --access=public",
+    "timepicker": "cd projects/ngx-timepicker && bump --minor && cd ../../ && ng build ngx-timepicker && cd dist/ngx-timepicker && npm publish --access=public",
     "publish": "npm-run-all avatar flatpickr editor select rights roles timepicker"
   },
   "private": false,
@@ -81,6 +81,7 @@
     "tsickle": ">=0.33.1",
     "tslib": "^1.9.3",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.6"
+    "typescript": "~3.1.6",
+    "version-bump-prompt": "4.2.1"
   }
 }
