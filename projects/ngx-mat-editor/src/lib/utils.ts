@@ -15,7 +15,9 @@ const injectScriptTag = (scriptId: string, callback: callbackFn) => {
   scriptTag.id = scriptId;
   scriptTag.addEventListener('load', callback);
   scriptTag.src = url;
-  scriptTag.nonce = '{{ .Nonce }}';
+  if (window['nonce']) {
+    scriptTag.setAttribute('nonce', window['nonce']);
+  }
   if (document.head) {
     document.head.appendChild(scriptTag);
   }

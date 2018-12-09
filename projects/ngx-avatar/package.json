@@ -1,11 +1,9 @@
 {
   "name": "@harryy/ngx-avatar",
-  "version": "0.1.8",
+  "version": "0.1.11",
   "peerDependencies": {
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0",
-    "svg.filter.js": "2.0.2",
-    "svg.js": "2.6.5",
-    "@angular/material": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0",
-    "@angular/cdk": "^6.0.0-rc.0 || ^6.0.0 || ^7.0.0"
+    "@angular/core": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
+    "@angular/material": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
+    "@angular/cdk": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
   }
 }
