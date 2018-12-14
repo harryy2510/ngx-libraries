@@ -70,7 +70,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Input() groupBy: string | Function;
   @Input() groupValue: Function;
   @Input() bufferAmount: number;
-  @Input() virtualScroll: boolean;
+  @Input() virtualScroll = true;
   @Input() selectableGroup: boolean;
   @Input() selectableGroupAsModel: boolean;
   @Input() searchFn: Function;
