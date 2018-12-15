@@ -34,7 +34,6 @@ import {
   MatPrefix,
   MatSuffix,
   mixinDisabled,
-  mixinDisableRipple,
   mixinErrorState,
   mixinTabIndex
 } from '@angular/material';
@@ -61,7 +60,7 @@ export const _MatSelectMixinBase:
   HasTabIndexCtor &
   CanUpdateErrorStateCtor &
   typeof MatSelectBase =
-    mixinTabIndex(mixinDisabled(mixinErrorState(MatSelectBase)));
+  mixinTabIndex(mixinDisabled(mixinErrorState(MatSelectBase)));
 
 
 @Component({
@@ -319,6 +318,11 @@ export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnC
     return this.focused || this._isOpen || !this.empty;
   }
 
+  /** The currently selected option. */
+  get selected(): T | T[] {
+    return this.multiple ? (this.select && (this.select.selectedValues as T[])) || [] : this.select && (this.select.selectedValues[0] as T);
+  }
+
   /** `View -> model callback called when value changes` */
   _onChange: (value: any) => void = () => {
   };
@@ -424,11 +428,6 @@ export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnC
    */
   registerOnChange(fn: (value: any) => void): void {
     this._onChange = fn;
-  }
-
-  /** The currently selected option. */
-  get selected(): T | T[] {
-    return this.multiple ? (this.select && (this.select.selectedValues as T[])) || [] : this.select && (this.select.selectedValues[0] as T);
   }
 
   /**
