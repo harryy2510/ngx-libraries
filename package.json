@@ -10,7 +10,8 @@
     "rights": "cd projects/ngx-rights && bump --patch && cd ../../ && ng build ngx-rights && cd dist/ngx-rights && npm publish --access=public",
     "roles": "cd projects/ngx-roles && bump --patch && cd ../../ && ng build ngx-roles && cd dist/ngx-roles && npm publish --access=public",
     "timepicker": "cd projects/ngx-timepicker && bump --patch && cd ../../ && ng build ngx-timepicker && cd dist/ngx-timepicker && npm publish --access=public",
-    "publish": "npm-run-all avatar flatpickr editor select rights roles timepicker --parallel"
+    "script-loader": "cd projects/ngx-script-loader && bump --patch && cd ../../ && ng build ngx-script-loader && cd dist/ngx-script-loader && npm publish --access=public",
+    "publish": "npm-run-all avatar flatpickr editor select rights roles timepicker script-loader --parallel"
   },
   "private": false,
   "dependencies": {
@@ -26,6 +27,7 @@
     "@angular/platform-browser-dynamic": "^7.0.4",
     "@angular/router": "^7.0.4",
     "@harryy/ngx-flatpickr": "0.1.21",
+    "@harryy/ngx-script-loader": "1.0.5",
     "@harryy/ngx-timepicker": "0.1.3",
     "@harryy/ngx-trumbowyg": "0.1.1",
     "@material-extended/mde": "2.1.0",
@@ -44,8 +46,6 @@
     "moment": "2.22.2",
     "moment-timezone": "0.5.23",
     "multimatch": "2.1.0",
-    "ngx-custom-validators": "7.0.0",
-    "ngx-password-toggle": "1.0.3",
     "rxjs": "^6.3.3",
     "svg.filter.js": "2.0.2",
     "svg.js": "2.7.0",

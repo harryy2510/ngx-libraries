@@ -76,6 +76,12 @@
       ],
       "ngx-mat-editor/*": [
         "dist/ngx-mat-editor/*"
+      ],
+      "ngx-script-loader": [
+        "dist/ngx-script-loader"
+      ],
+      "ngx-script-loader/*": [
+        "dist/ngx-script-loader/*"
       ]
     }
   }

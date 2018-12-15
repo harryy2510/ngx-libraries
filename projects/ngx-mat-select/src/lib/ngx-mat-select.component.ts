@@ -277,7 +277,7 @@ export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnC
     return this._focused || this._isOpen;
   }
 
-  private _value: T | T[];
+  _value: T | T[];
 
   /** Value of the select control. */
   @Input()

@@ -9,6 +9,7 @@ import {concat, Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {NgxRightsService} from '../../projects/ngx-rights/src/lib/ngx-rights.service';
 import 'moment-timezone';
 import {catchError, debounceTime, delay, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
+import {NgxScriptLoaderService} from '../../projects/ngx-script-loader/src/lib/ngx-script-loader.service';
 
 @Component({
   selector: 'lib-root',
@@ -36,8 +37,7 @@ export class AppComponent implements OnInit {
     '/programs/{class.base.program_id}/locations/{class.base.location_id}/divisions/{class.base.division_id}/users/{user_id}/classes/{class.id}'
   ];
 
-  formValues: any = {
-  };
+  formValues: any = {};
 
   markedDates = [moment(), moment().add(1, 'd'), moment().add(2, 'd')];
 
@@ -110,13 +110,27 @@ export class AppComponent implements OnInit {
   selectedPersons: any[] = <any>[];
 
 
-  constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService) {
+  constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService, private _scriptLoader: NgxScriptLoaderService) {
     this._rightsService.setRights(this.rights);
     this._rolesService.role = this.role;
-    moment.tz.setDefault('America/Chicago');
+    // moment.tz.setDefault('America/Chicago');
     this.time = moment();
     this.date2 = moment();
     this.loadPeople3();
+    this.loadJs();
+  }
+
+  loadJs() {
+    this._scriptLoader.load('111', 'https://code.jquery.com/jquery-3.3.1.min.js')
+      .subscribe(res => console.log(res));
+    this._scriptLoader.load('1121', 'https://code.jquery.com/jquery-3.3.1.min.js')
+      .subscribe(res => console.log(res));
+    this._scriptLoader.load('111', 'https://code.jquery.com/jquery-3.3.1.min.js')
+      .subscribe(res => console.log(res));
+    this._scriptLoader.load('1131', 'https://code.jquery.com/jquery-3.3.1.min.js')
+      .subscribe(res => console.log(res));
+    this._scriptLoader.load('1121', 'https://code.jquery.com/jquery-3.3.1.min.js')
+      .subscribe(res => console.log(res));
   }
 
 

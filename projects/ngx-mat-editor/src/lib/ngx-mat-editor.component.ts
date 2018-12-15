@@ -19,9 +19,12 @@ import {ControlValueAccessor, NgControl} from '@angular/forms';
 import {MatFormFieldControl} from '@angular/material';
 import {Subject} from 'rxjs';
 import {EventObj} from '@tinymce/tinymce-angular/editor/Events';
-import * as Utils from './utils';
+import {NgxScriptLoaderService} from '@harryy/ngx-script-loader';
 
-const scriptState = Utils.create();
+const getTinymce = () => {
+  const w = typeof window !== 'undefined' ? (window as any) : undefined;
+  return w && w.tinymce ? w.tinymce : null;
+};
 
 @Component({
   selector: 'ngx-mat-editor',
@@ -69,7 +72,8 @@ export class NgxMatEditorComponent implements OnDestroy, AfterViewInit, OnChange
 
   constructor(private viewContainerRef: ViewContainerRef,
               private cdRef: ChangeDetectorRef,
-              @Optional() @Self() public ngControl: NgControl) {
+              @Optional() @Self() public ngControl: NgControl,
+              private _scriptLoader: NgxScriptLoaderService) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
@@ -145,7 +149,9 @@ export class NgxMatEditorComponent implements OnDestroy, AfterViewInit, OnChange
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      Utils.initializeTinyMCE(scriptState, this.initialize);
+      if (getTinymce()) {
+        this._scriptLoader.load('tinymce-angular', 'assets/tinymce/tinymce.min.js')
+      }
     }, 300);
   }
 
