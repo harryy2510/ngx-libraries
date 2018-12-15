@@ -1,4 +1,51 @@
-<ng-select [(ngModel)]="_value" [labelForId]="id" [name]="id" [required]="required" [placeholder]="placeholder" [disabled]="disabled" [items]="items" [bindLabel]="bindLabel" [bindValue]="bindValue" [clearable]="clearable" [markFirst]="markFirst" [notFoundText]="notFoundText" [typeToSearchText]="typeToSearchText" [addTagText]="addTagText" [loadingText]="loadingText" [clearAllText]="clearAllText" [dropdownPosition]="dropdownPosition" [appendTo]="appendTo" [loading]="loading" [closeOnSelect]="closeOnSelect" [hideSelected]="hideSelected" [selectOnTab]="selectOnTab" [openOnEnter]="openOnEnter" [maxSelectedItems]="maxSelectedItems" [groupBy]="groupBy" [groupValue]="groupValue" [bufferAmount]="bufferAmount" [virtualScroll]="virtualScroll" [selectableGroup]="selectableGroup" [selectableGroupAsModel]="selectableGroupAsModel" [searchFn]="searchFn" [clearOnBackspace]="clearOnBackspace" [typeahead]="typeahead" [multiple]="multiple" [addTag]="addTag" [searchable]="searchable" [isOpen]="isOpen" [clearSearchOnAdd]="clearSearchOnAdd" (blur)="onBlur($event)" (focus)="onFocus($event)" (change)="emitChange($event)" (open)="onOpen($event)" (close)="onClose($event)" (search)="searchEvent.emit($event)" (clear)="clearEvent.emit($event)" (add)="addEvent.emit($event)" (remove)="removeEvent.emit($event)" (scroll)="scrollEvent.emit($event)" (scrollToEnd)="scrollToEndEvent.emit($event)">
+<ng-select [(ngModel)]="_value"
+           [labelForId]="id"
+           [name]="id"
+           [required]="required"
+           [placeholder]="placeholder"
+           [disabled]="disabled"
+           [items]="items"
+           [bindLabel]="bindLabel"
+           [bindValue]="bindValue"
+           [clearable]="clearable"
+           [markFirst]="markFirst"
+           [notFoundText]="notFoundText"
+           [typeToSearchText]="typeToSearchText"
+           [addTagText]="addTagText"
+           [loadingText]="loadingText"
+           [clearAllText]="clearAllText"
+           [dropdownPosition]="dropdownPosition"
+           [appendTo]="appendTo"
+           [loading]="loading"
+           [closeOnSelect]="closeOnSelect"
+           [hideSelected]="hideSelected"
+           [selectOnTab]="selectOnTab"
+           [openOnEnter]="openOnEnter"
+           [maxSelectedItems]="maxSelectedItems"
+           [groupBy]="groupBy"
+           [groupValue]="groupValue"
+           [bufferAmount]="bufferAmount"
+           [virtualScroll]="virtualScroll"
+           [selectableGroup]="selectableGroup"
+           [selectableGroupAsModel]="selectableGroupAsModel"
+           [searchFn]="searchFn"
+           [clearOnBackspace]="clearOnBackspace"
+           [typeahead]="typeahead"
+           [multiple]="multiple"
+           [addTag]="addTag"
+           [searchable]="searchable"
+           [clearSearchOnAdd]="clearSearchOnAdd"
+           (blur)="_onBlur($event)"
+           (focus)="_onFocus($event)"
+           (change)="_propagateChanges($event)"
+           (open)="_onOpen($event)"
+           (close)="_onClose($event)"
+           (search)="_onSearch($event)"
+           (clear)="_onClear($event)"
+           (add)="_onAdd($event)"
+           (remove)="_onRemove($event)"
+           (scroll)="_onScroll($event)"
+           (scrollToEnd)="_onScrollToEnd($event)">
 
   <ng-template [ngIf]="items?.length">
 
@@ -81,5 +128,3 @@
   </ng-template>
 
 </ng-select>
-
-<ng-template #templatePortal></ng-template>

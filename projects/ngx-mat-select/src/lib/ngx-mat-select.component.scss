@@ -1,3 +1,5 @@
+$highlight-color: #3f51b5 !default;
+
 :host {
   display: inline-block;
   animation-name: cdk-text-field-autofill-end;
@@ -14,6 +16,25 @@
   .ng-select.ng-select-single {
     padding: 0;
     font-size: 1rem;
+
+    .ng-has-value,
+    &.ng-select-opened,
+    &.ng-select-focused {
+      .ng-placeholder {
+        transform: none!important;
+        color: rgba(0, 0, 0, 0.54)!important;
+      }
+    }
+
+    .ng-has-value {
+      .ng-placeholder {
+        visibility: hidden;
+      }
+    }
+
+    .ng-placeholder {
+      color: rgba(0, 0, 0, 0.54);
+    }
 
     .ng-select-container {
       align-items: center;
@@ -148,7 +169,7 @@
 
       .mat-checkbox-layout {
         color: rgba(0, 0, 0, 0.87);
-        font-size: 14px;
+        font-size: inherit;
         max-width: 100%;
 
         .mat-checkbox-label {
@@ -156,6 +177,20 @@
           max-width: 100%;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+      }
+    }
+
+    &.ng-select-multiple {
+      .ng-option.ng-option-selected {
+        background-color: inherit;
+        &.ng-option-marked {
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+        .mat-checkbox {
+          .mat-checkbox-layout {
+            color: $highlight-color;
+          }
         }
       }
     }

@@ -37,8 +37,6 @@ export class AppComponent implements OnInit {
   ];
 
   formValues: any = {
-    select: '',
-    x: ''
   };
 
   markedDates = [moment(), moment().add(1, 'd'), moment().add(2, 'd')];

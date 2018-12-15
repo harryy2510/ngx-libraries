@@ -1,11 +1,14 @@
 import {
   AfterViewInit,
+  Attribute,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
+  DoCheck,
+  ElementRef,
   EventEmitter,
   HostBinding,
-  HostListener,
   Input,
   OnChanges,
   OnDestroy,
@@ -14,40 +17,118 @@ import {
   Self,
   SimpleChanges,
   TemplateRef,
-  ViewChild,
-  ViewContainerRef
+  ViewChild
 } from '@angular/core';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {ControlValueAccessor, NgControl} from '@angular/forms';
-import {MatFormFieldControl, MatPrefix, MatSuffix} from '@angular/material';
-import {Subject} from 'rxjs';
+import {ControlValueAccessor, FormGroupDirective, NgControl, NgForm} from '@angular/forms';
+import {
+  CanDisable,
+  CanDisableCtor,
+  CanUpdateErrorState,
+  CanUpdateErrorStateCtor,
+  ErrorStateMatcher,
+  HasTabIndex,
+  HasTabIndexCtor,
+  MatFormField,
+  MatFormFieldControl,
+  MatPrefix,
+  MatSuffix,
+  mixinDisabled,
+  mixinDisableRipple,
+  mixinErrorState,
+  mixinTabIndex
+} from '@angular/material';
+import {Observable, Subject} from 'rxjs';
 import {FocusMonitor} from '@angular/cdk/a11y';
 import {NgSelectComponent} from '@ng-select/ng-select';
 import {AddTagFn, CompareWithFn, DropdownPosition} from '@ng-select/ng-select/ng-select/ng-select.component';
-import {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
-import {TemplatePortal} from '@angular/cdk/portal';
+import {filter, map} from 'rxjs/operators';
+import {Directionality} from '@angular/cdk/bidi';
+
+let nextUniqueId = 0;
+
+export class MatSelectBase {
+  constructor(public _elementRef: ElementRef,
+              public _defaultErrorStateMatcher: ErrorStateMatcher,
+              public _parentForm: NgForm,
+              public _parentFormGroup: FormGroupDirective,
+              public ngControl: NgControl) {
+  }
+}
+
+export const _MatSelectMixinBase:
+  CanDisableCtor &
+  HasTabIndexCtor &
+  CanUpdateErrorStateCtor &
+  typeof MatSelectBase =
+    mixinTabIndex(mixinDisabled(mixinErrorState(MatSelectBase)));
+
 
 @Component({
   selector: 'ngx-mat-select',
+  exportAs: 'ngxMatSelect',
   templateUrl: './ngx-mat-select.component.html',
   styleUrls: ['./ngx-mat-select.component.scss'],
   providers: [
     {provide: MatFormFieldControl, useExisting: NgxMatSelectComponent}
-  ]
+  ],
+  inputs: ['disabled', 'tabIndex'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[attr.tabindex]': 'tabIndex',
+    // '[attr.aria-label]': '_getAriaLabel()',
+    // '[attr.aria-labelledby]': '_getAriaLabelledby()',
+    // '[attr.aria-required]': 'required.toString()',
+    // '[attr.aria-disabled]': 'disabled.toString()',
+    // '[attr.aria-invalid]': 'errorState',
+    // '[attr.aria-owns]': 'isOpen ? _optionIds : null',
+    // '[attr.aria-multiselectable]': 'multiple',
+    // '[attr.aria-describedby]': '_ariaDescribedby || null',
+    // '[attr.aria-activedescendant]': '_getAriaActiveDescendant()',
+    '[class.ngx-mat-select-disabled]': 'disabled',
+    '[class.ngx-mat-select-invalid]': 'errorState',
+    '[class.ngx-mat-select-required]': 'required',
+    '[class.ngx-mat-select-empty]': 'empty',
+    'class': 'ngx-mat-select',
+  }
 })
-export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnChanges, MatFormFieldControl<any>, ControlValueAccessor {
+export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnChanges,
+  OnDestroy, DoCheck, ControlValueAccessor, CanDisable, HasTabIndex,
+  MatFormFieldControl<any>, CanUpdateErrorState,
+  AfterViewInit,
+  OnDestroy, OnChanges, MatFormFieldControl<any>, ControlValueAccessor {
 
-  static nextId = 0;
-  readonly stateChanges = new Subject<void>();
-  focused = false;
+  /** The aria-describedby attribute on the select for improved a11y. */
+  _ariaDescribedby: string;
+  /** A name for this control that can be used by `mat-form-field`. */
   controlType = 'ngx-mat-select';
-  @HostBinding() id = `${this.controlType}-${NgxMatSelectComponent.nextId++}`;
-  @HostBinding('attr.aria-describedBy') describedBy = '';
+  /** Aria label of the select. If not specified, the placeholder will be used as label. */
+  @Input('aria-label') ariaLabel: string = '';
+  /** Input that can be used to specify the `aria-labelledby` attribute. */
+  @Input('aria-labelledby') ariaLabelledby: string;
+  /** Object used to control when error messages are shown. */
+  @Input() errorStateMatcher: ErrorStateMatcher;
+  /** Event emitted when the select panel has been toggled. */
+  @Output() readonly openedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  /** Event emitted when the select has been opened. */
+  @Output('opened') readonly _openedStream: Observable<void> =
+    this.openedChange.pipe(filter(o => o), map(() => {
+    }));
+  /** Event emitted when the select has been closed. */
+  @Output('closed') readonly _closedStream: Observable<void> =
+    this.openedChange.pipe(filter(o => !o), map(() => {
+    }));
+  /** Event emitted when the selected value has been changed by the user. */
+  @Output() readonly selectionChange: EventEmitter<T | T[]> =
+    new EventEmitter<T | T[]>();
+  /**
+   * Event that emits whenever the raw value of the select changes. This is here primarily
+   * to facilitate the two-way binding for the `value` input.
+   */
+  @Output() readonly valueChange: EventEmitter<T | T[]> = new EventEmitter<T | T[]>();
   @ViewChild(NgSelectComponent) select: NgSelectComponent;
-
   @Input() matPrefix: MatPrefix;
   @Input() matSuffix: MatSuffix;
-
   // inputs
   @Input() items: T[] = [];
   @Input() bindLabel: string;
@@ -76,9 +157,7 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
   @Input() searchFn: Function;
   @Input() clearOnBackspace = false;
   @Input() typeahead: Subject<string>;
-  @Input() multiple: boolean;
   @Input() addTag: boolean | AddTagFn;
-  @Input() isOpen: boolean;
   @Input() searchable = true;
   @Input() compareWith: CompareWithFn;
   @Input() clearSearchOnAdd = true;
@@ -112,233 +191,406 @@ export class NgxMatSelectComponent<T> implements AfterViewInit, OnDestroy, OnCha
       'other': '(+# others)'
     }
   };
-  @ViewChild('templatePortal') templatePortal: TemplateRef<any>;
-  overlayRef: OverlayRef;
+  /** Unique id for this input. */
+  private _uid = `ngx-mat-select-${nextUniqueId++}`;
+  /** Emits whenever the component is destroyed. */
+  private readonly _destroy = new Subject<void>();
 
-  constructor(private viewContainerRef: ViewContainerRef,
-              private fm: FocusMonitor,
-              private cdRef: ChangeDetectorRef,
-              @Optional() @Self() public ngControl: NgControl,
-              private overlay: Overlay) {
+  constructor(
+    private fm: FocusMonitor,
+    private _changeDetectorRef: ChangeDetectorRef,
+    _defaultErrorStateMatcher: ErrorStateMatcher,
+    elementRef: ElementRef,
+    @Optional() private _dir: Directionality,
+    @Optional() _parentForm: NgForm,
+    @Optional() _parentFormGroup: FormGroupDirective,
+    @Optional() private _parentFormField: MatFormField,
+    @Self() @Optional() public ngControl: NgControl,
+    @Attribute('tabindex') tabIndex: string) {
+    super(elementRef, _defaultErrorStateMatcher, _parentForm,
+      _parentFormGroup, ngControl);
+
     if (this.ngControl) {
+      // Note: we provide the value accessor through here, instead of
+      // the `providers` to avoid running into a circular import.
       this.ngControl.valueAccessor = this;
     }
+
+    this.tabIndex = parseInt(tabIndex) || -1;
+
+    // Force setter to be called in case id was not specified.
+    this.id = this.id;
   }
 
-  _value: T | T[] | undefined = undefined;
+  /** Whether or not the overlay panel is open. */
+  private _isOpen = false;
 
+  /** Whether or not the overlay panel is open. */
+  get isOpen(): boolean {
+    return this._isOpen;
+  }
+
+  /** Whether filling out the select is required in the form. */
+  private _required: boolean = false;
+
+  /** Whether the component is required. */
   @Input()
-  get value(): T | T[] | undefined {
-    return this._value;
-  }
-
-  set value(value: T | T[] | undefined) {
-    this.writeValue(value);
-    this.propogateChange(value);
-  }
-
-  get errorState() {
-    return this.ngControl.errors !== null && this.ngControl.touched;
-  }
-
-  @HostBinding('class.floating')
-  get shouldLabelFloat() {
-    return this.focused || !this.empty;
-  }
-
-  private _required = false;
-
-  @Input()
-  get required() {
+  get required(): boolean {
     return this._required;
   }
 
-  set required(req) {
-    this._required = coerceBooleanProperty(req);
+  set required(value: boolean) {
+    this._required = coerceBooleanProperty(value);
     this.stateChanges.next();
   }
 
-  private _disabled = false;
+  /** The placeholder displayed in the trigger of the select. */
+  private _placeholder: string;
 
+  /** Placeholder to be shown if no value has been selected. */
   @Input()
-  get disabled() {
-    if (this.ngControl && this.ngControl.disabled !== null) {
-      return this.ngControl.disabled;
-    }
-    return this._disabled;
-  }
-
-  set disabled(dis) {
-    this._disabled = coerceBooleanProperty(dis);
-    if (this.focused) {
-      this.focused = false;
-      this.stateChanges.next();
-    }
-  }
-
-  private _placeholder = '';
-
-  @Input()
-  get placeholder() {
+  get placeholder(): string {
     return this._placeholder;
   }
 
-  set placeholder(plh) {
-    this._placeholder = plh;
+  set placeholder(value: string) {
+    this._placeholder = value;
     this.stateChanges.next();
   }
 
+  /** Whether the component is in multiple selection mode. */
+  private _multiple: boolean = false;
+
+  /** Whether the user should be allowed to select multiple options. */
+  @Input()
+  get multiple(): boolean {
+    return this._multiple;
+  }
+
+  set multiple(value: boolean) {
+    this._multiple = coerceBooleanProperty(value);
+  }
+
+  private _focused = false;
+
+  /** Whether the select is focused. */
+  get focused(): boolean {
+    return this._focused || this._isOpen;
+  }
+
+  private _value: T | T[];
+
+  /** Value of the select control. */
+  @Input()
+  get value(): T | T[] {
+    return this._value;
+  }
+
+  set value(newValue: T | T[]) {
+    if (newValue !== this._value) {
+      this.writeValue(newValue);
+      this._value = newValue;
+    }
+  }
+
+  private _id: string;
+
+  /** Unique id of the element. */
+  @Input()
+  get id(): string {
+    return this._id;
+  }
+
+  set id(value: string) {
+    this._id = value || this._uid;
+    this.stateChanges.next();
+  }
+
+  /** Whether the select has a value. */
   get empty(): boolean {
     return this.select ? !this.select.hasValue : true;
   }
 
-  propogateChange = (_: any) => {
-  } // tslint:disable-line
-
-  propogateTouched = () => {
-  } // tslint:disable-line
-
-  detectChanges() {
-    if (!this.cdRef['destroyed']) {
-      this.cdRef.markForCheck();
-    }
+  /**
+   * Implemented as part of MatFormFieldControl.
+   */
+  @HostBinding('class.floating')
+  get shouldLabelFloat(): boolean {
+    return this.focused || this._isOpen || !this.empty;
   }
+
+  /** `View -> model callback called when value changes` */
+  _onChange: (value: any) => void = () => {
+  };
+
+  /** `View -> model callback called when select has been touched` */
+  _onTouched = () => {
+  };
 
   ngAfterViewInit() {
     if (this.select && this.select.element) {
       this.fm.monitor(this.select.element, true).subscribe(origin => {
-        this.focused = !!origin;
+        this._focused = !!origin;
         this.stateChanges.next();
       });
     }
   }
 
+  ngDoCheck() {
+    if (this.ngControl) {
+      this.updateErrorState();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Updating the disabled state is handled by `mixinDisabled`, but we need to additionally let
+    // the parent form field know to run change detection when the disabled state changes.
+    if (changes.disabled) {
+      this.stateChanges.next();
+    }
+
+    if (changes.multiple) {
+      this.clearable = this.multiple;
+      // this.closeOnSelect = !this.multiple && !!this.typeahead;
+      this.stateChanges.next();
+    }
+    if (changes.typeahead) {
+      this.clearOnBackspace = !!this.typeahead;
+      // this.closeOnSelect = !this.multiple && !!this.typeahead;
+      this.stateChanges.next();
+    }
+  }
+
   ngOnDestroy() {
+    this._destroy.next();
+    this._destroy.complete();
     this.stateChanges.complete();
     if (this.select && this.select.element) {
       this.fm.stopMonitoring(this.select.element);
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.multiple) {
-      this.clearable = this.multiple;
-      this.closeOnSelect = !this.multiple && !!this.typeahead;
+  /** Toggles the overlay panel open or closed. */
+  toggle(): void {
+    this.isOpen ? this.close() : this.open();
+  }
+
+  /** Opens the overlay panel. */
+  open(): void {
+    if (this.disabled || !this.items || !this.items.length || this._isOpen) {
+      return;
     }
-    if (changes.typeahead) {
-      this.clearOnBackspace = !!this.typeahead;
-      this.closeOnSelect = !this.multiple && !!this.typeahead;
-    }
-    if (changes.closeOnSelect) {
-      this.closeOnSelect = changes.closeOnSelect.currentValue;
-    }
-    this.stateChanges.next();
-  }
 
-  writeValue(value: T | T[] | undefined): void {
-    this._value = this.coerceValue(value);
-    setTimeout(() => {
-      this.stateChanges.next();
-      this.detectChanges();
-    });
-  }
-
-  registerOnChange(fn: (_: any) => void): void {
-    this.propogateChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.propogateTouched = fn;
-  }
-
-  setDescribedByIds(ids: string[]) {
-    this.describedBy = ids.join(' ');
-  }
-
-  focus() {
-    this.open();
-  }
-
-  onContainerClick() {
-    if (!this.focused && !coerceBooleanProperty(this.matPrefix) && !coerceBooleanProperty(this.matSuffix)) {
-      this.focus();
-    }
-  }
-
-  onFocus(event) {
-    if (this.items && this.items.length) {
-      this.open();
-    }
-    this.focused = true;
-    this.propogateTouched();
-    this.stateChanges.next();
-    this.focusEvent.emit(event);
-  }
-
-  @HostListener('focusout', ['$event'])
-  onBlur(event) {
-    this.close();
-    this.focused = false;
-    this.propogateTouched();
-    this.stateChanges.next();
-    this.blurEvent.emit(event);
-    this.removeOverlay();
-  }
-
-  onOpen(event) {
-    this.createOverlay();
-    this.openEvent.emit(event);
-  }
-
-  open() {
+    this._isOpen = true;
     setTimeout(() => {
       if (this.select && !this.select.isOpen) {
         this.select.focus();
         this.select.open();
       }
     });
+    this.detectChanges();
   }
 
-  close() {
-    if (this.select && this.select.isOpen) {
-      this.select.close();
+  /** Closes the overlay panel and focuses the host element. */
+  close(): void {
+    if (this._isOpen) {
+      this._isOpen = false;
+      if (this.select && this.select.isOpen) {
+        this.select.close();
+      }
+      this.detectChanges();
+      this._onTouched();
     }
   }
 
-  onClose(event) {
-    this.removeOverlay();
-    this.closeEvent.emit(event)
+  /**
+   * Sets the select's value. Part of the ControlValueAccessor interface
+   * required to integrate with Angular's core forms API.
+   *
+   * @param value New value to be written to the model.
+   */
+  writeValue(value: T | T[]): void {
+    if (this.items && this.items.length) {
+      this._value = this.coerceValue(value);
+    }
   }
 
-  createOverlay() {
-    const portalHost = new TemplatePortal(this.templatePortal, this.viewContainerRef);
-    let config = new OverlayConfig();
-    config.positionStrategy = this.overlay
-      .position()
-      .global();
-    config.scrollStrategy = this.overlay.scrollStrategies.block();
-    this.overlayRef = this.overlay.create(config);
-    this.overlayRef.backdropClick().subscribe(() => {
-      this.close();
-      this.removeOverlay();
+  /**
+   * Saves a callback function to be invoked when the select's value
+   * changes from user input. Part of the ControlValueAccessor interface
+   * required to integrate with Angular's core forms API.
+   *
+   * @param fn Callback to be triggered when the value changes.
+   */
+  registerOnChange(fn: (value: any) => void): void {
+    this._onChange = fn;
+  }
+
+  /** The currently selected option. */
+  get selected(): T | T[] {
+    return this.multiple ? (this.select && (this.select.selectedValues as T[])) || [] : this.select && (this.select.selectedValues[0] as T);
+  }
+
+  /**
+   * Saves a callback function to be invoked when the select is blurred
+   * by the user. Part of the ControlValueAccessor interface required
+   * to integrate with Angular's core forms API.
+   *
+   * @param fn Callback to be triggered when the component has been touched.
+   */
+  registerOnTouched(fn: () => {}): void {
+    this._onTouched = fn;
+  }
+
+  /**
+   * Disables the select. Part of the ControlValueAccessor interface required
+   * to integrate with Angular's core forms API.
+   *
+   * @param isDisabled Sets whether the component is disabled.
+   */
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.detectChanges();
+    this.stateChanges.next();
+  }
+
+  /** Whether the element is in RTL mode. */
+  _isRtl(): boolean {
+    return this._dir ? this._dir.value === 'rtl' : false;
+  }
+
+  /** Focuses the select element. */
+  focus(): void {
+    if (this.select) {
+      this.select.focus();
+    }
+  }
+
+  /** Returns the aria-label of the select component. */
+  _getAriaLabel(): string | null {
+    // If an ariaLabelledby value has been set by the consumer, the select should not overwrite the
+    // `aria-labelledby` value by setting the ariaLabel to the placeholder.
+    return this.ariaLabelledby ? null : this.ariaLabel || this.placeholder;
+  }
+
+  /** Returns the aria-labelledby of the select component. */
+  _getAriaLabelledby(): string | null {
+    if (this.ariaLabelledby) {
+      return this.ariaLabelledby;
+    }
+
+    // Note: we use `_getAriaLabel` here, because we want to check whether there's a
+    // computed label. `this.ariaLabel` is only the user-specified label.
+    if (!this._parentFormField || !this._parentFormField._hasFloatingLabel() ||
+      this._getAriaLabel()) {
+      return null;
+    }
+
+    return this._parentFormField._labelId || null;
+  }
+
+  /**
+   * Implemented as part of MatFormFieldControl.
+   */
+  setDescribedByIds(ids: string[]) {
+    this._ariaDescribedby = ids.join(' ');
+  }
+
+  /**
+   * Implemented as part of MatFormFieldControl.
+   */
+  onContainerClick() {
+    if (!this.focused && !coerceBooleanProperty(this.matPrefix) && !coerceBooleanProperty(this.matSuffix)) {
+      this.focus();
+      this.open();
+    }
+  }
+
+  _onFocus($event) {
+    if (!this.disabled) {
+      this._focused = true;
+      this.stateChanges.next();
+    }
+    this.focusEvent.emit($event);
+  }
+
+  /**
+   * Calls the touched callback only if the panel is closed. Otherwise, the trigger will
+   * "blur" to the panel when it opens, causing a false positive.
+   */
+  _onBlur($event) {
+    this._focused = false;
+
+    if (!this.disabled && !this.isOpen) {
+      this._onTouched();
+      this.detectChanges();
+      this.stateChanges.next();
+    }
+    this.blurEvent.emit($event);
+  }
+
+  _onOpen($event) {
+    this._isOpen = true;
+    this.openedChange.emit(this._isOpen);
+    this.openEvent.emit($event);
+  }
+
+  _onClose($event) {
+    this._isOpen = false;
+    this.openedChange.emit(this._isOpen);
+    this.closeEvent.emit($event);
+  }
+
+  _onSearch($event) {
+    this.searchEvent.emit($event);
+    this.detectChanges()
+  }
+
+  _onClear($event) {
+    this.clearEvent.emit($event);
+    this.detectChanges()
+  }
+
+  _onAdd($event) {
+    this.addEvent.emit($event);
+    this.detectChanges()
+  }
+
+  _onRemove($event) {
+    this.removeEvent.emit($event);
+    this.detectChanges()
+  }
+
+  _onScroll($event) {
+    this.scrollEvent.emit($event);
+    this.detectChanges()
+  }
+
+  _onScrollToEnd($event) {
+    this.scrollToEndEvent.emit($event);
+    this.detectChanges()
+  }
+
+  detectChanges() {
+    setTimeout(() => {
+      if (!this._changeDetectorRef['destroyed']) {
+        this._changeDetectorRef.markForCheck();
+      }
+      if (this.select) {
+        this.select.detectChanges();
+      }
     });
-    this.overlayRef.attach(portalHost);
   }
 
-  removeOverlay() {
-    if (this.overlayRef) {
-      this.overlayRef.dispose();
-      this.overlayRef = null;
-    }
-  }
-
-  emitChange($event) {
-    this.writeValue(this.value);
-    this.propogateChange(this.value);
+  /** Emits change event to set the model value. */
+  _propagateChanges($event): void {
+    this.valueChange.emit(this.value);
+    this._onChange(this.value);
     this.changeEvent.emit($event);
+    this.detectChanges();
   }
 
-  coerceValue(value: T | T[] | undefined) {
+  private coerceValue(value: T | T[]) {
     if (typeof value === 'undefined' || value === null || (typeof value === 'string' && value === '')) {
       return undefined;
     }
