@@ -150,12 +150,14 @@ export class NgxMatEditorComponent implements OnDestroy, AfterViewInit, OnChange
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (getTinymce()) {
-        this._scriptLoader.load('tinymce-angular', 'assets/tinymce/tinymce.min.js')
+        this.initialize();
+      } else {
+        this._scriptLoader.load('tinymce-angular', 'assets/tinymce/tinymce.min.js').subscribe(() => this.initialize());
       }
-    }, 300);
+    });
   }
 
-  initialize = () => {
+  initialize() {
     setTimeout(() => {
       this.initialized = true;
       this.detectChanges();

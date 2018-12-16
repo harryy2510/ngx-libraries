@@ -1,4 +1,4 @@
-<!--<a routerLink="test1" mat-button>Test 1</a><a routerLink="test2" mat-button>Test 2</a>-->
+<!--<a routerLink="/" mat-button>Test 1</a><a routerLink="test2" mat-button>Test 2</a>-->
 
 <!--<router-outlet></router-outlet>-->
 
@@ -9,9 +9,9 @@
       <div class="col-12">
         <form #f="ngForm" (submit)="submit(f)">
           <mat-form-field>
-            <mat-label>ASDsadk</mat-label>
-            <ngx-mat-select name="bank1" [multiple]="true" required [searchable]="true" [clearable]="true" [(ngModel)]="formValues.a" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>
-            <mat-error>Required</mat-error>
+            <mat-label>Search user</mat-label>
+            <ngx-mat-select name="customer" [items]="customer$ | async" [loading]="customerLoading" [clearOnBackspace]="true" [clearable]="true" [typeahead]="customerInput$" [(ngModel)]="selectedCustomer" [closeOnSelect]="true" required bindLabel="name"></ngx-mat-select>
+            <mat-error>Customer is required</mat-error>
           </mat-form-field>
           <button type="submit" mat-button>Submit</button>
         </form>
@@ -20,53 +20,53 @@
   </div>
 </div>
 <div>
-  <div class="container-fluid p-5">
-    <div class="row">
-      <div class="col-12">
-        <form #f="ngForm" (submit)="submit(f)">
-          <mat-form-field>
+  <!--<div class="container-fluid p-5">-->
+    <!--<div class="row">-->
+      <!--<div class="col-12">-->
+        <!--<form #f="ngForm" (submit)="submit(f)">-->
+          <!--<mat-form-field>-->
+            <!--&lt;!&ndash;<mat-label>ASDsadk</mat-label>&ndash;&gt;-->
+            <!--<ngx-mat-select name="bank2" placeholder="Label" [multiple]="true" required [searchable]="false" [clearable]="true" [(ngModel)]="formValues.b" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>-->
+            <!--<mat-error>Required</mat-error>-->
+          <!--</mat-form-field>-->
+          <!--<button type="submit" mat-button>Submit</button>-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--<div>-->
+  <!--<div class="container-fluid p-5">-->
+    <!--<div class="row">-->
+      <!--<div class="col-12">-->
+        <!--<form #f="ngForm" (submit)="submit(f)">-->
+          <!--<mat-form-field>-->
             <!--<mat-label>ASDsadk</mat-label>-->
-            <ngx-mat-select name="bank2" placeholder="Label" [multiple]="true" required [searchable]="false" [clearable]="true" [(ngModel)]="formValues.b" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>
-            <mat-error>Required</mat-error>
-          </mat-form-field>
-          <button type="submit" mat-button>Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div>
-  <div class="container-fluid p-5">
-    <div class="row">
-      <div class="col-12">
-        <form #f="ngForm" (submit)="submit(f)">
-          <mat-form-field>
-            <mat-label>ASDsadk</mat-label>
-            <ngx-mat-select name="bank3" [multiple]="false" required [searchable]="true" [clearable]="true" [(ngModel)]="formValues.c" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>
-            <mat-error>Required</mat-error>
-          </mat-form-field>
-          <button type="submit" mat-button>Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<div>
-  <div class="container-fluid p-5">
-    <div class="row">
-      <div class="col-12">
-        <form #f="ngForm" (submit)="submit(f)">
-          <mat-form-field>
-            <!--<mat-label>ASDsadk</mat-label>-->
-            <ngx-mat-select name="bank4" placeholder="Label" [multiple]="false" required [searchable]="false" [clearable]="true" [(ngModel)]="formValues.d" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>
-            <mat-error>Required</mat-error>
-          </mat-form-field>
-          <button type="submit" mat-button>Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+            <!--<ngx-mat-select name="bank3" [multiple]="false" required [searchable]="true" [clearable]="true" [(ngModel)]="formValues.c" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>-->
+            <!--<mat-error>Required</mat-error>-->
+          <!--</mat-form-field>-->
+          <!--<button type="submit" mat-button>Submit</button>-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<!--<div>-->
+  <!--<div class="container-fluid p-5">-->
+    <!--<div class="row">-->
+      <!--<div class="col-12">-->
+        <!--<form #f="ngForm" (submit)="submit(f)">-->
+          <!--<mat-form-field>-->
+            <!--&lt;!&ndash;<mat-label>ASDsadk</mat-label>&ndash;&gt;-->
+            <!--<ngx-mat-select name="bank4" placeholder="Label" [multiple]="false" required [searchable]="false" [clearable]="true" [(ngModel)]="formValues.d" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>-->
+            <!--<mat-error>Required</mat-error>-->
+          <!--</mat-form-field>-->
+          <!--<button type="submit" mat-button>Submit</button>-->
+        <!--</form>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
 
 <!--<div>-->
   <!--<div class="container-fluid p-5">-->

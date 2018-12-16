@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   Attribute,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChild,
@@ -72,18 +71,8 @@ export const _MatSelectMixinBase:
     {provide: MatFormFieldControl, useExisting: NgxMatSelectComponent}
   ],
   inputs: ['disabled', 'tabIndex'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.tabindex]': 'tabIndex',
-    // '[attr.aria-label]': '_getAriaLabel()',
-    // '[attr.aria-labelledby]': '_getAriaLabelledby()',
-    // '[attr.aria-required]': 'required.toString()',
-    // '[attr.aria-disabled]': 'disabled.toString()',
-    // '[attr.aria-invalid]': 'errorState',
-    // '[attr.aria-owns]': 'isOpen ? _optionIds : null',
-    // '[attr.aria-multiselectable]': 'multiple',
-    // '[attr.aria-describedby]': '_ariaDescribedby || null',
-    // '[attr.aria-activedescendant]': '_getAriaActiveDescendant()',
     '[class.ngx-mat-select-disabled]': 'disabled',
     '[class.ngx-mat-select-invalid]': 'errorState',
     '[class.ngx-mat-select-required]': 'required',
@@ -347,22 +336,16 @@ export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnC
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // Updating the disabled state is handled by `mixinDisabled`, but we need to additionally let
-    // the parent form field know to run change detection when the disabled state changes.
-    if (changes.disabled) {
-      this.stateChanges.next();
-    }
-
     if (changes.multiple) {
       this.clearable = this.multiple;
-      // this.closeOnSelect = !this.multiple && !!this.typeahead;
-      this.stateChanges.next();
     }
     if (changes.typeahead) {
       this.clearOnBackspace = !!this.typeahead;
-      // this.closeOnSelect = !this.multiple && !!this.typeahead;
-      this.stateChanges.next();
+      this.clearable = !!this.typeahead;
+      this.virtualScroll = !this.typeahead;
     }
+    this.stateChanges.next();
+    this.detectChanges();
   }
 
   ngOnDestroy() {
@@ -414,9 +397,8 @@ export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnC
    * @param value New value to be written to the model.
    */
   writeValue(value: T | T[]): void {
-    if (this.items && this.items.length) {
-      this._value = this.coerceValue(value);
-    }
+    this._value = this.coerceValue(value);
+    this.detectChanges();
   }
 
   /**

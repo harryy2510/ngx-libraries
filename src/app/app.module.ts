@@ -14,6 +14,7 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule, MatInputModule} from
 import {NgxMatEditorModule} from '../../projects/ngx-mat-editor/src/lib/ngx-mat-editor.module';
 import {TestComponent} from './test/test.component';
 import {Test2Component} from './test2/test2.component';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -35,21 +36,16 @@ import {Test2Component} from './test2/test2.component';
     MatFormFieldModule,
     MatInputModule,
     NgxMatEditorModule,
-    // RouterModule.forRoot([
-    //   {
-    //     path: '',
-    //     redirectTo: 'test1',
-    //     pathMatch:'full'
-    //   },
-    //   {
-    //     path: 'test1',
-    //     component: TestComponent
-    //   },
-    //   {
-    //     path: 'test2',
-    //     component: Test2Component
-    //   }
-    // ])
+    RouterModule.forRoot([
+      {
+        path: '',
+        component: TestComponent
+      },
+      {
+        path: 'test2',
+        component: Test2Component
+      }
+    ])
   ],
   providers: [
     {

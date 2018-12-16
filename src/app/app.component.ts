@@ -5,10 +5,10 @@ import * as moment from 'moment';
 import {NgxRolesService} from '../../projects/ngx-roles/src/lib/ngx-roles.service';
 import {Role, RoleType} from '../../projects/ngx-roles/src/lib/protos/appointy.go.roles.service';
 import {FormControl, NgForm} from '@angular/forms';
-import {concat, Observable, of, ReplaySubject, Subject} from 'rxjs';
+import {concat, from, Observable, of, ReplaySubject, Subject} from 'rxjs';
 import {NgxRightsService} from '../../projects/ngx-rights/src/lib/ngx-rights.service';
 import 'moment-timezone';
-import {catchError, debounceTime, delay, distinctUntilChanged, switchMap, tap} from 'rxjs/operators';
+import {catchError, debounceTime, delay, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
 import {NgxScriptLoaderService} from '../../projects/ngx-script-loader/src/lib/ngx-script-loader.service';
 
 @Component({
@@ -110,6 +110,13 @@ export class AppComponent implements OnInit {
   selectedPersons: any[] = <any>[];
 
 
+  searchedUsers: any[] = [];
+  customer$: Observable<any[]>;
+  customerLoading = false;
+  customerInput$ = new Subject<string>();
+  selectedCustomer: any = null;
+
+
   constructor(private _rightsService: NgxRightsService, private _rolesService: NgxRolesService, private _scriptLoader: NgxScriptLoaderService) {
     this._rightsService.setRights(this.rights);
     this._rolesService.role = this.role;
@@ -118,6 +125,31 @@ export class AppComponent implements OnInit {
     this.date2 = moment();
     this.loadPeople3();
     this.loadJs();
+    this.getCustomer();
+  }
+
+  getCustomer() {
+    this.customer$ = concat(
+      of([]),
+      this.customerInput$.pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap(() => {
+          this.customerLoading = true;
+        }),
+        switchMap(term => {
+            return of(this.banks).pipe(
+              debounceTime(5000),
+              catchError(() => of([])),
+              map((list: any) => list.filter(b => b.name.toLowerCase().includes(term.toLowerCase()))),
+              tap(() => {
+                this.customerLoading = false;
+              })
+            );
+          }
+        )
+      )
+    );
   }
 
   loadJs() {
