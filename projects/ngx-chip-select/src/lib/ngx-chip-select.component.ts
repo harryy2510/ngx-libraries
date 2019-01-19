@@ -244,8 +244,9 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
     this._parseSelectionLabel();
     this.onTouched();
     if (emit) {
+      const items = this.selectedOptions.map((option: NgxChipSelectOption) => option.item);
+      this.changeEvent.emit(this.multiple ? items : items[0]);
       this.onChange(this.value);
-      this.changeEvent.emit(this.value);
     }
   }
 
@@ -269,6 +270,7 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
 
   private initialize(): void {
     if (!this.initialized) {
+      this.initialized = true;
       if (this._initialValue) {
         const initialValues = coerceArray(this._initialValue);
         if (this.multiple) {
@@ -282,9 +284,8 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
             this.value = opt.value;
           }
         }
-        this._emitChange(!isequal(this.value, this._initialValue));
+        this._emitChange();
       }
-      this.initialized = true;
       this.markForCheck();
     }
   }
