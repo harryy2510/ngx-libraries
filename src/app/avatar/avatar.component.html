@@ -1,0 +1,10 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Avatars</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-template ngFor [ngForOf]="avatars" let-avatar let-i="index">
+      <ngx-avatar [rounded]="avatar.rounded" [zoom]="avatar.zoom" [upload]="avatar.upload" [size]="avatar.size" [margin]="avatar.margin" [label]="avatar.label" [disabled]="avatar.disabled" [name]="avatar.name" [randomColor]="avatar.randomColor" [image]="avatar.image" [textColor]="avatar.textColor" [bgColor]="avatar.bgColor"></ngx-avatar>
+    </ng-template>
+  </mat-card-content>
+</mat-card>

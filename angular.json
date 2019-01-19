@@ -38,6 +38,14 @@
             ]
           },
           "configurations": {
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -60,9 +68,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-libraries:build"
+            "browserTarget": "ngx-libraries:build",
+            "hmrWarning": false
           },
           "configurations": {
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "ngx-libraries:build:hmr"
+            },
             "production": {
               "browserTarget": "ngx-libraries:build:production"
             }
@@ -186,6 +199,146 @@
           "options": {
             "tsConfig": "projects/ngx-script-loader/tsconfig.lib.json",
             "project": "projects/ngx-script-loader/ng-package.json"
+          }
+        }
+      }
+    },
+    "ngx-mat-table": {
+      "root": "projects/ngx-mat-table",
+      "sourceRoot": "projects/ngx-mat-table/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-mat-table/tsconfig.lib.json",
+            "project": "projects/ngx-mat-table/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-mat-table/src/test.ts",
+            "tsConfig": "projects/ngx-mat-table/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-mat-table/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-mat-table/tsconfig.lib.json",
+              "projects/ngx-mat-table/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-speed-dial": {
+      "root": "projects/ngx-speed-dial",
+      "sourceRoot": "projects/ngx-speed-dial/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-speed-dial/tsconfig.lib.json",
+            "project": "projects/ngx-speed-dial/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-speed-dial/src/test.ts",
+            "tsConfig": "projects/ngx-speed-dial/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-speed-dial/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-speed-dial/tsconfig.lib.json",
+              "projects/ngx-speed-dial/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-calendar": {
+      "root": "projects/ngx-calendar",
+      "sourceRoot": "projects/ngx-calendar/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-calendar/tsconfig.lib.json",
+            "project": "projects/ngx-calendar/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-calendar/src/test.ts",
+            "tsConfig": "projects/ngx-calendar/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-calendar/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-calendar/tsconfig.lib.json",
+              "projects/ngx-calendar/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngx-chip-select": {
+      "root": "projects/ngx-chip-select",
+      "sourceRoot": "projects/ngx-chip-select/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-chip-select/tsconfig.lib.json",
+            "project": "projects/ngx-chip-select/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-chip-select/src/test.ts",
+            "tsConfig": "projects/ngx-chip-select/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-chip-select/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-chip-select/tsconfig.lib.json",
+              "projects/ngx-chip-select/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }

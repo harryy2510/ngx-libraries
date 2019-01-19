@@ -1,0 +1,49 @@
+<mat-chip-list [selectable]="false">
+  <mat-chip [selected]="hasValue && !disabled" [selectable]="false" [satPopoverAnchorFor]="popover" (keyup.enter)="toggle()" (keyup.space)="toggle()" (click)="toggle()">
+    {{selectedLabel}}
+    <ng-template [ngIf]="!disabled">
+      <ng-template [ngIf]="hasValue && clearable">
+        <mat-icon (click)="clear($event)" [inline]="true" class="remove-icon">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAQAAABIkb+zAAACv0lEQVR4Ae2bJ1gjQRiG36hlzLXEXVvFeYW8vi6oi7f05r2kFwVegwT/RNJRKVcNdU9d/w99bSbJn93Mc/O+lvJ9IcDszD8EFAkEAoFAiYQJVtjhkCbnfLn2nCaH7LDCBAklehJDmXn2+YFY/ME+85Qx9AgFnrJBirRoygZPKZArESPUkQ6sM0JELhhm+IAo+IEZDBkzSANRtE6ZzIjZQvRli5gMqJAiXTKlQlfpYw3psqtEdIkiVSQDqxTRh/ucIBl5zH2UecQbJEPf0I8i9/XjO1S4hxJFTpAcPKaIAhFVJCerRHTMKpKjK3RIBcnZCh0QkyI5mxLTNlsI+btJmwwiPWKZNjCOC+YrEqpt/o1JuEIcbGBomRnH+APAzTYqVLkJDDhWmKZFIj44x+f3Co7xca7wnoiWGHGP/+8KlvjuFYbBnQJ19/i2Cpb4rhXqFHDmKWI1AbBUcIsPkCBWn+DMBuIaxF7B/bMsruOI4SOiUEE3vpBicKKMIAoVdOO7/0NjHlGooB9fmMOJfUSjgnp8YQ8HSvxAdCooxxd+UMJKgiCqFdzj232JlQlEs4JqfGEcKyuIZgXV+MIyVnYQzQqq8YVtrBwiShX04wsHWGkiShX04wsNrJwjShX04wtnWPmCKFXQjy989r+A/28h/3+J/f8z6vU/Mu+XEt4v5rxfTnv/QOP5I+V/8lDv/baKIe3Rja0+/7cW/d/c9X973f8DDv+PmPw/5PPvmLWO8fyg2/NRA7+HPa6I/R63eeX7wFMYOYMix7kO/YWxS4D+HAZfvR49vheGv/9IlMEf1RUify9AXFEhA2I2u7TmicmMsgeXgCwYpnmPKPieaQy5EDHc8UW4YSJypcAT1tu6irjOEwq9dBl0jj2ny6B7zFHG0JOUeMk4y2xzQIMzPl97RoMDtllmnJeUCAQCgUBAjZ/2HsPegJs5lwAAAABJRU5ErkJggg==" alt="Clear">
+        </mat-icon>
+      </ng-template>
+      <ng-template [ngIf]="isEmpty || !clearable">
+        <mat-icon>arrow_drop_down</mat-icon>
+      </ng-template>
+    </ng-template>
+  </mat-chip>
+</mat-chip-list>
+<sat-popover hasBackdrop verticalAlign="below">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{placeholder}}</mat-card-title>
+      <button mat-icon-button (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-template [ngIf]="multiple">
+        <mat-selection-list [disabled]="disabled" cdkFocusInitial [(ngModel)]="value" (selectionChange)="_emitChange(true)">
+          <ng-template ngFor [ngForOf]="options" let-option>
+            <mat-list-option checkboxPosition="before" [value]="option.value">
+              {{ option.label }}
+            </mat-list-option>
+          </ng-template>
+        </mat-selection-list>
+      </ng-template>
+      <ng-template [ngIf]="!multiple">
+        <mat-action-list>
+          <ng-template ngFor [ngForOf]="options" let-option>
+            <mat-list-item (click)="select(option.value)">
+              {{ option.label }}
+            </mat-list-item>
+          </ng-template>
+        </mat-action-list>
+      </ng-template>
+    </mat-card-content>
+    <!--<mat-card-actions align="end">-->
+    <!--<button (click)="close()" mat-button>Cancel</button>-->
+    <!--<button mat-button color="primary">Done</button>-->
+    <!--</mat-card-actions>-->
+  </mat-card>
+</sat-popover>

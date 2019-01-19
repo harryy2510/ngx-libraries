@@ -82,6 +82,32 @@
       ],
       "ngx-script-loader/*": [
         "dist/ngx-script-loader/*"
+      ],
+      "ngx-mat-table": [
+        "dist/ngx-mat-table"
+      ],
+      "ngx-mat-table/*": [
+        "dist/ngx-mat-table/*"
+      ],
+      "ngx-speed-dial": [
+        "dist/ngx-speed-dial"
+      ],
+      "ngx-speed-dial/*": [
+        "dist/ngx-speed-dial/*"
+      ],
+      "ngx-calendar": [
+        "dist/ngx-calendar",
+        "dist/ngx-calendar"
+      ],
+      "ngx-calendar/*": [
+        "dist/ngx-calendar/*",
+        "dist/ngx-calendar/*"
+      ],
+      "ngx-chip-select": [
+        "dist/ngx-chip-select"
+      ],
+      "ngx-chip-select/*": [
+        "dist/ngx-chip-select/*"
       ]
     }
   }

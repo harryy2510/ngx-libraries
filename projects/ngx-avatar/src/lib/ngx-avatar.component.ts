@@ -181,13 +181,10 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
       g = a[2];
       b = a[3];
     } else {
-      a = +('0x' + a.slice(1).replace(
-          a.length < 5 && /./g, '$&$&'
-        )
-      );
-      r = a >> 16;        // tslint:disable-line
-      b = a >> 8 & 255;   // tslint:disable-line
-      g = a & 255;        // tslint:disable-line
+      a = a.replace('#', '');
+      r = parseInt(a.substring(0, 2), 16);
+      g = parseInt(a.substring(2, 4), 16);
+      b = parseInt(a.substring(4, 6), 16);
     }
     hsp = Math.sqrt(
       0.299 * (r * r) +

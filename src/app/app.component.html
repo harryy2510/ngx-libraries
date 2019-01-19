@@ -1,95 +1,14 @@
-<!--<a routerLink="/" mat-button>Test 1</a><a routerLink="test2" mat-button>Test 2</a>-->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Third Line</span> <span class="spacer"></span>
+    <button routerLink="avatar" mat-button>Avatar</button>
+    <button routerLink="speed-dial" mat-button>Speed Dial</button>
+    <button routerLink="calendar" mat-button>Calendar</button>
+    <button routerLink="select" mat-button>Select</button>
+    <button routerLink="chip" mat-button>Chip Select</button>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-<!--<router-outlet></router-outlet>-->
-
-<!--<ngx-avatar name="Hariom Sharma"></ngx-avatar>-->
-<div>
-  <div class="container-fluid p-5">
-    <div class="row">
-      <div class="col-12">
-        <form #f="ngForm" (submit)="submit(f)">
-          <mat-form-field>
-            <mat-label>Search user</mat-label>
-            <ngx-mat-select name="customer" [items]="customer$ | async" [loading]="customerLoading" [clearOnBackspace]="true" [clearable]="true" [typeahead]="customerInput$" [(ngModel)]="selectedCustomer" [closeOnSelect]="true" required bindLabel="name"></ngx-mat-select>
-            <mat-error>Customer is required</mat-error>
-          </mat-form-field>
-          <button type="submit" mat-button>Submit</button>
-        </form>
-      </div>
-    </div>
-  </div>
+<div class="container-fluid p-5">
+  <router-outlet></router-outlet>
 </div>
-<div>
-  <!--<div class="container-fluid p-5">-->
-    <!--<div class="row">-->
-      <!--<div class="col-12">-->
-        <!--<form #f="ngForm" (submit)="submit(f)">-->
-          <!--<mat-form-field>-->
-            <!--&lt;!&ndash;<mat-label>ASDsadk</mat-label>&ndash;&gt;-->
-            <!--<ngx-mat-select name="bank2" placeholder="Label" [multiple]="true" required [searchable]="false" [clearable]="true" [(ngModel)]="formValues.b" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>-->
-            <!--<mat-error>Required</mat-error>-->
-          <!--</mat-form-field>-->
-          <!--<button type="submit" mat-button>Submit</button>-->
-        <!--</form>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-<!--<div>-->
-  <!--<div class="container-fluid p-5">-->
-    <!--<div class="row">-->
-      <!--<div class="col-12">-->
-        <!--<form #f="ngForm" (submit)="submit(f)">-->
-          <!--<mat-form-field>-->
-            <!--<mat-label>ASDsadk</mat-label>-->
-            <!--<ngx-mat-select name="bank3" [multiple]="false" required [searchable]="true" [clearable]="true" [(ngModel)]="formValues.c" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>-->
-            <!--<mat-error>Required</mat-error>-->
-          <!--</mat-form-field>-->
-          <!--<button type="submit" mat-button>Submit</button>-->
-        <!--</form>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-<!--<div>-->
-  <!--<div class="container-fluid p-5">-->
-    <!--<div class="row">-->
-      <!--<div class="col-12">-->
-        <!--<form #f="ngForm" (submit)="submit(f)">-->
-          <!--<mat-form-field>-->
-            <!--&lt;!&ndash;<mat-label>ASDsadk</mat-label>&ndash;&gt;-->
-            <!--<ngx-mat-select name="bank4" placeholder="Label" [multiple]="false" required [searchable]="false" [clearable]="true" [(ngModel)]="formValues.d" [items]="banks" bindLabel="name" bindValue="id"></ngx-mat-select>-->
-            <!--<mat-error>Required</mat-error>-->
-          <!--</mat-form-field>-->
-          <!--<button type="submit" mat-button>Submit</button>-->
-        <!--</form>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-
-<!--<div>-->
-  <!--<div class="container-fluid p-5">-->
-    <!--<div class="row">-->
-      <!--<div class="col-12">-->
-        <!--<form #f="ngForm">-->
-          <!--<mat-form-field>-->
-            <!--<mat-label>Editor</mat-label>-->
-            <!--<ngx-mat-editor name="editor" [(ngModel)]="asdasds"></ngx-mat-editor>-->
-          <!--</mat-form-field>-->
-        <!--</form>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-
-
-<!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Time</mat-label>--><!--<input type="text" matInput name="time" timeFormat="HH:mm" ngxTimepicker>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>-->
-
-<!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field class="with-ng-select">--><!--<ngx-mat-select name="currency" [searchable]="false" [clearable]="false" [(ngModel)]="bank" [items]="banks2" bindLabel="name" bindValue="id" matPrefix class="input-select"></ngx-mat-select>--><!--<input placeholder="Amount" matInput type="number" name="amount" [(ngModel)]="dsjfgsjfgjs" required number>--><!--<mat-error>Enter a valid amount</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div><div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [searchable]="false" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select2" [items]="people3$ | async"--><!--bindLabel="name"--><!--[multiple]="true"--><!--[loading]="people3Loading"--><!--[typeahead]="people3input$"--><!--[(ngModel)]="selectedPersons">--><!--</ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div><div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>--><!--<div>--><!--<div class="container-fluid p-5">--><!--<div class="row">--><!--<div class="col-12">--><!--<form #f="ngForm">--><!--<mat-form-field>--><!--<mat-label>Phone number</mat-label>--><!--<ngx-mat-select name="select" [(ngModel)]="bank" [items]="banks2" [multiple]="true" bindLabel="name" bindValue="id" required (change)="onChange($event)"></ngx-mat-select>--><!--<mat-hint>Include area code</mat-hint>--><!--<mat-error>Required</mat-error>--><!--</mat-form-field>--><!--</form>--><!--</div>--><!--</div>--><!--</div>--><!--</div>-->
-
-<!--&lt;!&ndash;<div class="container-fluid p-5">&ndash;&gt;--><!--&lt;!&ndash;<div class="row">&ndash;&gt;--><!--&lt;!&ndash;<div class="col-12">&ndash;&gt;--><!--&lt;!&ndash;<form #f3="ngForm" (submit)="onSubmit(f2)">&ndash;&gt;--><!--&lt;!&ndash;<mat-form-field>&ndash;&gt;--><!--&lt;!&ndash;<mat-select [formControl]="bankMultiCtrl" placeholder="Banks" [multiple]="true" #multiSelect>&ndash;&gt;--><!--&lt;!&ndash;<ngx-select [formControl]="bankMultiFilterCtrl"></ngx-select>&ndash;&gt;--><!--&lt;!&ndash;<mat-option *ngFor="let bank of filteredBanksMulti | async" [value]="bank">{{bank.name}}</mat-option>&ndash;&gt;--><!--&lt;!&ndash;</mat-select>&ndash;&gt;--><!--&lt;!&ndash;</mat-form-field>&ndash;&gt;--><!--&lt;!&ndash;<button type="submit">Submit</button>&ndash;&gt;--><!--&lt;!&ndash;</form>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;--><!--&lt;!&ndash;<div class="container-fluid p-5">&ndash;&gt;--><!--&lt;!&ndash;<div class="row">&ndash;&gt;--><!--&lt;!&ndash;<div class="col-12">&ndash;&gt;--><!--&lt;!&ndash;<form #f2="ngForm" (submit)="onSubmit(f2)">&ndash;&gt;--><!--&lt;!&ndash;<ngx-input hint="sdhsfhskdfk" #xx="ngModel" [(ngModel)]="dsjfgsjfgjs" validators="required" name="X"></ngx-input>&ndash;&gt;--><!--&lt;!&ndash;{{ xx?.errors | json }}&lt;!&ndash;<ngx-input type="number" #yy="ngModel" [(ngModel)]="formValues.y" [validators]="[ 'required', { type: 'lte', value: formValues.x } ]" name="Y"></ngx-input>&ndash;&gt;&lt;!&ndash;<ngx-checkbox [(ngModel)]="formValues.premium" name="Premium"></ngx-checkbox>&ndash;&gt;&lt;!&ndash;<ngx-date [(ngModel)]="formValues.date" validators="required" name="Date"></ngx-date>&ndash;&gt;&lt;!&ndash;<ngx-input [(ngModel)]="formValues.serviceName" validators="required" name="Service Name"></ngx-input>&ndash;&gt;&lt;!&ndash;<ngx-password [(ngModel)]="formValues.password" validators="required" name="Password"></ngx-password>&ndash;&gt;&lt;!&ndash;<ngx-radio [(ngModel)]="formValues.radio" name="Radio"></ngx-radio>&ndash;&gt;&ndash;&gt;--><!--&lt;!&ndash;<ngx-select #ds="ngModel" [(ngModel)]="formValues.select" validators="required" name="Select" bindValue="value" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>&ndash;&gt;--><!--&lt;!&ndash;{{ ds?.errors | json }}{{ f2?.status }}&lt;!&ndash;&lt;!&ndash;<ngx-select [(ngModel)]="formValues.selectMultiple" validators="required" name="Select Multiple" [multiple]="true" [options]="[{ title: 'X', value: 'x' }, { title: 'Y', value: 'y' }]"></ngx-select>&ndash;&gt;&ndash;&gt;&lt;!&ndash;<ngx-checkbox [(ngModel)]="formValues.premium" name="Premium"></ngx-checkbox>&ndash;&gt;&lt;!&ndash;<ngx-textarea [(ngModel)]="formValues.textarea" validators="required" name="Textarea"></ngx-textarea>&ndash;&gt;&lt;!&ndash;<ngx-time [(ngModel)]="formValues.time" validators="required" name="Time"></ngx-time>&ndash;&gt;&lt;!&ndash;&lt;!&ndash;<ngx-wysiwyg [(ngModel)]="formValues.wysiwyg"  [validators]="{ type: 'maxLength', value: 50 }" name="HTML"></ngx-wysiwyg>&ndash;&gt;&ndash;&gt;&lt;!&ndash;&lt;!&ndash;{{formValues.wysiwyg}}&ndash;&gt;&ndash;&gt;&ndash;&gt;--><!--&lt;!&ndash;<button type="submit">Submit</button>&ndash;&gt;--><!--&lt;!&ndash;</form>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;--><!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;<div class="container-fluid p-5">&ndash;&gt;&lt;!&ndash;<div class="row">&ndash;&gt;&lt;!&ndash;<div class="col-12"><h3>WYSIWYG</h3></div>&ndash;&gt;&lt;!&ndash;<div class="col-12">&ndash;&gt;&lt;!&ndash;<form #f="ngForm">&ndash;&gt;&lt;!&ndash;<ngx-trumbowyg-editor #dfsfsf="editor" name="editor" [(ngModel)]="model"></ngx-trumbowyg-editor>&ndash;&gt;&lt;!&ndash;{{ model }}</form>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;<div class="row">&ndash;&gt;&lt;!&ndash;<div class="col-12"><h3>Roles</h3></div>&ndash;&gt;&lt;!&ndash;<div class="col-12">&ndash;&gt;&lt;!&ndash;<ng-template [ngxRolesIf]="'serviceProvider'"><p>ServiceProvider</p></ng-template>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;<div class="container-fluid p-5">&ndash;&gt;&lt;!&ndash;<div class="row">&ndash;&gt;&lt;!&ndash;<div class="col-12"><h3>Avatar</h3></div>&ndash;&gt;&lt;!&ndash;<ng-template ngFor [ngForOf]="avatars" let-avatar let-i="index">&ndash;&gt;&lt;!&ndash;<ngx-avatar [rounded]="avatar.rounded" [zoom]="avatar.zoom" [upload]="avatar.upload" [size]="avatar.size" [margin]="avatar.margin" [label]="avatar.label" [disabled]="avatar.disabled" [name]="avatar.name" [randomColor]="avatar.randomColor" [image]="avatar.image" [textColor]="avatar.textColor" [bgColor]="avatar.bgColor"></ngx-avatar>&ndash;&gt;&lt;!&ndash;</ng-template>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;<div class="row">&ndash;&gt;&lt;!&ndash;<div class="col-12"><h3>Rights</h3></div>&ndash;&gt;&lt;!&ndash;<ng-template ngFor [ngForOf]="tests" let-test>&ndash;&gt;&lt;!&ndash;<div class="col-12 d-flex mb-2"><h5 class="mr-2">Test <code>{{ test }}</code> against&ndash;&gt;&lt;!&ndash;<code>{{ rights | json }}</code></h5>&ndash;&gt;&lt;!&ndash;<h4 *ngxRightsIf="{ resource: test, value: 1 }; else elseTemplate" class="text-success font-weight-bold">True</h4>&ndash;&gt;&lt;!&ndash;<ng-template #elseTemplate><h4 class="text-danger font-weight-bold">False</h4></ng-template>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;</ng-template>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;-->
-
-<!--&lt;!&ndash;<div class="container-fluid p-5">&ndash;&gt;&lt;!&ndash;<div class="row">&ndash;&gt;&lt;!&ndash;<div class="col-12"><h3>Datepicker</h3>&ndash;&gt;&lt;!&ndash;</div>&lt;!&ndash;<div class="form-group">&ndash;&gt;&lt;!&ndash;<input [(ngModel)]="date" [markedDates]="markedDates" (flatpickrMonthChange)="mongthChange($event)" (onChange)="change($event)" [minDate]="min" class="form-control" ngxFlatpickr>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;&lt;!&ndash;<div class="form-group">&ndash;&gt;&lt;!&ndash;<span [(ngModel)]="date" class="form-control" (flatpickrChange)="onDateChange($event)" [markedDates]="markedDates" ngxFlatpickr></span>{{date}}&ndash;&gt;&lt;!&ndash;<input [(ngModel)]="date2" class="form-control" (flatpickrChange)="onDateChange($event)" [markedDates]="markedDates" ngxFlatpickr>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;<div class="col-12">Value: {{date2}}</div>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;<div class="container-fluid p-5">&ndash;&gt;&lt;!&ndash;<div class="row">&ndash;&gt;&lt;!&ndash;<div class="col-12"><h3>Timepicker</h3></div>&ndash;&gt;&lt;!&ndash;<div class="form-group"><input [(ngModel)]="time" (onChange)="change($event)" class="form-control" ngxTimepicker>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;<div class="col-12">Value: {{time}}</div>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;&lt;!&ndash;</div>&ndash;&gt;-->

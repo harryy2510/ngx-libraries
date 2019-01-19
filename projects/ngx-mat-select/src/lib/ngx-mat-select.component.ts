@@ -336,6 +336,12 @@ export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnC
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.items && this.items && this.items.length) {
+      this.virtualScroll = this.items.length > 50;
+    }
+    if (changes.virtualScroll) {
+      this.virtualScroll = changes.virtualScroll.currentValue;
+    }
     if (changes.multiple) {
       this.clearable = this.multiple;
     }
