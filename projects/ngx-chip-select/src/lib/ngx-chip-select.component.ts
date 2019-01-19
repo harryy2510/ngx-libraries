@@ -260,7 +260,7 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
         this._selectionLabel = this.selectedOptions[0].label;
       } else if (sLen === oLen) {
         this._selectionLabel = `All ${this.placeholder.toLowerCase()}`;
-      } else if (sLen < (oLen / 2)) {
+      } else if (sLen <= (oLen / 2)) {
         this._selectionLabel = `${this.selectedOptions[0].label} ${sLen > 1 ? '+' + (sLen - 1) : ''}`;
       } else {
         this._selectionLabel = `Exclude: ${this.notSelectedOptions[0].label} ${nsLen > 1 ? '+' + (nsLen - 1) : ''}`;
