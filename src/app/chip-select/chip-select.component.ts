@@ -2419,4 +2419,6 @@ export class ChipSelectComponent implements OnInit {
   ngOnInit() {
   }
 
+  labelFn = (item) => `${item.id} - ${item.name}`
+
 }

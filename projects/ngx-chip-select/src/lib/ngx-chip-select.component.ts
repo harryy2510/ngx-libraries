@@ -55,6 +55,8 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
   @Input() bindValue: string = '';
   @Input() disabled: boolean = false;
   @Input() clearable: boolean = false;
+  @Input() labelFn: Function;
+  @Input() valueFn: Function;
   @Output('change') changeEvent = new EventEmitter();
   options: NgxChipSelectOption[] = [];
   selectedOptions: NgxChipSelectOption[] = [];
@@ -291,10 +293,10 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
   }
 
   private getLabel(item: any): string {
-    return this.bindLabel ? get(item, this.bindLabel) : item;
+    return this.labelFn ? this.labelFn(item) : (this.bindLabel ? get(item, this.bindLabel) : item);
   }
 
   private getValue(item: any): any {
-    return this.bindValue ? get(item, this.bindValue) : item;
+    return this.valueFn ? this.valueFn(item) : (this.bindValue ? get(item, this.bindValue) : item);
   }
 }

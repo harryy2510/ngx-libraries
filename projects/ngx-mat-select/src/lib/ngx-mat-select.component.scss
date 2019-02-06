@@ -26,7 +26,7 @@ $highlight-color: #3f51b5 !default;
       }
     }
 
-    .ng-has-value {
+    .ng-has-value, &.ng-select-filtered {
       .ng-placeholder {
         visibility: hidden;
       }

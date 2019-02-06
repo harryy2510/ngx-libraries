@@ -1,6 +1,6 @@
 {
   "name": "@harryy/ngx-avatar",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "peerDependencies": {
     "@angular/core": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",
     "@angular/material": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0",

@@ -12,8 +12,8 @@
   .ngx-avatar {
     display: inline-block;
     position: relative;
-    //float: left;
-    //clear: both;
+    flex-grow: 0;
+    flex-shrink: 0;
 
     &.ngx-avatar-action {
       cursor: pointer;

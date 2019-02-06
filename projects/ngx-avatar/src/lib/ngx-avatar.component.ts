@@ -59,7 +59,7 @@ export class NgxAvatarComponent implements AfterViewInit, OnChanges {
   @HostBinding('class.ngx-avatar-disabled') ngxAvatarActionDisabledClass = false;
   @HostBinding('style.background-color') cssBackgroundColor: string;
   @HostBinding('style.color') cssTextColor: string;
-  @HostBinding('style.width') @HostBinding('style.height') cssSize: string;
+  @HostBinding('style.width') @HostBinding('style.height') @HostBinding('style.flex-basis') cssSize: string;
   @HostBinding('style.margin') cssMargin: string;
   @HostBinding('style.font-size') cssFontSize: string;
   @HostBinding('style.border-radius') cssBorderRadius: string;

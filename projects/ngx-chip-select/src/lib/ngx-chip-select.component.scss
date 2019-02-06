@@ -12,6 +12,16 @@
   }
 }
 
+.mat-list-item {
+  &:hover, &:focus {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+
+  &.active {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+}
+
 .mat-card {
   padding: 0;
   min-width: 280px;

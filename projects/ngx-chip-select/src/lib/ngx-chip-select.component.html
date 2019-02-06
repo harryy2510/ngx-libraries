@@ -34,9 +34,9 @@
       <ng-template [ngIf]="!multiple">
         <mat-action-list>
           <ng-template ngFor [ngForOf]="options" let-option>
-            <mat-list-item (click)="select(option.value)">
+            <button mat-list-item (click)="select(option.value)" [class.active]="isSelected(option.value)">
               {{ option.label }}
-            </mat-list-item>
+            </button>
           </ng-template>
         </mat-action-list>
       </ng-template>
