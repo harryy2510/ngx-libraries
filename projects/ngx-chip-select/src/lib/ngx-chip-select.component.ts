@@ -247,8 +247,8 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
     this.onTouched();
     if (emit) {
       const items = this.selectedOptions.map((option: NgxChipSelectOption) => option.item);
-      this.changeEvent.emit(this.multiple ? items : items[0]);
       this.onChange(this.value);
+      this.changeEvent.emit(this.multiple ? items : items[0]);
     }
   }
 

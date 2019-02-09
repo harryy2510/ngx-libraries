@@ -1,3 +1,7 @@
+:host {
+  display: inline-flex;
+}
+
 .mat-chip {
   min-height: 28px;
   height: 28px;
@@ -32,7 +36,7 @@
   background-color: #1967d2;
   color: white;
   padding: 0 8px 0 0;
-  height: 52px;
+  height: 42px;
   justify-content: space-between;
   align-items: center;
 }

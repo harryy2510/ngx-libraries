@@ -3,5 +3,10 @@
   "dest": "../../dist/ngx-chip-select",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "lodash.get",
+    "lodash.isequal",
+    "@ncstate/sat-popover"
+  ]
 }
