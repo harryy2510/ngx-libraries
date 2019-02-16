@@ -5,16 +5,20 @@
 .mat-chip {
   min-height: 28px;
   height: 28px;
-  padding: 0 12px;
+  padding: 0 8px 0 10px;
   margin: 2px;
   font-size: 12px;
   line-height: 14px;
   white-space: nowrap;
   cursor: pointer;
 
-  &.mat-chip-selected {
-    font-weight: 700;
+  &.mat-chip-disabled {
+    opacity: 1;
   }
+
+  //&.mat-chip-selected {
+  //  font-weight: 700;
+  //}
 }
 
 .mat-list-item {
@@ -88,7 +92,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: pointer;
 
   img {
@@ -96,10 +100,6 @@
   }
 
   &:focus, &:hover, &:active {
-    opacity: 0.8;
-
-    img {
-      filter: invert(1);
-    }
+    opacity: 0.6;
   }
 }

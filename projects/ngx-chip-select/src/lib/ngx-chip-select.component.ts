@@ -19,6 +19,7 @@ import {MatListOption, MatSelectionList} from '@angular/material';
 import {SatPopover} from '@ncstate/sat-popover';
 import get from 'lodash.get';
 import isequal from 'lodash.isequal';
+import {plural} from 'pluralize';
 
 function id(): string {
   return 'axxxxxxxxxxx'.replace(/[x]/g, function (_) {
@@ -51,11 +52,12 @@ export class NgxChipSelectOption {
   },
 })
 export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, AfterContentInit {
-  @Input() heading: string = '';
-  @Input() bindLabel: string = '';
-  @Input() bindValue: string = '';
-  @Input() disabled: boolean = false;
-  @Input() clearable: boolean = false;
+  @Input() showHeading = true;
+  @Input() heading = '';
+  @Input() bindLabel = '';
+  @Input() bindValue = '';
+  @Input() disabled = false;
+  @Input() clearable = false;
   @Input() labelFn: Function;
   @Input() valueFn: Function;
   @Output('change') changeEvent = new EventEmitter();
@@ -64,9 +66,9 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
   notSelectedOptions: NgxChipSelectOption[] = [];
   @ViewChild(SatPopover) popover: SatPopover;
   @ViewChild(MatSelectionList) selectionList: MatSelectionList;
-  initialized: boolean = false;
+  initialized = false;
   private _initialValue: any[];
-  private _selectionLabel: string = '';
+  private _selectionLabel = '';
 
   constructor(private _cdRef: ChangeDetectorRef,
               @Self()
@@ -92,7 +94,7 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
     this._value = value;
   }
 
-  private _placeholder: string = 'Select';
+  private _placeholder = 'Select';
 
   @Input()
   get placeholder(): string {
@@ -114,7 +116,7 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
     this._items = value;
   }
 
-  private _multiple: boolean = false;
+  private _multiple = false;
 
   @Input()
   get multiple(): boolean {
@@ -203,6 +205,10 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
       if (!this.multiple) {
         this.close();
       }
+    } else {
+      if (!this.multiple) {
+        this.close();
+      }
     }
   }
 
@@ -260,9 +266,9 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
       if (sLen === 1 && oLen === 1) {
         this._selectionLabel = this.selectedOptions[0].label;
       } else if (sLen === oLen) {
-        this._selectionLabel = `All ${this.placeholder.toLowerCase()}`;
+        this._selectionLabel = `All ${plural((this.heading || this.placeholder)).toLowerCase()}`;
       } else if (sLen <= (oLen / 2)) {
-        this._selectionLabel = `${this.selectedOptions[0].label} ${sLen > 1 ? '+' + (sLen - 1) : ''}`;
+        this._selectionLabel = `${this.selectedOptions[0].label} ${sLen > 1 ? '(+' + (sLen - 1) + ')' : ''}`;
       } else {
         this._selectionLabel = `Exclude: ${this.notSelectedOptions[0].label} ${nsLen > 1 ? '+' + (nsLen - 1) : ''}`;
       }
@@ -273,21 +279,21 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
     if (!this.initialized) {
       this.initialized = true;
       // if (this._initialValue) {
-        const initialValues = coerceArray(this._initialValue);
-        if (this.multiple) {
-          this.value = this.options
-            .filter((option: NgxChipSelectOption) => initialValues.find(value => isequal(value, option.value)))
-            .map((option: NgxChipSelectOption) => option.value);
+      const initialValues = coerceArray(this._initialValue);
+      if (this.multiple) {
+        this.value = this.options
+          .filter((option: NgxChipSelectOption) => initialValues.find(value => isequal(value, option.value)))
+          .map((option: NgxChipSelectOption) => option.value);
+      } else {
+        const opt = this.options
+          .find((option: NgxChipSelectOption) => initialValues.find(value => isequal(value, option.value)));
+        if (opt) {
+          this.value = opt.value;
         } else {
-          const opt = this.options
-            .find((option: NgxChipSelectOption) => initialValues.find(value => isequal(value, option.value)));
-          if (opt) {
-            this.value = opt.value;
-          } else {
-            this.value = undefined;
-          }
+          this.value = undefined;
         }
-        this._emitChange();
+      }
+      this._emitChange();
       // }
       this.markForCheck();
     }

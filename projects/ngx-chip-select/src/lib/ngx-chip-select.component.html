@@ -1,5 +1,5 @@
 <mat-chip-list [disabled]="disabled" [selectable]="false">
-  <mat-chip [selected]="hasValue && !disabled" [selectable]="false" [satPopoverAnchorFor]="popover" (keyup.enter)="toggle()" (keyup.space)="toggle()" (click)="toggle()">
+  <mat-chip [selectable]="false" [satPopoverAnchorFor]="popover" (keyup.enter)="toggle()" (keyup.space)="toggle()" (click)="toggle()">
     {{selectedLabel}}
     <ng-template [ngIf]="!disabled">
       <ng-template [ngIf]="hasValue && clearable">
@@ -35,12 +35,14 @@
         </mat-action-list>
       </ng-template>
     </mat-card-content>
-    <mat-card-header>
-      <mat-card-title>{{heading || placeholder}}</mat-card-title>
-      <button mat-icon-button (click)="close()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-card-header>
+    <ng-template [ngIf]="showHeading">
+      <mat-card-header>
+        <mat-card-title>{{heading || placeholder}}</mat-card-title>
+        <button mat-icon-button (click)="close()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-card-header>
+    </ng-template>
     <!--<mat-card-actions align="end">-->
     <!--<button (click)="close()" mat-button>Cancel</button>-->
     <!--<button mat-button color="primary">Done</button>-->
