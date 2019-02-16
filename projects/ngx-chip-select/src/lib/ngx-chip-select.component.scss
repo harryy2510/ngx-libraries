@@ -10,6 +10,7 @@
   font-size: 12px;
   line-height: 14px;
   white-space: nowrap;
+  cursor: pointer;
 
   &.mat-chip-selected {
     font-weight: 700;
@@ -26,17 +27,30 @@
   }
 }
 
+.mat-list-base {
+  padding: 0;
+
+  &:before {
+    content: '';
+    background-color: #fff;
+    display: block;
+    height: 4px;
+    position: relative;
+    top: -1;
+  }
+}
+
 .mat-card {
   padding: 0;
   min-width: 280px;
   margin: 8px 0;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .mat-card-header {
-  background-color: #1967d2;
-  color: white;
-  padding: 0 8px 0 0;
-  height: 42px;
+  padding: 0 4px 0 0;
+  height: 48px;
   justify-content: space-between;
   align-items: center;
 }
@@ -44,13 +58,15 @@
 .mat-card-header .mat-card-title {
   margin-bottom: 0;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .mat-card-content {
   max-height: 300px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   margin-bottom: 0;
+  box-shadow: inset 0 1px 0px rgba(0, 0, 0, 0.12);
 }
 
 .mat-card > .mat-card-actions:last-child {

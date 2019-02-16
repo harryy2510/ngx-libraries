@@ -10,5 +10,9 @@
     "@tinymce/tinymce-angular": "^2.3.0",
     "tinymce": "^4.8.5",
     "@harryy/ngx-script-loader": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

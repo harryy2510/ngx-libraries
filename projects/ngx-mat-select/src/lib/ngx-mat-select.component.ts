@@ -139,7 +139,7 @@ export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnC
   @Input() groupBy: string | Function;
   @Input() groupValue: Function;
   @Input() bufferAmount: number;
-  @Input() virtualScroll = true;
+  @Input() virtualScroll = false;
   @Input() selectableGroup: boolean;
   @Input() selectableGroupAsModel: boolean;
   @Input() searchFn: Function;
@@ -336,19 +336,19 @@ export class NgxMatSelectComponent<T> extends _MatSelectMixinBase implements OnC
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.items && this.items && this.items.length) {
-      this.virtualScroll = this.items.length > 50;
-    }
-    if (changes.virtualScroll) {
-      this.virtualScroll = changes.virtualScroll.currentValue;
-    }
+    // if (changes.items && this.items && this.items.length) {
+    //   this.virtualScroll = this.items.length > 50;
+    // }
+    // if (changes.virtualScroll) {
+    //   this.virtualScroll = changes.virtualScroll.currentValue;
+    // }
     if (changes.multiple) {
       this.clearable = this.multiple;
     }
     if (changes.typeahead) {
       this.clearOnBackspace = !!this.typeahead;
       this.clearable = !!this.typeahead;
-      this.virtualScroll = !this.typeahead;
+      // this.virtualScroll = !this.typeahead;
     }
     this.stateChanges.next();
     this.detectChanges();

@@ -1,4 +1,4 @@
-<mat-chip-list [selectable]="false">
+<mat-chip-list [disabled]="disabled" [selectable]="false">
   <mat-chip [selected]="hasValue && !disabled" [selectable]="false" [satPopoverAnchorFor]="popover" (keyup.enter)="toggle()" (keyup.space)="toggle()" (click)="toggle()">
     {{selectedLabel}}
     <ng-template [ngIf]="!disabled">
@@ -15,15 +15,9 @@
 </mat-chip-list>
 <sat-popover hasBackdrop verticalAlign="below">
   <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{placeholder}}</mat-card-title>
-      <button mat-icon-button (click)="close()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-card-header>
     <mat-card-content>
       <ng-template [ngIf]="multiple">
-        <mat-selection-list [disabled]="disabled" cdkFocusInitial [(ngModel)]="value" (selectionChange)="_emitChange(true)">
+        <mat-selection-list [disabled]="disabled" [(ngModel)]="value" (selectionChange)="_emitChange(true)">
           <ng-template ngFor [ngForOf]="options" let-option>
             <mat-list-option checkboxPosition="before" [value]="option.value">
               {{ option.label }}
@@ -41,6 +35,12 @@
         </mat-action-list>
       </ng-template>
     </mat-card-content>
+    <mat-card-header>
+      <mat-card-title>{{heading || placeholder}}</mat-card-title>
+      <button mat-icon-button (click)="close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
     <!--<mat-card-actions align="end">-->
     <!--<button (click)="close()" mat-button>Cancel</button>-->
     <!--<button mat-button color="primary">Done</button>-->

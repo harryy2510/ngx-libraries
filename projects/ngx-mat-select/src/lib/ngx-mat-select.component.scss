@@ -17,12 +17,17 @@ $highlight-color: #3f51b5 !default;
     padding: 0;
     font-size: 1rem;
 
+    .ng-select-container {
+      color: inherit!important;
+    }
+
     .ng-has-value,
     &.ng-select-opened,
     &.ng-select-focused {
       .ng-placeholder {
         transform: none!important;
-        color: rgba(0, 0, 0, 0.54)!important;
+        color: inherit!important;
+        opacity: 0.54;
       }
     }
 
@@ -33,7 +38,8 @@ $highlight-color: #3f51b5 !default;
     }
 
     .ng-placeholder {
-      color: rgba(0, 0, 0, 0.54);
+      color: inherit!important;
+      opacity: 0.54;
     }
 
     .ng-select-container {
@@ -54,16 +60,21 @@ $highlight-color: #3f51b5 !default;
         bottom: unset;
         text-align: center;
         border-top: none;
+        color: inherit!important;
 
         .ng-clear {
           font-size: 1.4rem;
           line-height: 14px;
           top: 2px;
           position: relative;
+          color: inherit!important;
+          opacity: 0.54;
         }
 
         .ng-arrow {
           top: -2px;
+          color: inherit!important;
+          opacity: 0.54;
         }
       }
 
@@ -89,6 +100,7 @@ $highlight-color: #3f51b5 !default;
 
           input {
             padding: 0;
+            color: inherit!important;
           }
         }
       }
@@ -116,7 +128,7 @@ $highlight-color: #3f51b5 !default;
         .ng-value {
           background-color: transparent;
           border-radius: 0;
-          color: initial;
+          color: inherit!important;
           padding: 0;
           margin: 0;
         }
@@ -169,7 +181,8 @@ $highlight-color: #3f51b5 !default;
       max-width: 100%;
 
       .mat-checkbox-layout {
-        color: rgba(0, 0, 0, 0.87);
+        color: inherit!important;
+        opacity: 0.87;
         font-size: inherit;
         max-width: 100%;
 

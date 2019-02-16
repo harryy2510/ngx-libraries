@@ -1,3 +1,5 @@
+import {coerceArray} from '@angular/cdk/coercion';
+import {SelectionModel} from '@angular/cdk/collections';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -12,13 +14,11 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import {ControlValueAccessor, NgControl} from '@angular/forms';
+import {MatListOption, MatSelectionList} from '@angular/material';
+import {SatPopover} from '@ncstate/sat-popover';
 import get from 'lodash.get';
 import isequal from 'lodash.isequal';
-import {SatPopover} from '@ncstate/sat-popover';
-import {ControlValueAccessor, NgControl} from '@angular/forms';
-import {coerceArray} from '@angular/cdk/coercion';
-import {MatListOption, MatSelectionList} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
 
 function id(): string {
   return 'axxxxxxxxxxx'.replace(/[x]/g, function (_) {
@@ -51,6 +51,7 @@ export class NgxChipSelectOption {
   },
 })
 export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, AfterContentInit {
+  @Input() heading: string = '';
   @Input() bindLabel: string = '';
   @Input() bindValue: string = '';
   @Input() disabled: boolean = false;
@@ -177,11 +178,9 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
   }
 
   writeValue(value: any[]): void {
-    if (value) {
-      this._initialValue = value;
-      this.initialized = false;
-      this.initialize();
-    }
+    this._initialValue = value;
+    this.initialized = false;
+    this.initialize();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -235,7 +234,7 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
 
   isSelected(value: any) {
     if (!this.multiple) {
-      return isequal(this.value, value)
+      return isequal(this.value, value);
     }
     return !!(this.value && this.value.find(v => isequal(v, value)));
   }
@@ -273,7 +272,7 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
   private initialize(): void {
     if (!this.initialized) {
       this.initialized = true;
-      if (this._initialValue) {
+      // if (this._initialValue) {
         const initialValues = coerceArray(this._initialValue);
         if (this.multiple) {
           this.value = this.options
@@ -284,10 +283,12 @@ export class NgxChipSelectComponent implements OnChanges, ControlValueAccessor, 
             .find((option: NgxChipSelectOption) => initialValues.find(value => isequal(value, option.value)));
           if (opt) {
             this.value = opt.value;
+          } else {
+            this.value = undefined;
           }
         }
         this._emitChange();
-      }
+      // }
       this.markForCheck();
     }
   }

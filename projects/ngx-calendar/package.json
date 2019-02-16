@@ -6,5 +6,9 @@
     "@angular/core": "^7.1.0",
     "fullcalendar": "^4.0.0-alpha.3",
     "fullcalendar-scheduler": "^4.0.0-alpha.3"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@harryy/ngx-chip-select",
-  "version": "0.0.30",
+  "version": "0.0.37",
   "peerDependencies": {
     "@angular/common": "^6.0.0 || ^7.0.0",
     "@angular/core": "^6.0.0 || ^7.0.0",
@@ -13,5 +13,9 @@
     "@ncstate/sat-popover": "^3.1.0",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
