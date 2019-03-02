@@ -1,4 +1,11 @@
-<ngx-chip-select [items]="data" [multiple]="false" [clearable]="true" bindLabel="name" [(ngModel)]="value" label="Locations"></ngx-chip-select>
+<!--<ngx-chip-select [items]="data" bindLabel="name" [(ngModel)]="value" label="Locations" (change)="onChange($event)">-->
+
+<!--</ngx-chip-select>-->
+<ngx-chip-select [multiple]="true" [items]="data" bindLabel="name" [(ngModel)]="value" label="Locations" (change)="onChange($event)">
+  <ng-template #optionTemplate let-option>
+    {{ option?.label }}
+  </ng-template>
+</ngx-chip-select>
 
 <!--<ngx-chip-select [items]="data" [multiple]="true" [clearable]="true" bindLabel="name" [(ngModel)]="value" label="Locations"></ngx-chip-select>-->
 

@@ -12,12 +12,12 @@ import {
   Renderer2,
   SimpleChanges
 } from '@angular/core';
-import {FlatpickrConfig, FlatpickrDisableEnableDate, momentToFpDateFormat} from './ngx-flatpickr.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import flatpickr from 'flatpickr';
 import weekSelectPlugin from 'flatpickr/dist/plugins/weekSelect/weekSelect';
 import * as moment_ from 'moment';
 import {Moment} from 'moment';
+import {FlatpickrConfig, FlatpickrDisableEnableDate, momentToFpDateFormat} from './ngx-flatpickr.service';
 
 const moment = moment_;
 
@@ -279,10 +279,6 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   private instance: flatpickr.Instance;
   private isDisabled = false;
   private initialValue: any;
-  private onChangeFn: (value: any) => void = () => {
-  }; // tslint:disable-line
-  private onTouchedFn = () => {
-  }; // tslint:disable-line
 
   constructor(
     private config: FlatpickrConfig,
@@ -294,7 +290,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
   // tslint:disable-next-line
   static convertFormat(key: string, value: any) {
     if (value instanceof moment) {
-      return new Date(value.valueOf());
+      return new Date((value as Moment).valueOf());
     }
     if (key === 'enable' || key === 'disable') {
       return value.map(v => new Date(moment(v).valueOf()));
@@ -314,7 +310,7 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
       return d.map((date: any) => format ? moment(date, format) : moment(date));
     }
 
-    if (d instanceof Date || typeof(d) === 'string') {
+    if (d instanceof Date || typeof (d) === 'string') {
       return format ? moment(d, format) : moment(d);
     }
   }
@@ -578,4 +574,10 @@ export class NgxFlatpickrDirective implements AfterViewInit, OnChanges, OnDestro
     this.onChangeFn(isValid ? parsedValues : null);
     this.onChange.emit(isValid ? parsedValues : null);
   }
+
+  private onChangeFn: (value: any) => void = () => {
+  }; // tslint:disable-line
+
+  private onTouchedFn = () => {
+  }; // tslint:disable-line
 }

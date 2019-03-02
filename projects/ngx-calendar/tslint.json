@@ -12,6 +12,7 @@
       "element",
       "ngx",
       "kebab-case"
-    ]
+    ],
+    "semicolon": false
   }
 }
