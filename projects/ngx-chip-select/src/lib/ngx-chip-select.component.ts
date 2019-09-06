@@ -34,13 +34,15 @@ export class NgxChipSelectOption {
   value: any;
   item: any;
   disabled: boolean;
+  ariaLabel: string;
 
-  constructor(item: any, label: string, value: any, disabled: boolean = false) {
+  constructor(item: any, label: string, value: any, disabled: boolean = false, ariaLabel: string = '') {
     this.id = item.id || id();
     this.label = label;
     this.value = value;
     this.item = item;
     this.disabled = disabled;
+    this.ariaLabel = ariaLabel;
   }
 }
 
@@ -61,6 +63,7 @@ export class NgxChipSelectComponent implements ControlValueAccessor, AfterConten
   @Input() clearable = false;
   @Input() labelFn: Function;
   @Input() valueFn: Function;
+  @Input() arialLabelFn: Function;
   @Output('change') changeEvent = new EventEmitter();
   options: NgxChipSelectOption[] = [];
   selectedOptions: NgxChipSelectOption[] = [];
@@ -119,7 +122,7 @@ export class NgxChipSelectComponent implements ControlValueAccessor, AfterConten
     this.items.forEach((item: any) => {
       this.options = [
         ...this.options,
-        new NgxChipSelectOption(item, this.getLabel(item), this.getValue(item), item.disabled)
+        new NgxChipSelectOption(item, this.getLabel(item), this.getValue(item), item.disabled, this.getAriaLabel(item))
       ];
     });
     this.initialize();
@@ -308,6 +311,10 @@ export class NgxChipSelectComponent implements ControlValueAccessor, AfterConten
 
   private getLabel(item: any): string {
     return this.labelFn ? this.labelFn(item) : (this.bindLabel ? get(item, this.bindLabel) : item);
+  }
+
+  private getAriaLabel(item: any): string {
+    return this.arialLabelFn ? this.arialLabelFn(item) : this.getLabel(item);
   }
 
   private getValue(item: any): any {

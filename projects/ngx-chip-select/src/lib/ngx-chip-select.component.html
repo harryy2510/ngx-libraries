@@ -1,4 +1,4 @@
-<mat-chip-list [selectable]="false" [disabled]="disabled">
+<mat-chip-list [attr.aria-label]="_selectionLabel" [selectable]="false" [disabled]="disabled">
   <mat-chip [disabled]="disabled" [selectable]="false" [satPopoverAnchorFor]="popover" (keyup.enter)="toggle()" (keyup.space)="toggle()" (click)="toggle()">
     {{selectedLabel}}
     <ng-template [ngIf]="!disabled">
@@ -19,7 +19,7 @@
       <ng-template [ngIf]="multiple">
         <mat-selection-list [disabled]="disabled" [(ngModel)]="value" (selectionChange)="_emitChange(true)">
           <ng-template ngFor [ngForOf]="options" let-option>
-            <mat-list-option [disabled]="option.disabled" checkboxPosition="before" [value]="option.value" [attr.cdkFocusInitial]="isSelected(option.value) || null">
+            <mat-list-option [disabled]="option.disabled" [attr.aria-label]="option.ariaLabel" checkboxPosition="before" [value]="option.value" [attr.cdkFocusInitial]="isSelected(option.value) || null">
               <ng-template [ngIf]="optionTemplateRef">
                 <ng-template [ngTemplateOutlet]="optionTemplateRef" [ngTemplateOutletContext]="{ $implicit: option }"></ng-template>
               </ng-template>
@@ -33,7 +33,7 @@
       <ng-template [ngIf]="!multiple">
         <mat-action-list>
           <ng-template ngFor [ngForOf]="options" let-option>
-            <button [disabled]="option.disabled" mat-list-item [attr.cdkFocusInitial]="isSelected(option.value) || null" (click)="select(option.value)" [class.active]="isSelected(option.value)">
+            <button [disabled]="option.disabled" mat-list-item [attr.aria-label]="option.ariaLabel" [attr.cdkFocusInitial]="isSelected(option.value) || null" (click)="select(option.value)" [class.active]="isSelected(option.value)">
               <ng-template [ngIf]="optionTemplateRef">
                 <ng-template [ngTemplateOutlet]="optionTemplateRef" [ngTemplateOutletContext]="{ $implicit: option }"></ng-template>
               </ng-template>
@@ -48,7 +48,7 @@
     <ng-template [ngIf]="showHeading">
       <mat-card-header>
         <mat-card-title>{{heading || placeholder}}</mat-card-title>
-        <button mat-icon-button (click)="close()">
+        <button [attr.aria-label]="'Close'" mat-icon-button (click)="close()">
           <mat-icon>close</mat-icon>
         </button>
       </mat-card-header>
