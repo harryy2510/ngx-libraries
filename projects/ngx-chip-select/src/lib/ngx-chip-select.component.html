@@ -17,7 +17,7 @@
   <mat-card>
     <mat-card-content>
       <ng-template [ngIf]="multiple">
-        <mat-selection-list [disabled]="disabled" [(ngModel)]="value" (selectionChange)="_emitChange(true)">
+        <mat-selection-list [attr.aria-label]="selectedLabel" [disabled]="disabled" [(ngModel)]="value" (selectionChange)="_emitChange(true)">
           <ng-template ngFor [ngForOf]="options" let-option>
             <mat-list-option [disabled]="option.disabled" [attr.aria-label]="option.ariaLabel" checkboxPosition="before" [value]="option.value" [attr.cdkFocusInitial]="isSelected(option.value) || null">
               <ng-template [ngIf]="optionTemplateRef">
@@ -31,7 +31,7 @@
         </mat-selection-list>
       </ng-template>
       <ng-template [ngIf]="!multiple">
-        <mat-action-list>
+        <mat-action-list [attr.aria-label]="selectedLabel">
           <ng-template ngFor [ngForOf]="options" let-option>
             <button [disabled]="option.disabled" mat-list-item [attr.aria-label]="option.ariaLabel" [attr.cdkFocusInitial]="isSelected(option.value) || null" (click)="select(option.value)" [class.active]="isSelected(option.value)">
               <ng-template [ngIf]="optionTemplateRef">
