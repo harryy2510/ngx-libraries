@@ -1,5 +1,5 @@
 <mat-chip-list [attr.aria-label]="selectedLabel" [selectable]="false" [disabled]="disabled">
-  <mat-chip [disabled]="disabled" [selectable]="false" [satPopoverAnchorFor]="popover" (keyup.enter)="toggle()" (keyup.space)="toggle()" (click)="toggle()">
+  <mat-chip [disabled]="disabled" [selectable]="false" [satPopoverAnchor]="popover" (keyup.enter)="toggle()" (keyup.space)="toggle()" (click)="toggle()">
     {{selectedLabel}}
     <ng-template [ngIf]="!disabled">
       <ng-template [ngIf]="hasValue && clearable">
