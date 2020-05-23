@@ -57,6 +57,15 @@ export class NgxCalendarOptionsBase implements OptionsInput {
 
   private _options: OptionsInput = {};
 
+  @Input() eventPositioned?: (arg: {
+    isMirror: boolean;
+    isStart: boolean;
+    isEnd: boolean;
+    event: EventApi;
+    el: HTMLElement;
+    view: View;
+  }) => void;
+
   @Input()
   get options(): OptionsInput {
     return {
@@ -78,6 +87,7 @@ export class NgxCalendarOptionsBase implements OptionsInput {
       plugins: this.plugins,
       slotDuration: this.slotDuration,
       timeZone: this.timeZone,
+      eventPositioned: this.eventPositioned,
       ...this._options
     };
   };

@@ -1,1 +1,2 @@
-<ngx-calendar [events]="events"></ngx-calendar>
+<ngx-calendar [defaultDate]="'2020-05-23'" [eventPositioned]="callPositioned" [eventRender]="callRender"
+              [events]="events" [firstDay]="0" [maxTime]="{hours: 20}" [minTime]="{hours: 7}"></ngx-calendar>

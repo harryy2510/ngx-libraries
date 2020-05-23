@@ -7,6 +7,18 @@
   "whitelistedNonPeerDependencies": [
     "@fullcalendar/core",
     "@fullcalendar/timegrid",
+    "@fullcalendar/daygrid",
+    "@fullcalendar/interaction",
+    "@fullcalendar/daygrid",
+    "@fullcalendar/interaction",
+    "@fullcalendar/list",
+    "@fullcalendar/moment",
+    "@fullcalendar/moment-timezone",
+    "@fullcalendar/resource-common",
+    "@fullcalendar/resource-daygrid",
+    "@fullcalendar/resource-timegrid",
+    "@fullcalendar/resource-timeline",
+    "@fullcalendar/timeline",
     "lodash"
   ]
 }
