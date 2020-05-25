@@ -1,6 +1,66 @@
-@import '~@fullcalendar/core/main.css';
-@import '~@fullcalendar/daygrid/main.css';
-@import '~@fullcalendar/list/main.css';
-@import '~@fullcalendar/resource-timeline/main.css';
-@import '~@fullcalendar/timegrid/main.css';
-@import '~@fullcalendar/timeline/main.css';
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/timegrid/main.css";
+
+.fc {
+  .fc-view-container {
+    .fc-view {
+      .fc-slats {
+        td {
+          height: 40px;
+        }
+      }
+
+      .fc-nonbusiness {
+        background: #e0e0e0;
+      }
+
+      .fc-day.fc-widget-content {
+        &, &.fc-today {
+          background-color: transparent;
+        }
+      }
+
+      .fc-axis.fc-time.fc-widget-content {
+        position: relative;
+
+        > span {
+          font-size: 12px;
+          position: absolute;
+          top: 0;
+          right: 8px;
+          width: 40px;
+          transform: translateY(-50%);
+          background-color: white;
+          text-align: right;
+          padding-right: 8px;
+        }
+      }
+
+      [data-time="00:00:00"] {
+        .fc-axis.fc-time.fc-widget-content {
+          > span {
+            display: none;
+          }
+        }
+      }
+
+      .fc-body > tr > td.fc-widget-content {
+        border-left-color: transparent;
+      }
+    }
+  }
+}
+
+.fc-event, .fc-event-dot {
+  background-color: white;
+  border-color: #2c76e4;
+  color: #2c76e4;
+  padding: 2px;
+  border-radius: 2px;
+  cursor: pointer;
+
+  .fc-content {
+    position: relative;
+    height: 100%;
+  }
+}
