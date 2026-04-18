@@ -1,62 +1,58 @@
-# ngx libraries
+<p align="center">
+  <h1 align="center">Ngx Libraries</h1>
+  <p align="center">
+    <strong>12 Angular component and utility libraries.</strong>
+  </p>
+  <p align="center">
+    <code>@harryy</code> npm scope · <code>Angular 4-7</code> · <code>independently published</code>
+  </p>
+</p>
 
-## Installation
+<p align="center">
+  <a href="https://angular.io"><img src="https://img.shields.io/badge/Angular-4%E2%80%937-DD0031?style=flat-square&logo=angular&logoColor=white" alt="Angular"></a>
+  <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"></a>
+</p>
 
-Install through npm:
+---
 
+> **Note:** This project is archived and no longer actively maintained.
+
+---
+
+## UI Components
+
+| Package | Description |
+|---|---|
+| `ngx-avatar` | User avatar with upload support and Material styling |
+| `ngx-calendar` | Full calendar component (FullCalendar v4 wrapper) |
+| `ngx-chip-select` | Material chip-based multi-select with popover |
+| `ngx-mat-select` | Enhanced select dropdown (ng-select + Material theming) |
+| `ngx-mat-editor` | Rich text editor (TinyMCE + Angular Material) |
+| `ngx-mat-table` | Enhanced Material table component |
+| `ngx-speed-dial` | Material floating action button menu |
+
+## Utilities
+
+| Package | Description |
+|---|---|
+| `ngx-flatpickr` | Date picker directive wrapping Flatpickr |
+| `ngx-timepicker` | Time picker directive with jQuery timepicker |
+| `ngx-rights` | Authorization directive -- conditional rendering based on user rights |
+| `ngx-roles` | Role-based access control directive |
+| `ngx-script-loader` | Service for dynamically loading external JS files |
+
+---
+
+## Install
+
+```bash
+npm install @harryy/ngx-avatar @harryy/ngx-calendar  # etc.
 ```
-npm install --save flatpickr moment @harryy/ngx-flatpickr
-npm install --save jquery timepicker moment @harryy/ngx-timepicker
-npm install --save multimatch @harryy/ngx-rights
-npm install --save svg.js svg.filter.js @harryy/ngx-avatar
-```
 
-Then include in your apps module:
+Each library is published independently to npm under the `@harryy` scope.
 
-```typescript
-import 'flatpickr/dist/flatpickr.min.css'; // you may need to adjust the css import depending on your build tool
-import 'timepicker/jquery.timepicker.min.css'; // you may need to adjust the css import depending on your build tool
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { NgxFlatpickrModule } from 'ngx-flatpickr';
-import { NgxTimepickerModule } from 'ngx-timepicker';
-import { NgxRightsModule } from 'ngx-rights';
-import { NgxAvatarModule } from 'ngx-avatar';
-import { NgxTrumbowygModule } from 'ngx-trumbowyg';
+---
 
-@NgModule({
-  imports: [
-    FormsModule,
-    NgxFlatpickrModule.forRoot(),
-    NgxTimepickerModule.forRoot(),
-    NgxRightsModule.forRoot(),
-    NgxAvatarModule.forRoot(),
-    NgxTrumbowygModule.forRoot()
-  ]
-})
-export class MyModule {}
-```
+## License
 
-Finally use in one of your apps components:
-
-```typescript
-import { Component } from '@angular/core';
-
-@Component({
-  template: `
-    <input 
-      type="text" 
-      ngxFlatpickr 
-      [(ngModel)]="selectedDate" 
-      dateFormat="MMM DD, YYYY">
-    <input 
-      type="text" 
-      ngxTimepicker 
-      [(ngModel)]="selectedDate" 
-      timeFormat="hh:mm a">
-  <ngx-avatar [upload]="true" [name]="name" [image]="image"></ngx-avatar>
-
-  `
-})
-export class MyComponent {}
-```
+MIT
